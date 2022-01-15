@@ -27,5 +27,12 @@
   - name: Downloading config
     ansible.builtin.fetch:
       src: "config"
-      dest: "~/.kube/config"
+      dest: "config"
       flat: yes
+
+  - name: ansible copy file locally.
+    copy:
+      src: "config"
+      dest: "~/.kube/config"
+    delegate_to: localhost
+    become: no

@@ -2,3 +2,4 @@
 variables.tf
 venv/
 hosts.yml
+config
