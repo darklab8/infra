@@ -1,2 +1,4 @@
 .terraform/
 variables.tf
+venv/
+hosts.yml
