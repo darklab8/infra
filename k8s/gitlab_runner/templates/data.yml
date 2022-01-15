@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: gitlab-runner-gitlab-runner
+type: Opaque
+data:
+  runner-registration-token: {{.Values.super_secret_token | quote }} #base64 encoded registration token
+  runner-token: ""
