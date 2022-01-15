@@ -1,6 +1,15 @@
-variable "hcloud_token" {
-  sensitive = true # Requires terraform >= 0.14
+terraform {
+  required_providers {
+    hcloud = {
+      source  = "hetznercloud/hcloud"
+      version = "~> 1.32.2"
+    }
+  }
+
+  backend "http" {
+  }
 }
+
 
 # Configure the Hetzner Cloud Provider
 provider "hcloud" {
@@ -8,6 +17,17 @@ provider "hcloud" {
 }
 
 # Create a server
-data "hcloud_ssh_key" "ssh_key" {
-  name = "shared2"
+data "hcloud_ssh_key" "default" {
+  name = "naa@shared2"
+}
+
+resource "hcloud_server" "darklab-cluster" {
+  name        = "darklab-cluster"
+  image       = "ubuntu-20.04"
+  server_type = "cx41"
+  location    = "hel1"
+  ssh_keys    = [data.hcloud_ssh_key.default.id ]
+  labels = {
+      "terraform": "true"
+  }
 }
