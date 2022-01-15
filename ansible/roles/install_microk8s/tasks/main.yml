@@ -18,8 +18,8 @@
   - name: Await microk8s starting cluster
     shell: microk8s status --wait-ready
 
-  - name: Microk8s - enabling DNS
-    shell: microk8s enable dns
+  - name: Microk8s - enabling DNS and storage
+    shell: microk8s enable dns storage
 
   - name: Microk8s - extracting config
     shell: microk8s config > config
