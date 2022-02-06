@@ -3,3 +3,4 @@ variables.tf
 venv/
 hosts.yml
 config
+login_*.sh
