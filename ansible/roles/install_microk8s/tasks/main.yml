@@ -20,3 +20,13 @@
 
   - name: Microk8s - enabling DNS and storage
     shell: microk8s enable dns storage
+
+  - name: microk8s enable registry:size=40Gi
+    shell: microk8s enable registry:size=40Gi
+
+  - name: Stop service ufw, if started
+    ansible.builtin.service:
+      name: ufw
+      state: stopped
+      enabled: no
+    when: ansible_facts['distribution'] == "Ubuntu"

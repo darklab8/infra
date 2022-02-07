@@ -10,7 +10,7 @@ my_parser = argparse.ArgumentParser(description='')
 my_parser.add_argument('--ip',
                        type=str,
                        help='ip',
-                       default="95.217.134.161")
+                       default="darklab.dedyn.io")
 
 # Execute the parse_args() method
 args = my_parser.parse_args()
