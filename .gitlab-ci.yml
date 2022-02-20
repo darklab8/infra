@@ -9,7 +9,7 @@ stages:
 
 testing:
   image: ${PIPELINE_RUNNER}
-  stage: testing-prod
+  stage: testing
   script:
     - echo 123456
 
