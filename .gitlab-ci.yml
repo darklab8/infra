@@ -11,7 +11,7 @@ testing:
   image: ${PIPELINE_RUNNER}
   stage: testing-prod
   script:
-    - echo 123
+    - echo 1234
 
 terraform_prod:
   image: ${terraform_image}
