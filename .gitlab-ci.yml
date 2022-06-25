@@ -1,5 +1,5 @@
 variables:
-  PIPELINE_RUNNER: registry.gitlab.com/darklab2/darklab_pipeliner/darklab-pipeliner:kubectl-v1.0.3
+  PIPELINE_RUNNER: darkwind8/pipeline_images:v1.0-docker-20.10.12-kubectl-v1.24.2-helm-v3.9.0
   terraform_image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
 
 stages:
@@ -26,7 +26,7 @@ terraform_prod:
     - when: manual
   variables:
     TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/cluster
-    TV_VAR_hcloud_token: $hcloud_token
+    TV_VAR_do_token: $do_token
 
 prod_init_kube:
   image: ${PIPELINE_RUNNER}
@@ -36,5 +36,7 @@ prod_init_kube:
     - echo "${kubectl_config}" > ~/.kube/config
     - cd ansible
     - python3 install_cluster.py
+  rules:
+    - when: manual
   needs:
     - terraform_prod
