@@ -1,8 +1,8 @@
 terraform {
   required_providers {
-    hcloud = {
-      source  = "hetznercloud/hcloud"
-      version = "~> 1.32.2"
+    digitalocean = {
+      source  = "digitalocean/digitalocean"
+      version = "~> 2.21.0"
     }
   }
 
@@ -11,23 +11,27 @@ terraform {
 }
 
 
-# Configure the Hetzner Cloud Provider
-provider "hcloud" {
-  token = var.hcloud_token
+variable "do_token" {}
+
+# Configure the DigitalOcean Provider
+provider "digitalocean" {
+  token = var.do_token
 }
 
-# Create a server
-data "hcloud_ssh_key" "default" {
-  name = "naa@shared2"
+
+data "digitalocean_ssh_key" "pipeline" {
+  name = "pet_project_pipeline"
 }
 
-resource "hcloud_server" "darklab-cluster" {
-  name        = "darklab-cluster"
-  image       = "ubuntu-20.04"
-  server_type = "cx41"
-  location    = "hel1"
-  ssh_keys    = [data.hcloud_ssh_key.default.id ]
-  labels = {
-      "terraform": "true"
-  }
+data "digitalocean_ssh_key" "admin" {
+  name = "dd84ai"
+}
+
+resource "digitalocean_droplet" "web" {
+  image  = "ubuntu-20-04-x64"
+  name   = "darklab"
+  region = "nyc1"
+  size   = "s-1vcpu-2gb"
+  ssh_keys = [data.digitalocean_ssh_key.pipeline.id, data.digitalocean_ssh_key.admin.id]
+  tags = ["terraform"]
 }
