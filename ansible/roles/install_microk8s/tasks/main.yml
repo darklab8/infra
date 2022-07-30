@@ -10,7 +10,7 @@
       name: snapd
       state: present
 
-  - name: Install "microk8s" with option --classic
+  - name: Install "microk8s" with option --classic --channel=1.23
     community.general.snap:
       name: microk8s
       classic: yes

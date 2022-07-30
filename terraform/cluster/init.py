@@ -5,7 +5,7 @@ import os
 my_parser = argparse.ArgumentParser(description='')
 
 # Add the arguments
-my_parser.add_argument('--key',
+my_parser.add_argument('key',
                        type=str,
                        help='key')
 
