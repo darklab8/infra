@@ -38,7 +38,10 @@ with open("hosts.yml", "w") as file_:
 
 def shell(cmd):
     print(cmd)
-    exit(os.system(cmd))
+    return_code = os.system(cmd)
+    if return_code != 0:
+      raise Exception(f"exit code is not zero: {return_code}")
 
 shell("ansible-playbook -i hosts.yml install_cluster.yml")
+shell("ansible-playbook -i hosts.yml download_configs.yml")
 
