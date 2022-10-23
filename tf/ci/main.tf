@@ -59,11 +59,11 @@ data "cloudflare_zone" "domain_main" {
 }
 
 resource "cloudflare_record" "record_frontend" {
-  ttl = 1
+  ttl = 60
   type = "A"
   value = hcloud_server.cluster.ipv4_address
   name = "${local.envornment}-${local.task_name}.${local.domain}"
   zone_id = data.cloudflare_zone.domain_main.id
-  proxied = true
+  proxied = false
 }
 

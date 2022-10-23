@@ -10,19 +10,17 @@
       name: snapd
       state: present
 
-  - name: Install "microk8s" with option --classic --channel=1.23
+  - name: Install "microk8s" with option --classic --channel=1.25/stable
     community.general.snap:
       name: microk8s
       classic: yes
+      channel: 1.25/stable
 
   - name: Await microk8s starting cluster
     shell: microk8s status --wait-ready
 
   - name: Microk8s - enabling DNS and storage
     shell: microk8s enable dns storage
-
-  - name: microk8s enable registry:size=40Gi
-    shell: microk8s enable registry:size=40Gi
 
   - name: Stop service ufw, if started
     ansible.builtin.service:

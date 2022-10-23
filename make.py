@@ -77,6 +77,8 @@ match Actions[args.action]:
         cd tf/{args.environment}
          && terraform plan
          && terraform apply -auto-approve
+         && cd ../../playbooks
+         && ansible-playbook -i hosts.yml deploy_ci.yml
         """.replace("\n",""),shell=True, check=True)
 
 
