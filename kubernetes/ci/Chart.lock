@@ -1,0 +1,6 @@
+dependencies:
+- name: gitlab
+  repository: file://../modules/gitlab_runner
+  version: 0.0.0
+digest: sha256:00b31b30b05c6dfce9d0942978cbc2d454c09a788e6c17234c35a8356d8ab8db
+generated: "2022-10-24T01:00:13.001366855+02:00"
