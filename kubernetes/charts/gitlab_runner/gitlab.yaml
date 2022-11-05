@@ -1,5 +1,5 @@
 # Just a notice that here you can configure additional parameters for the gitlab_runner chart
-# gitlabUrl: "https://your_url_must_be_defined.com!!!"
+gitlabUrl: "https://gitlab.com"
 
 imagePullPolicy: Always
 concurrent: 2

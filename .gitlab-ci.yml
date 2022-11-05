@@ -1,0 +1,13 @@
+variables:
+  IMAGE_PIPELINE_RUNNER: ubuntu:20.04
+  DOCKER_HOST: tcp://dind-service:2375
+
+stages:
+  - test
+
+check-ci-runner:
+  image: ${IMAGE_PIPELINE_RUNNER}
+  stage: test
+  script:
+    - echo "checking CI runner"
+    - docker ps
