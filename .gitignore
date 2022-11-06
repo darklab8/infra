@@ -9,3 +9,6 @@ images.json
 __pycache__/
 kubectl
 kubectl.sha256
+*.secrets.yml
+*.secrets.json
+*.env.json

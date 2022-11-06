@@ -15,3 +15,12 @@ curl -LO https://get.helm.sh/helm-v3.10.1-linux-amd64.tar.gz
 ## terraform 1.3.3
 
 ## kubens / kubectx
+
+## yq
+
+# Deployment:
+
+./prepare_secrets.sh
+add missing terraform_tfvars or set necessary vars as env
+./make.py terraform_init
+./make.py deploy ci

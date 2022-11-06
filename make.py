@@ -1,10 +1,21 @@
+#!/usr/bin/env python3
 import argparse
 from enum import Enum, auto
 import subprocess
 import inspect
 from scripts.config import Config
 
+subprocess.run("./prepare_secrets.sh", shell=True, check=True)
+
 config = Config()
+
+darklab_hcloud_token = config["darklab_ci_hcloud_token"]
+
+darklab_infra_project_id = config["darklab_gitlab_infra_repo_id"]
+darklab_gitlab_apikey = config["darklab_gitlab_apikey"]
+darklab_gitlab_user = config["darklab_gitlab_user"]
+
+darklab_cloudflare_token = config["darklab_cloudflare_token"]
 
 class Actions(Enum):
     git_remote = auto()
@@ -12,6 +23,7 @@ class Actions(Enum):
     terraform_init = auto()
     cloudflare_check = auto()
     deploy = auto()
+    prepare_secrets = auto()
 
 
 parser = argparse.ArgumentParser()
@@ -42,33 +54,29 @@ match Actions[args.action]:
          && git remote set-url --add --push origin git@gitlab.com-dd84ai:darklab2/darklab_infrastructure.git
         """).replace("\n",""), shell=True, check=True)
     case Actions.hetzner:
-        hcloud_token = config["darklab_ci_hcloud_token"]
+        
         subprocess.run((
             'curl -H'
-            f' "Authorization: Bearer {hcloud_token}"'
+            f' "Authorization: Bearer {darklab_hcloud_token}"'
 	        f" 'https://api.hetzner.cloud/v1/{args.object}'"
         ),shell=True, check=True)
     case Actions.terraform_init:
-        project_id = config["darklab_gitlab_infra_repo_id"]
-        gitlab_apikey = config["darklab_gitlab_apikey"]
-        gitlab_user = config["darklab_gitlab_user"]
         subprocess.run((
             f"""cd tf/{args.environment} && terraform init \
-            -backend-config="address=https://gitlab.com/api/v4/projects/{project_id}/terraform/state/{args.environment}" \
-            -backend-config="lock_address=https://gitlab.com/api/v4/projects/{project_id}/terraform/state/{args.environment}/lock" \
-            -backend-config="unlock_address=https://gitlab.com/api/v4/projects/{project_id}/terraform/state/{args.environment}/lock" \
-            -backend-config="username={gitlab_user}" \
-            -backend-config="password={gitlab_apikey}" \
+            -backend-config="address=https://gitlab.com/api/v4/projects/{darklab_infra_project_id}/terraform/state/{args.environment}" \
+            -backend-config="lock_address=https://gitlab.com/api/v4/projects/{darklab_infra_project_id}/terraform/state/{args.environment}/lock" \
+            -backend-config="unlock_address=https://gitlab.com/api/v4/projects/{darklab_infra_project_id}/terraform/state/{args.environment}/lock" \
+            -backend-config="username={darklab_gitlab_user}" \
+            -backend-config="password={darklab_gitlab_apikey}" \
             -backend-config="lock_method=POST" \
             -backend-config="unlock_method=DELETE" \
             -backend-config="retry_wait_min=5"
             """
         ),shell=True, check=True)
     case Actions.cloudflare_check:
-        cloudflare_token = config["darklab_cloudflare_token"]
         subprocess.run((f"""
         curl -X GET "https://api.cloudflare.com/client/v4/user/tokens/verify" \
-        -H "Authorization: Bearer {cloudflare_token}" \
+        -H "Authorization: Bearer {darklab_cloudflare_token}" \
         -H "Content-Type:application/json"
         """
             ),shell=True, check=True)
@@ -79,6 +87,7 @@ match Actions[args.action]:
          && terraform apply -auto-approve
          && cd ../../playbooks
          && ansible-playbook -i hosts.yml deploy_ci.yml
+         && skaffold -f skaffold.ci.yaml
         """.replace("\n",""),shell=True, check=True)
 
 

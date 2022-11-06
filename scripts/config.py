@@ -1,18 +1,16 @@
 import os
-import configparser
 from contextlib import suppress
+import json
 
 class Config:
     def __init__(self):
         self.environ = os.environ
 
-        env = configparser.ConfigParser()
-        env.read("env.ini")
-        self.env = env["DEFAULT"]
+        with open(".secrets.json", "r") as file:
+            self.env = json.load(file)
 
-        settings = configparser.ConfigParser()
-        settings.read("settings.ini")
-        self.settings = settings["DEFAULT"]
+        with open("settings.env.json", "r") as file:
+            self.settings = json.load(file)
 
     def __getitem__(self, key: str):
         key = key.upper()

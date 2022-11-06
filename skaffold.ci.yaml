@@ -1,0 +1,34 @@
+apiVersion: skaffold/v3
+kind: Config
+metadata:
+  name: darklab-infrastructure
+deploy:
+  helm:
+    releases:
+    - name: gitlab-runner
+      chartPath: kubernetes/ci
+      valuesFiles:
+      - kubernetes/ci/values.yaml
+      - .darklab.helm.secrets.yml
+      version: 0.0.0
+      createNamespace: true
+      namespace: darklab
+      recreatePods: true
+    - name: gitlab-runner
+      chartPath: kubernetes/ci
+      valuesFiles:
+      - kubernetes/ci/values.yaml
+      - .shapevpn.helm.secrets.yml
+      version: 0.0.0
+      createNamespace: true
+      namespace: shapevpn
+      recreatePods: true
+    - name: gitlab-runner
+      chartPath: kubernetes/ci
+      valuesFiles:
+      - kubernetes/ci/values.yaml
+      - .noveo.helm.secrets.yml
+      version: 0.0.0
+      createNamespace: true
+      namespace: noveo
+      recreatePods: true
