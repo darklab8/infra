@@ -42,16 +42,16 @@ match Actions[args.action]:
          && git remote set-url --add --push origin git@gitlab.com-dd84ai:darklab2/darklab_infrastructure.git
         """).replace("\n",""), shell=True, check=True)
     case Actions.hetzner:
-        hcloud_token = config["ci_hcloud_token"]
+        hcloud_token = config["darklab_ci_hcloud_token"]
         subprocess.run((
             'curl -H'
             f' "Authorization: Bearer {hcloud_token}"'
 	        f" 'https://api.hetzner.cloud/v1/{args.object}'"
         ),shell=True, check=True)
     case Actions.terraform_init:
-        project_id = config["gitlab_infra_repo_id"]
-        gitlab_apikey = config["gitlab_apikey"]
-        gitlab_user = config["gitlab_user"]
+        project_id = config["darklab_gitlab_infra_repo_id"]
+        gitlab_apikey = config["darklab_gitlab_apikey"]
+        gitlab_user = config["darklab_gitlab_user"]
         subprocess.run((
             f"""cd tf/{args.environment} && terraform init \
             -backend-config="address=https://gitlab.com/api/v4/projects/{project_id}/terraform/state/{args.environment}" \
@@ -65,7 +65,7 @@ match Actions[args.action]:
             """
         ),shell=True, check=True)
     case Actions.cloudflare_check:
-        cloudflare_token = config["cloudflare_token"]
+        cloudflare_token = config["darklab_cloudflare_token"]
         subprocess.run((f"""
         curl -X GET "https://api.cloudflare.com/client/v4/user/tokens/verify" \
         -H "Authorization: Bearer {cloudflare_token}" \

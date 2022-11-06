@@ -1,13 +1,3 @@
-kind: ConfigMap
-apiVersion: v1
-metadata:
-  name: docker-conf
-data:
-  daemon.json: |
-    {
-      "insecure-registries" : ["{{.Values.server_address}}:32000"]
-    }
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -27,10 +17,6 @@ spec:
       labels:
         app: dind-app
     spec:
-      volumes:
-        - name: volmap
-          configMap:
-            name: docker-conf
       containers:
         - name: dind-pod
           image: docker:20.10.12-dind
@@ -43,10 +29,6 @@ spec:
             - "--mtu=1440" # https://liejuntao001.medium.com/fix-docker-in-docker-network-issue-in-kubernetes-cc18c229d9e5 because this
           securityContext:
             privileged: true
-          volumeMounts:
-            - name: volmap
-              mountPath: /etc/docker/daemon.json
-              subPath: daemon.json
 ---
 apiVersion: v1
 kind: Service

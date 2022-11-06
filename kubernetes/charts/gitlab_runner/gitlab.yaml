@@ -1,7 +1,0 @@
-# Just a notice that here you can configure additional parameters for the gitlab_runner chart
-gitlabUrl: "https://gitlab.com"
-
-imagePullPolicy: Always
-concurrent: 2
-# runners:
-#   privileged: true

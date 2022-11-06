@@ -11,3 +11,5 @@ check-ci-runner:
   script:
     - echo "checking CI runner"
     - docker ps
+
+# TODO write manual action to deploy your runners for darklab/shapevpn/work

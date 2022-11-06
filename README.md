@@ -13,3 +13,5 @@ sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 curl -LO https://get.helm.sh/helm-v3.10.1-linux-amd64.tar.gz
 
 ## terraform 1.3.3
+
+## kubens / kubectx
