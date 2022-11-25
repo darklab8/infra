@@ -87,7 +87,8 @@ match Actions[args.action]:
          && terraform apply -auto-approve
          && cd ../../playbooks
          && ansible-playbook -i hosts.yml deploy_ci.yml
-         && skaffold -f skaffold.ci.yaml
+         && skaffold -f skaffold.gitlab.yaml
+         && skaffold -f skaffold.github.yaml
         """.replace("\n",""),shell=True, check=True)
 
 

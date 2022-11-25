@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: github-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: github-app
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: github-app
+    spec:
+      containers:
+        - name: github-pod
+          image: darkwind8/github_runner:v0.0.2
+          env:
+            - name: DOCKER_TLS_CERTDIR
+              value: ""
+            - name: ORG
+              value: {{ .Values.githubRunner.org }}
+            - name: TOKEN_ORG
+              value: {{ .Values.githubRunner.tokenOrg }}
+          securityContext:
+            privileged: true

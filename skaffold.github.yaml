@@ -1,0 +1,16 @@
+apiVersion: skaffold/v3
+kind: Config
+metadata:
+  name: darklab-infrastructure-github
+deploy:
+  helm:
+    releases:
+    - name: github-runner
+      chartPath: kubernetes/github-ci
+      valuesFiles:
+      - kubernetes/github-ci/values.yaml
+      - .darklab.helm.secrets.yml
+      version: 0.0.0
+      createNamespace: true
+      namespace: darklab-github
+      recreatePods: true
