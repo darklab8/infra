@@ -26,3 +26,19 @@ spec:
               value: {{ .Values.githubRunner.tokenOrg }}
           securityContext:
             privileged: true
+            readOnlyRootFilesystem: false
+          volumeMounts:
+          - mountPath: "/var/lib/docker/aufs"
+            name: scratch-volume
+      volumes:
+        - name: scratch-volume
+          ephemeral:
+            volumeClaimTemplate:
+              metadata:
+                labels:
+                  type: my-volume
+              spec:
+                accessModes: [ "ReadWriteOnce" ]
+                resources:
+                  requests:
+                    storage: 10Gi

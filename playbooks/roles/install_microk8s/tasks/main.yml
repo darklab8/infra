@@ -20,7 +20,7 @@
     shell: microk8s status --wait-ready
 
   - name: Microk8s - enabling DNS and storage
-    shell: microk8s enable dns storage
+    shell: microk8s enable dns hostpath-storage
 
   - name: Stop service ufw, if started
     ansible.builtin.service:
