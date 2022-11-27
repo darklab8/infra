@@ -20,7 +20,7 @@ locals {
   envornment = "ci"
   datacenter = "ash-dc1" # USA
   image = "ubuntu-20.04"
-  server_type = "cpx11"
+  server_type = "cpx21"
   task_name = "cluster"
 }
 

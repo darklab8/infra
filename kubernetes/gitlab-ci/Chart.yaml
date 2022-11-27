@@ -22,5 +22,5 @@ dependencies:
   version: "0.0.0"
   repository: "file://./charts/dind"
 - name: gitlab-runner
-  version: "0.46.0"
+  version: "0.47.1"
   repository: "https://charts.gitlab.io/"
