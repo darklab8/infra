@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dind-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dind-app
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: dind-app
+    spec:
+      containers:
+        - name: dind-pod
+          image: docker:20.10.12-dind
+          ports:
+            - containerPort: 2375
+          env:
+            - name: DOCKER_TLS_CERTDIR
+              value: ""
+          args:
+            - "--mtu=1440" # https://liejuntao001.medium.com/fix-docker-in-docker-network-issue-in-kubernetes-cc18c229d9e5 because this
+          securityContext:
+            privileged: true
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dind-service
+spec:
+  ports:
+    - port: 2375
+      targetPort: 2375
+  selector:
+    app: dind-app

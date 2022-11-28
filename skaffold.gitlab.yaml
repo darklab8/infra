@@ -23,12 +23,3 @@ deploy:
       createNamespace: true
       namespace: shapevpn
       recreatePods: true
-    - name: gitlab-runner
-      chartPath: kubernetes/gitlab-ci
-      valuesFiles:
-      - kubernetes/gitlab-ci/values.yaml
-      - .noveo.helm.secrets.yml
-      version: 0.0.0
-      createNamespace: true
-      namespace: noveo
-      recreatePods: true

@@ -1,0 +1,16 @@
+apiVersion: skaffold/v3
+kind: Config
+metadata:
+  name: darklab-infrastructure
+deploy:
+  helm:
+    releases:
+    - name: gitlab-runner
+      chartPath: kubernetes/gitlab-ci-noveo
+      valuesFiles:
+      - kubernetes/gitlab-ci-noveo/values.yaml
+      - .noveo.helm.secrets.yml
+      version: 0.0.0
+      createNamespace: true
+      namespace: noveo
+      recreatePods: true
