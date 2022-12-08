@@ -16,13 +16,15 @@ spec:
     spec:
       containers:
         - name: github-pod
-          image: darkwind8/github_runner:v0.0.2
+          image: darkwind8/github_runner:org-nodejs-14-v0.1.2
           env:
             - name: DOCKER_TLS_CERTDIR
               value: ""
-            - name: ORG
+            - name: ORG_NAME
               value: {{ .Values.githubRunner.org }}
-            - name: TOKEN_ORG
+            - name: ORG_URL
+              value: "https://github.com/{{ .Values.githubRunner.org }}"
+            - name: ORG_TOKEN
               value: {{ .Values.githubRunner.tokenOrg }}
           securityContext:
             privileged: true
