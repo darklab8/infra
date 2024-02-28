@@ -1,6 +1,0 @@
-{
-    "files.associations": {
-        "ansible/**/*.yml": "ansible",
-        "ansible/**/*init.yml": "yaml",
-    }
-}
