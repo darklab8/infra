@@ -1,9 +1,0 @@
-dependencies:
-- name: dind
-  repository: file://./charts/dind
-  version: 0.0.0
-- name: gitlab-runner
-  repository: https://charts.gitlab.io/
-  version: 0.46.0
-digest: sha256:70902451f2345950f035e41951d667a847de430fcdf88f6bc54c6d7a1de94dc1
-generated: "2022-11-28T05:24:33.622525402+01:00"

@@ -1,5 +1,0 @@
-gitlab-runner:
-  imagePullPolicy: Always
-  concurrent: 2
-  # gitlabUrl: https://gitlab.com # setting from --set
-  # runnerRegistrationToken: # setting from --set
