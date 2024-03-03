@@ -12,6 +12,14 @@ module "cluster" {
   datacenter   = "hel1-dc2"
 }
 
+module "node_arm" {
+   source       = "../modules/ansible_microk8s"
+}
+
+module "labels" {
+   source       = "../modules/kube_node_labels"
+}
+
 output "cluster_ip" {
   value = module.cluster.cluster_ip
 }

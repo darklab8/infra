@@ -30,3 +30,8 @@ data "aws_ssm_parameter" "cloudflare_key" {
 provider "cloudflare" {
   api_token = data.aws_ssm_parameter.cloudflare_key.value
 }
+
+provider "kubernetes" {
+  config_path    = "~/.kube/config"
+  config_context = "darklab"
+}
