@@ -22,4 +22,7 @@ resource "kubernetes_labels" "labels" {
   labels = {
     "node" = var.name
   }
+  depends_on = [
+    module.microk8s,
+  ]
 }

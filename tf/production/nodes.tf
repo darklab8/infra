@@ -9,3 +9,15 @@ module "node_arm" {
     hardware   = "cax31"
    }
 }
+
+module "node_amd" {
+   source = "../modules/kube_node"
+   environment = "production"
+   ssh_id = module.ssh_key.id
+   init_hostname = "production-avorion"
+   name = "amd"
+   server = {
+    datacenter = "ash-dc1"
+    hardware   = "ccx23"
+   }
+}
