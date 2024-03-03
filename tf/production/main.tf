@@ -5,7 +5,7 @@ module "ssh_key" {
 module "cluster" {
   source       = "../modules/hetzner_server"
   environment  = "production"
-  name         = "cluster-arm64"
+  name         = "cluster-arm"
   server_power = "cax31"
   backups      = false
   ssh_key_id   = module.ssh_key.id
