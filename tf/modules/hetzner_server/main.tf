@@ -19,10 +19,11 @@ resource "hcloud_server" "cluster" {
   lifecycle {
     ignore_changes = [
       image,
+      ssh_keys, # for legacy servers
     ]
   }
 
-  backups = var.backups
+  backups = var.backups == null ? false : var.backups
 }
 
 output "cluster_ip" {

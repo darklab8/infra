@@ -2,10 +2,10 @@ module "server" {
   source       = "../hetzner_server"
   environment  = var.environment
   name         = "node-${var.name}"
-  hardware     = lookup(var.server, "hardware", null)
-  backups      = false
+  hardware     = var.server["hardware"]
+  backups      = lookup(var.server, "backups", null)
   ssh_key_id   = var.ssh_id
-  datacenter   = lookup(var.server, "datacenter", null)
+  datacenter   = var.server["datacenter"]
 }
 
 module "microk8s" {

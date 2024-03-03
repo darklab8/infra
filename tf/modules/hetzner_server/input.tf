@@ -7,7 +7,8 @@ variable "hardware" {
 }
 
 variable "backups" {
-  type = string
+  type    = bool
+  default = null
 }
 
 variable name {

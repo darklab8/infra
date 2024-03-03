@@ -25,6 +25,9 @@ terraform {
   }
 }
 
+data "aws_ssm_parameter" "hetzner" {
+  name = "/terraform/hetzner/production"
+}
 provider "hcloud" {
   token = data.aws_ssm_parameter.hetzner.value
 }
