@@ -25,8 +25,3 @@ resource "hcloud_server" "cluster" {
 
   backups = var.backups == null ? false : var.backups
 }
-
-output "cluster_ip" {
-  value = hcloud_server.cluster.ipv4_address
-}
-

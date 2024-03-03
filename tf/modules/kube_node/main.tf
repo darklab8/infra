@@ -10,7 +10,7 @@ module "server" {
 
 module "microk8s" {
    source       = "../ansible_microk8s"
-   hostname     = module.server.cluster_ip
+   hostname     = module.server.ipv4_address
 }
 
 resource "kubernetes_labels" "labels" {
