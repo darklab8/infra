@@ -14,6 +14,7 @@ module "cluster" {
 
 module "node_arm" {
    source       = "../modules/ansible_microk8s"
+   hostname     = module.cluster.cluster_ip
 }
 
 module "labels" {

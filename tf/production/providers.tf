@@ -16,6 +16,12 @@ terraform {
       source  = "kreuzwerker/docker"
       version = ">=3.0.2"
     }
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+    }
+    ansible = {
+      source  = "ansible/ansible"
+    }
   }
 }
 
