@@ -2,7 +2,7 @@ variable "environment" {
   type = string
 }
 
-variable "server_power" {
+variable "hardware" {
   type = string
 }
 

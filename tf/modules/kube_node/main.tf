@@ -1,11 +1,11 @@
 module "server" {
   source       = "../hetzner_server"
-  environment  = "production"
-  name         = "node-arm"
-  server_power = "cax31"
+  environment  = var.environment
+  name         = "node-${var.name}"
+  hardware     = lookup(var.server, "hardware", null)
   backups      = false
   ssh_key_id   = var.ssh_id
-  datacenter   = "hel1-dc2"
+  datacenter   = lookup(var.server, "datacenter", null)
 }
 
 module "microk8s" {
@@ -17,9 +17,9 @@ resource "kubernetes_labels" "labels" {
   api_version = "v1"
   kind        = "Node"
   metadata {
-    name = "cluster-arm64"
+    name = var.init_hostname
   }
   labels = {
-    "node" = "arm"
+    "node" = var.name
   }
 }
