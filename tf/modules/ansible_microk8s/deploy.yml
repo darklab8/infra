@@ -9,10 +9,5 @@
       import_role:
         name: install_microk8s
 
-    - name: download_config of microk8s
-      import_role:
-        name: install_microk8s
-        tasks_from: download_config.yml
-
     - name: Create data folder
       shell: mkdir -p /var/lib/darklab

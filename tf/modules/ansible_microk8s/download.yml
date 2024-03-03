@@ -1,10 +1,9 @@
 ---
-- hosts: cluster
+- hosts: node
   become: yes
   gather_facts: true
   
   tasks:
-
     - name: download_config of microk8s
       import_role:
         name: install_microk8s
