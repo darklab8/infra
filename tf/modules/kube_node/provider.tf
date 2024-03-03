@@ -1,6 +1,6 @@
 terraform {
   required_providers {
-    cloudflare = {
+    kubernetes = {
       source  = "hashicorp/kubernetes"
     }
     ansible = {
