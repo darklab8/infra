@@ -7,6 +7,7 @@ module "node_arm" {
    server = {
     datacenter = "hel1-dc2"
     hardware   = "cax31"
+    backups    = true
    }
 }
 
@@ -19,5 +20,6 @@ module "node_amd" {
    server = {
     datacenter = "ash-dc1"
     hardware   = "cpx31"
+    backups    = true
    }
 }
