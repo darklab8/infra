@@ -30,25 +30,3 @@ resource "kubernetes_labels" "labels" {
     module.microk8s,
   ]
 }
-
-resource "kubernetes_storage_class" "storage" {
-  metadata {
-    name = "hostpath-retainer-${local.node_name}"
-  }
-  storage_provisioner = "microk8s.io/hostpath"
-  reclaim_policy      = "Retain"
-  parameters = {
-    pvDir = "/var/lib/darklab"
-  }
-  volume_binding_mode = "WaitForFirstConsumer"
-  allow_volume_expansion = true
-
-  allowed_topologies {
-    match_label_expressions {
-      key = "node"
-      values = [
-        var.name,
-      ]
-    }
-  }
-}
