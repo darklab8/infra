@@ -18,6 +18,6 @@ module "node_amd" {
    name = "amd"
    server = {
     datacenter = "ash-dc1"
-    hardware   = "ccx23"
+    hardware   = "cpx31"
    }
 }
