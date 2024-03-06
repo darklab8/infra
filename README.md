@@ -1,6 +1,6 @@
 # Description
 
-Repositories for
+This repository is for:
 - raising servers/cluster for pet projects
 - For infra specific applications (monitoring stuff for example)
 - and for reusable modules/infra templates for reusage in other repositories
