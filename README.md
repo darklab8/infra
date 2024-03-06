@@ -13,11 +13,11 @@ mindmap
   cluster))
     Node with Amd64
       avorion server
-      this node is for stuff hard to migrate to arm
+      desc(this node is for stuff hard to migrate to arm)
     Node with Arm64
       fl-darkbot
       minecraft server
-      this node is default for running stuff because arm is cheaper
+      desc(this node is default for running stuff because arm is cheaper)
 ```
 
 links to projects running here:
