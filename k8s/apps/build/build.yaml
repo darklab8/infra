@@ -1,6 +1,6 @@
 metadata:
   name: scarecrow
-  namespace: scarecrow
+  namespace: argocd
 spec:
   source:
     repoURL: https://github.com/darklab8/infra.git

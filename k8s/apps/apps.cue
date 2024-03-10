@@ -7,6 +7,7 @@ import (
 )
 
 #kube_server: "https://kubernetes.default.svc"
+#argo_namespace: "argocd"
 
 #app_kind: metav1.#TypeMeta
 #app_kind: {
@@ -20,7 +21,7 @@ application: {
     #app_kind
     metadata: {
         name: "scarecrow"
-        namespace: "scarecrow"
+        namespace: #argo_namespace
     }
     spec: {
         project: "default"
