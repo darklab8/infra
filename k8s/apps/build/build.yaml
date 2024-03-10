@@ -8,7 +8,7 @@ spec:
     path: k8s/scarecrow/build
   destination:
     server: https://kubernetes.default.svc
-    namespace: scarecrow
+    namespace: scarecrow2
   project: default
   syncPolicy:
     automated: {}
@@ -18,6 +18,6 @@ apiVersion: argoproj.io/v1alpha1
 metadata:
   name: scarecrow
   labels:
-    name: scarecrow
+    name: scarecrow2
 kind: Namespace
 apiVersion: v1

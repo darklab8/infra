@@ -6,6 +6,8 @@ import (
     shared "github.com/darklab8/infra/k8s/shared"
 )
 
+#scarecrow_namespace: "scarecrow2"
+
 application: argoapp.#Application
 application: {
     shared.#app_kind
@@ -22,7 +24,7 @@ application: {
         }
         destination: {
             server: shared.#kube_server
-            namespace: "scarecrow"
+            namespace: #scarecrow_namespace
         }
         syncPolicy: {
             automated: {}
@@ -42,7 +44,7 @@ namespace: {
     metadata: {
         name: "scarecrow"
         labels: {
-            name: "scarecrow"
+            name: #scarecrow_namespace
         }
     }
 }
