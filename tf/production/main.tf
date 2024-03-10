@@ -11,7 +11,10 @@ module "argo" {
   context = "darklab"
 }
 
-module "apps" {
-  source  = "../../k8s/production"
-  context = "darklab"
+module "discovery" {
+  source      = "../modules/kube_argo_discovery"
+  context     = "darklab"
+  environment = "production"
+  repo_url    = "https://github.com/darklab8/infra.git"
+  repo_path   = "k8s/production/build"
 }
