@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     ansible = {
-      source  = "ansible/ansible"
+      source = "ansible/ansible"
     }
   }
 }
@@ -12,13 +12,13 @@ resource "ansible_playbook" "playbook" {
   replayable = false
 
   extra_vars = {
-    ansible_user: "root"
-    ansible_connection: "ssh"
+    ansible_user : "root"
+    ansible_connection : "ssh"
     # ansible_ssh_extra_args: "-o ForwardAgent=yes"
-    ansible_ssh_private_key_file: "~/.ssh/id_rsa.darklab"
+    ansible_ssh_private_key_file : "~/.ssh/id_rsa.darklab"
   }
 }
 
-variable hostname {
-    type = string
+variable "hostname" {
+  type = string
 }

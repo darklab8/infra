@@ -1,5 +1,5 @@
 data "hcloud_image" "default" {
-  name = "docker-ce"
+  name              = "docker-ce"
   with_architecture = "arm"
 }
 

@@ -1,27 +1,27 @@
 module "node_arm" {
-   source = "../modules/kube_node"
-   environment = "production"
-   ssh_id = module.ssh_key.id
-   init_hostname = "cluster-arm64"
-   name = "arm"
-   server = {
+  source        = "../modules/kube_node"
+  environment   = "production"
+  ssh_id        = module.ssh_key.id
+  init_hostname = "cluster-arm64"
+  name          = "arm"
+  server = {
     datacenter = "hel1-dc2"
     hardware   = "cax31"
     backups    = true
-   }
+  }
 }
 
 module "node_amd" {
-   source = "../modules/kube_node"
-   environment = "production"
-   ssh_id = module.ssh_key.id
-   init_hostname = "production-avorion"
-   name = "amd"
-   server = {
+  source        = "../modules/kube_node"
+  environment   = "production"
+  ssh_id        = module.ssh_key.id
+  init_hostname = "production-avorion"
+  name          = "amd"
+  server = {
     datacenter = "ash-dc1"
     hardware   = "cpx31"
     backups    = true
-   }
+  }
 }
 
 resource "kubernetes_deployment" "amd_scarecrow" {
@@ -31,7 +31,7 @@ resource "kubernetes_deployment" "amd_scarecrow" {
   }
 
   spec {
-   replicas = 1
+    replicas = 1
 
     selector {
       match_labels = {
@@ -47,35 +47,35 @@ resource "kubernetes_deployment" "amd_scarecrow" {
       }
 
       spec {
-         affinity {
-            node_affinity {
+        affinity {
+          node_affinity {
             required_during_scheduling_ignored_during_execution {
-               node_selector_term {
-                  match_expressions {
+              node_selector_term {
+                match_expressions {
                   key      = "node"
                   operator = "In"
                   values   = ["amd"]
-                  }
-               }
+                }
+              }
             }
+          }
+          pod_anti_affinity {
+            required_during_scheduling_ignored_during_execution {
+              label_selector {
+                match_expressions {
+                  key      = "node"
+                  operator = "In"
+                  values   = ["amd"]
+                }
+              }
+              topology_key = "kubernetes.io/hostname"
             }
-            pod_anti_affinity {
-               required_during_scheduling_ignored_during_execution {
-                  label_selector {
-                     match_expressions {
-                        key      = "node"
-                        operator = "In"
-                        values   = ["amd"]
-                     }
-                  }
-                  topology_key = "kubernetes.io/hostname"
-               }
-            }
-         }
+          }
+        }
         container {
-          image = "busybox"
-          name  = "example"
-          command = [ "tail", "-f", "/dev/null" ]
+          image   = "busybox"
+          name    = "example"
+          command = ["tail", "-f", "/dev/null"]
 
 
         }

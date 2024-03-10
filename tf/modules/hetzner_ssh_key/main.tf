@@ -3,14 +3,14 @@ resource "hcloud_ssh_key" "darklab" {
   public_key = file("${path.module}/id_rsa.darklab.pub")
 }
 
-output id {
+output "id" {
   value = hcloud_ssh_key.darklab.id
 }
 
 terraform {
   required_providers {
     hcloud = {
-      source  = "hetznercloud/hcloud"
+      source = "hetznercloud/hcloud"
     }
   }
 }

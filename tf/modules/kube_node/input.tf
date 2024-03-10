@@ -1,17 +1,17 @@
-variable ssh_id {
-    type = string
+variable "ssh_id" {
+  type = string
 }
 
-variable init_hostname {
-    type = string
+variable "init_hostname" {
+  type = string
 }
 
-variable name {
-    type = string
+variable "name" {
+  type = string
 }
 
-variable environment {
-    type = string
+variable "environment" {
+  type = string
 }
 
 variable "server" {

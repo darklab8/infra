@@ -11,15 +11,15 @@ variable "backups" {
   default = null
 }
 
-variable name {
+variable "name" {
   type = string
 }
 
-variable ssh_key_id {
+variable "ssh_key_id" {
   type = string
 }
 
-variable datacenter {
+variable "datacenter" {
   # valid values
   #       + "nbg1-dc3",
   # + "hel1-dc2",

@@ -1,3 +1,3 @@
 data "hcloud_server" "cluster" {
-  name        = var.name
+  name = var.name
 }
