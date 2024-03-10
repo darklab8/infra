@@ -1,7 +1,3 @@
-variable "context" {
-  type = string
-}
-
 variable "environment" {
   type = string
 }

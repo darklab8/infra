@@ -13,7 +13,6 @@ module "argo" {
 
 module "discovery" {
   source      = "../modules/kube_argo_discovery"
-  context     = "darklab"
   environment = "production"
   project     = "infra"
   repo_url    = "https://github.com/darklab8/infra.git"
