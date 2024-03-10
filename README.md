@@ -21,5 +21,8 @@ mindmap
 ```
 
 links to projects running here:
+- [microk8s](tf/modules/ansible_microk8s/)
+  <img src="docs/assets/microk8s.png" style="width: 100px; height: 50px;"/>
 - [fl-darkbot](<https://github.com/darklab8/fl-darkbot>)
 - [game-servers](<https://github.com/darklab8/infra-game-servers>)
+- [argocd](tf/modules/kube_argo/)
