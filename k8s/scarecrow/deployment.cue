@@ -2,19 +2,13 @@ package scarecrow
 
 import (
     appsv1 "k8s.io/api/apps/v1"
-    metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+    shared "github.com/darklab8/infra/k8s/shared"
 )
 
 #screcrow_name: "amd-scarecrow"
 #screcrow_pod_name: "\(#screcrow_name)-pod"
 #scarecrow_selector: {
     app: #screcrow_pod_name
-}
-
-#deployment_kind: metav1.#TypeMeta
-#deployment_kind: {
-    apiVersion: "apps/v1"
-    kind: "Deployment"
 }
 
 #label_selector_node_arm: {
@@ -29,7 +23,7 @@ import (
 
 #scarecrow_deploy: appsv1.#Deployment
 #scarecrow_deploy: {
-    #deployment_kind
+    shared.#deployment_kind
     metadata: {
         name: "\(#screcrow_name)-deploy"
     }
