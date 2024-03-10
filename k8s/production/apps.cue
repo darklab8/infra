@@ -6,7 +6,7 @@ import (
     shared "github.com/darklab8/infra/k8s/shared"
 )
 
-#scarecrow_namespace: "scarecrow"
+#scarecrow_namespace: "production-scarecrow"
 
 application: argoapp.#Application
 application: {
@@ -20,7 +20,7 @@ application: {
         source: {
             repoURL: "https://github.com/darklab8/infra.git"
             targetRevision: "HEAD"
-            path: "k8s/scarecrow/build"
+            path: "k8s/modules/scarecrow/build"
         }
         destination: {
             server: shared.#kube_server
@@ -32,8 +32,7 @@ application: {
     }
 }
 
-
-#files: [
+#build_file: [
    {application},
    {namespace},
 ]

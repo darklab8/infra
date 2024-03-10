@@ -18,9 +18,9 @@ tasks:
   build:
     cmds:
       - task: build:package
-        vars: { WORKDIR: 'k8s/scarecrow' }
+        vars: { WORKDIR: 'k8s/modules/scarecrow' }
       - task: build:package
-        vars: { WORKDIR: 'k8s/apps' }
+        vars: { WORKDIR: 'k8s/production' }
 
   cue:install:
     cmds:
