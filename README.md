@@ -9,15 +9,15 @@ This repository is for:
 
 ```mermaid
 mindmap
-  cluster((microk8s
-  cluster))
+  cluster((microk8s cluster))
     Node with Amd64
-      avorion server
       desc(this node is for stuff hard to migrate to arm)
+        avorion server
     Node with Arm64
-      fl-darkbot
-      minecraft server
       desc(this node is default for running stuff because arm is cheaper)
+        fl-darkbot
+        minecraft server
+        argo cd
 ```
 
 links to projects running here:
