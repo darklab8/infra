@@ -1,6 +1,29 @@
-version: "3"
+version: '3'
 
 tasks:
-  check:
+  build:folder_create:
+    dir: '{{.WORKDIR}}'
     cmds:
-      - echo "check"
+      - mkdir build
+    status:
+      - test -d build
+
+  build:package:
+    dir: '{{.WORKDIR}}'
+    cmds:
+      - task: build:folder_create
+        vars: { WORKDIR: '{{.WORKDIR}}' }
+      - cue export --out yaml > build/build.yaml
+
+  build:
+    cmds:
+      - task: build:package
+        vars: { WORKDIR: 'k8s/scarecrow' }
+      - task: build:package
+        vars: { WORKDIR: 'k8s/applications' }
+
+  cue:install:
+    cmds:
+      # for example k8s.io/apimachinery/pkg/apis/meta/v1
+      - go get {{.PACKAGE}}
+      - cue get go {{.PACKAGE}}
