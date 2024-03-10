@@ -5,3 +5,8 @@ module "ssh_key" {
 module "cluster" {
    source       = "../modules/kube_cluster"
 }
+
+module "argo" {
+   source       = "../modules/kube_argo"
+   context      = "darklab"
+}

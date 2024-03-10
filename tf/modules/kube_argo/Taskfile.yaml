@@ -1,0 +1,20 @@
+version: "3"
+
+tasks:
+  argo:download:
+    cmds:
+      - wget https://raw.githubusercontent.com/argoproj/argo-cd/v2.8.11/manifests/install.yaml
+    status:
+      - test -f install.yaml
+
+  argo:apply:
+    - task: argo:download
+    - kubectl apply --context darklab -k .
+
+  argo:connect:
+    cmds:
+      - kubectl port-forward svc/argocd-server -n argocd 8080:443
+
+  argo:password:
+    cmds:
+      - argocd admin initial-password -n argocd

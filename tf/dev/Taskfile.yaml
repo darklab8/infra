@@ -1,0 +1,6 @@
+version: "3"
+
+tasks:
+  cluster:create:
+    cmds:
+      - kind create cluster --config=kind.yaml
