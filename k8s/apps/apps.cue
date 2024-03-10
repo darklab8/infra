@@ -6,7 +6,7 @@ import (
     shared "github.com/darklab8/infra/k8s/shared"
 )
 
-#scarecrow_namespace: "scarecrow2"
+#scarecrow_namespace: "scarecrow"
 
 application: argoapp.#Application
 application: {
