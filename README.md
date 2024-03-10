@@ -28,3 +28,7 @@ mindmap
         minecraft server
         argo cd
 ```
+
+# Other docs
+
+- [Links useful for getting hang of cue config language for k8s](docs/Cue.md)
