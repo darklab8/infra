@@ -11,8 +11,8 @@ import (
     app: #screcrow_pod_name
 }
 
-#scarecrow_meta: metav1.#TypeMeta
-#scarecrow_meta: {
+#deployment_kind: metav1.#TypeMeta
+#deployment_kind: {
     apiVersion: "apps/v1"
     kind: "Deployment"
 }
@@ -29,6 +29,7 @@ import (
 
 #scarecrow_deploy: appsv1.#Deployment
 #scarecrow_deploy: {
+    #deployment_kind
     metadata: {
         name: "\(#screcrow_name)-deploy"
     }
@@ -68,5 +69,9 @@ import (
     }
 }
 
-#scarecrow_meta
-#scarecrow_deploy
+#files: [
+   {
+        #scarecrow_deploy
+   }
+]
+

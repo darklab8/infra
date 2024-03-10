@@ -1,7 +1,5 @@
 metadata:
   name: amd-scarecrow-deploy
-kind: Deployment
-apiVersion: apps/v1
 spec:
   replicas: 1
   selector:
@@ -37,3 +35,5 @@ spec:
                     values:
                       - amd
               topologyKey: kubernetes.io/hostname
+kind: Deployment
+apiVersion: apps/v1

@@ -13,17 +13,18 @@ tasks:
     cmds:
       - task: build:folder_create
         vars: { WORKDIR: '{{.WORKDIR}}' }
-      - cue export --out yaml > build/build.yaml
+      - cue cmd build
 
   build:
     cmds:
       - task: build:package
         vars: { WORKDIR: 'k8s/scarecrow' }
       - task: build:package
-        vars: { WORKDIR: 'k8s/applications' }
+        vars: { WORKDIR: 'k8s/apps' }
 
   cue:install:
     cmds:
-      # for example k8s.io/apimachinery/pkg/apis/meta/v1
+      # for example PACKAGE=k8s.io/apimachinery/pkg/apis/meta/v1 task cue:install
+      # for example PACKAGE=github.com/argoproj/argo-cd/pkg/apis/application/v1alpha1 task cue:install
       - go get {{.PACKAGE}}
       - cue get go {{.PACKAGE}}

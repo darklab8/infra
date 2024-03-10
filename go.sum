@@ -1,3 +1,5 @@
+github.com/argoproj/argo-cd/v2 v2.10.2 h1:rEoW5Aq9EN55674OuPt8YMtpnpen9fvJSVnlA/HUhbo=
+github.com/argoproj/argo-cd/v2 v2.10.2/go.mod h1:nujAuswdQvB6yWI8HubQjfUiLdiIlKlG0ihx2Ht1D28=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/go-logr/logr v1.3.0 h1:2y3SDp0ZXuc6/cjLSZ+Q3ir+QB9T/iG5yYRXqsagWSY=

@@ -3,6 +3,7 @@ module github.com/darklab8/infra
 go 1.21.1
 
 require (
+	github.com/argoproj/argo-cd/v2 v2.10.2 // indirect
 	github.com/go-logr/logr v1.3.0 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/google/gofuzz v1.2.0 // indirect
