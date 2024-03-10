@@ -30,6 +30,8 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: ${var.environment}
+  syncPolicy:
+    automated: {}
 ---
 apiVersion: v1
 kind: Namespace
