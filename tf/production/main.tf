@@ -10,3 +10,8 @@ module "argo" {
   source  = "../modules/kube_argo"
   context = "darklab"
 }
+
+module "apps" {
+  source  = "../../k8s/production"
+  context = "darklab"
+}

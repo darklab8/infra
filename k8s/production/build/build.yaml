@@ -1,5 +1,5 @@
 metadata:
-  name: scarecrow
+  name: production-scarecrow
   namespace: argocd
 spec:
   source:
@@ -16,7 +16,7 @@ kind: Application
 apiVersion: argoproj.io/v1alpha1
 ---
 metadata:
-  name: scarecrow
+  name: production-scarecrow
   labels:
     name: production-scarecrow
 kind: Namespace
