@@ -1,0 +1,27 @@
+version: "3"
+
+tasks:
+  cluster:create:
+    cmds:
+      - kind create cluster
+    
+  cluster:scan:
+    cmds:
+      - kubectl get endpoints
+      # open ~/.kube/config and change cluster IP to discovered from command
+
+  argo:password:
+    cmds:
+      - argocd admin initial-password -n argocd
+
+  argo:deploy:
+    cmds:
+      - kubectl apply -k ./plugin
+
+  argo:delete:
+    cmds:
+      - kubectl delete -k ./plugin
+
+  argo:apply:
+    cmds:
+      - kubectl apply -f ./application
