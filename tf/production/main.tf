@@ -16,5 +16,5 @@ module "discovery" {
   environment = "production"
   project     = "infra"
   repo_url    = "https://github.com/darklab8/infra.git"
-  repo_path   = "k8s/production/build"
+  repo_path   = "k8s/production"
 }

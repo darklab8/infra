@@ -18,6 +18,6 @@ command: build: {
 
 command: dump: {
 	task: print: cli.Print & {
-		text: yaml.MarshalStream(#build_file)
+		text: yaml.MarshalStream(#files)
 	}
 }
