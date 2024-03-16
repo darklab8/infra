@@ -1,7 +1,0 @@
-namespace: argocd
-resources:
-- namespace.yaml
-- install.yaml
-commonAnnotations:
-  project: infra
-  repo: https://github.com/darklab8/infra
