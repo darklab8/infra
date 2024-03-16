@@ -7,7 +7,7 @@ module "cluster" {
 }
 
 module "argo" {
-  source  = "../modules/kube_argo"
+  source  = "../../k8s/modules/argo_cue"
   context = "darklab"
 }
 

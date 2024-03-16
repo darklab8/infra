@@ -20,7 +20,7 @@ application: {
         source: {
             repoURL: "https://github.com/darklab8/infra.git"
             targetRevision: "HEAD"
-            path: "k8s/modules/scarecrow/build"
+            path: "k8s/modules/scarecrow"
         }
         destination: {
             server: shared.#kube_server
