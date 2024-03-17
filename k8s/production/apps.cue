@@ -33,7 +33,7 @@ import (
     }
 }
 
-#application: "production-screwgrow": {
+#application: "production-scarecrow": {
     spec: {
         source: {
             repoURL: "https://github.com/darklab8/infra.git"
@@ -52,9 +52,9 @@ import (
 }
 
 build_file: [
-   {#application."production-screwgrow"},
+   {#application."production-scarecrow"},
    {#application."production-monitoring"},
-   {#namespace."production-screwgrow"},
+   {#namespace."production-scarecrow"},
    {#namespace."production-monitoring"},
 ]
 
@@ -65,5 +65,5 @@ build_file: [
     }
 }
 
-#namespace: "production-screwgrow": {}
+#namespace: "production-scarecrow": {}
 #namespace: "production-monitoring": {}
