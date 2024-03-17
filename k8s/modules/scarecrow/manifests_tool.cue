@@ -2,7 +2,6 @@ package scarecrow
 
 import (
     "encoding/yaml"
-	"tool/file"
 	"tool/cli"
 )
 

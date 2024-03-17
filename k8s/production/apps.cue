@@ -1,7 +1,6 @@
 package apps
 
 import (
-    // appsv1 "k8s.io/api/apps/v1"
     argoapp "github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1"
     shared "github.com/darklab8/infra/k8s/shared"
 )
