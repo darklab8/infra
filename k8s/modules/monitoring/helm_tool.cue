@@ -15,8 +15,4 @@ command: build: {
 		filename: "Chart.yaml"
 		contents: yaml.Marshal(chart)
 	}
-	task4: mkdir: file.Create & {
-		filename: "requirements.yaml"
-		contents: yaml.Marshal(requirements)
-	}
 }

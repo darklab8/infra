@@ -2,11 +2,19 @@ package monitoring
 
 chart: {
     apiVersion: "v2"
-    name: "Sample"
-    description: "A Helm chart for sample app"
+    name: "monitoring"
+    description: "A Helm chart for monitoring"
     type: "application"
     version: "0.1.0"
     appVersion: "beta"
+
+    dependencies: [
+        {
+            name: "loki-stack"
+            repository: "https://grafana.github.io/helm-charts"
+            version: "2.10.1"
+        }
+    ]
 }
 
 values: {
@@ -27,14 +35,4 @@ values: {
 }
 
 
-}
-
-requirements: {
-    dependencies: [
-        {
-            name: "loki-stack"
-            repository: "https://grafana.github.io/helm-charts"
-            version: "2.10.1"
-        }
-    ]
 }
