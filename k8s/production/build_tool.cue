@@ -12,13 +12,13 @@ command: build: {
 	}
 	task2: mkdir: file.Create & {
 		filename: "build/build.yaml"
-		contents: yaml.MarshalStream(#build_file)
+		contents: yaml.MarshalStream(build_file)
 	}
 }
 
 command: dump: {
 	task: print: cli.Print & {
-		text: yaml.MarshalStream(#build_file)
+		text: yaml.MarshalStream(build_file)
 	}
 }
 

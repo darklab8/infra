@@ -1,30 +1,31 @@
 package apps
 
 import (
-    appsv1 "k8s.io/api/apps/v1"
+    // appsv1 "k8s.io/api/apps/v1"
     argoapp "github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1"
     shared "github.com/darklab8/infra/k8s/shared"
 )
 
 #scarecrow_name: "production-scarecrow"
+#monitoring_name: "production-monitoring"
 
-application: argoapp.#Application
-application: {
+#application: [string]: argoapp.#Application
+#application: [Namespace=_]: {
     shared.#app_kind
     metadata: {
-        name: #scarecrow_name
+        name: Namespace
         namespace: shared.#argo_namespace
     }
     spec: {
         project: "default"
         source: {
-            repoURL: "https://github.com/darklab8/infra.git"
+            repoURL: string
             targetRevision: "HEAD"
-            path: "k8s/modules/scarecrow"
+            path: string
         }
         destination: {
             server: shared.#kube_server
-            namespace: #scarecrow_name
+            namespace: Namespace
         }
         syncPolicy: {
             automated: {}
@@ -32,18 +33,37 @@ application: {
     }
 }
 
-#build_file: [
-   {application},
-   {namespace},
-]
-
-#namespace: appsv1.#Namespace
-namespace: {
-    shared.#namespace_kind
-    metadata: {
-        name: #scarecrow_name
-        labels: {
-            name: #scarecrow_name
+#application: "screwgrow-production": {
+    spec: {
+        source: {
+            repoURL: "https://github.com/darklab8/infra.git"
+            path: "k8s/modules/scarecrow"
         }
     }
 }
+
+#application: "monitoring-production": {
+    spec: {
+        source: {
+            repoURL: "https://github.com/darklab8/infra.git"
+            path: "k8s/modules/monitoring"
+        }
+    }
+}
+
+build_file: [
+   {#application."screwgrow-production"},
+   {#application."monitoring-production"},
+   {#namespace."screwgrow-production"},
+   {#namespace."monitoring-production"},
+]
+
+#namespace: [Name=_]: {
+    shared.#namespace_kind
+    metadata: {
+        name: Name
+    }
+}
+
+#namespace: "screwgrow-production": {}
+#namespace: "monitoring-production": {}

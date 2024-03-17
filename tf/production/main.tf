@@ -7,7 +7,7 @@ module "cluster" {
 }
 
 module "argo" {
-  source  = "../../k8s/modules/argo_cue"
+  source  = "github.com/darklab8/argocd-cue.git?ref=v0.2.0"
   context = "darklab"
 }
 
