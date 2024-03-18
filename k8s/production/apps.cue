@@ -46,10 +46,11 @@ import (
             plugin: {
                 parameters: [
                     {
-                        "helm-template-args": {
-                            "--name-template": "monitoring"
-                            "--namespace": "production-monitoring"
-                        }
+                        name: "helm-template-args":
+                        array: [
+                            "--name-template=monitoring",
+                            "--namespace=production-monitoring",
+                        ]
                     }
                 ]
             }
