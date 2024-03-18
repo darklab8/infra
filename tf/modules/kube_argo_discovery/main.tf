@@ -33,9 +33,6 @@ resource "kubernetes_manifest" "autodiscovery" {
         server = "https://kubernetes.default.svc"
         namespace = var.environment
       }
-      syncPolicy = {
-        automated = {}
-      }
     }
   }
 }

@@ -26,9 +26,6 @@ import (
             server: shared.#kube_server
             namespace: Namespace
         }
-        syncPolicy: {
-            automated: {}
-        }
     }
 }
 
