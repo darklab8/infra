@@ -3,6 +3,7 @@ package apps
 import (
     argoapp "github.com/argoproj/argo-cd/v2/pkg/apis/application/v1alpha1"
     shared "github.com/darklab8/infra/k8s/shared"
+    argocue "github.com/darklab8/argocd-cue/argocue/settings"
 )
 
 #scarecrow_name: "production-scarecrow"
@@ -38,6 +39,10 @@ import (
     }
 }
 
+#helm_parameters: argocue.#AppParameterGroup & {
+    map: argocue.#AppParameters.HelmParameters,
+}
+
 #application: "production-monitoring": {
     spec: {
         source: {
@@ -45,13 +50,13 @@ import (
             path: "k8s/modules/monitoring"
             plugin: {
                 parameters: [
-                    {
-                        name: "helm-template-args"
-                        array: [
-                            "--name-template=monitoring",
-                            "--namespace=production-monitoring",
-                        ]
-                    }
+                    #helm_parameters & {
+                        name: argocue.#APP_PARAMETER_HELM_PARAMETERS_KEY,
+                        map: {
+                            name_template: "monitoring"
+                            namespace: "production-monitoring"
+                        }
+                    },
                 ]
             }
         }
