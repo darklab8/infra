@@ -44,15 +44,11 @@ import (
             repoURL: "https://github.com/darklab8/infra.git"
             path: "k8s/modules/monitoring"
             plugin: {
-                env: [{
-                    name: "HELM_RELEASE_NAME"
-                    value: "monitoring"
-                }]
                 parameters: [
                     {
-                        name: "helm-parameters"
-                        map: {
-                            RELEASE_NAME: "monitoring"
+                        "helm-template-args": {
+                            "--name-template": "monitoring"
+                            "--namespace": "production-monitoring"
                         }
                     }
                 ]
