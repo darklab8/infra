@@ -46,7 +46,7 @@ import (
             plugin: {
                 parameters: [
                     {
-                        name: "helm-template-args":
+                        name: "helm-template-args"
                         array: [
                             "--name-template=monitoring",
                             "--namespace=production-monitoring",
