@@ -43,6 +43,12 @@ import (
         source: {
             repoURL: "https://github.com/darklab8/infra.git"
             path: "k8s/modules/monitoring"
+            plugin: {
+                env: [{
+                    name: "HELM_RELEASE_NAME"
+                    value: "monitoring"
+                }]
+            }
         }
     }
 }
