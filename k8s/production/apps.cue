@@ -48,6 +48,14 @@ import (
                     name: "HELM_RELEASE_NAME"
                     value: "monitoring"
                 }]
+                parameters: [
+                    {
+                        name: "helm-parameters"
+                        map: {
+                            RELEASE_NAME: "monitoring"
+                        }
+                    }
+                ]
             }
         }
     }
