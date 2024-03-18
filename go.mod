@@ -4,6 +4,9 @@ go 1.21.1
 
 require (
 	github.com/argoproj/argo-cd/v2 v2.10.2 // indirect
+	github.com/darklab8/argocd-cue v0.4.0-a4 // indirect
+	github.com/darklab8/go-typelog v0.6.0 // indirect
+	github.com/darklab8/go-utils v0.11.1 // indirect
 	github.com/go-logr/logr v1.3.0 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/google/gofuzz v1.2.0 // indirect
@@ -14,6 +17,7 @@ require (
 	golang.org/x/text v0.14.0 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 	k8s.io/api v0.29.2 // indirect
 	k8s.io/apimachinery v0.29.2 // indirect
 	k8s.io/klog/v2 v2.110.1 // indirect

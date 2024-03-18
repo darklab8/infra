@@ -2,6 +2,8 @@ github.com/argoproj/argo-cd/v2 v2.10.2 h1:rEoW5Aq9EN55674OuPt8YMtpnpen9fvJSVnlA/
 github.com/argoproj/argo-cd/v2 v2.10.2/go.mod h1:nujAuswdQvB6yWI8HubQjfUiLdiIlKlG0ihx2Ht1D28=
 github.com/darklab8/argocd-cue v0.4.0-a3 h1:wkQWk/5AqZzwf/roCEA+iCRXRSfwkWnbCqZC+6syXwM=
 github.com/darklab8/argocd-cue v0.4.0-a3/go.mod h1:2oVUECsmZWT0yQwUOdBxw7hpYsYrsiz0ejp0wKh47Qo=
+github.com/darklab8/argocd-cue v0.4.0-a4 h1:XookY2BuHYybS1EHMmOlWzagt29puLVPxM3D6nUwkzc=
+github.com/darklab8/argocd-cue v0.4.0-a4/go.mod h1:2oVUECsmZWT0yQwUOdBxw7hpYsYrsiz0ejp0wKh47Qo=
 github.com/darklab8/go-typelog v0.6.0 h1:Ci8imc7ScXiy5e1qMgf46NyJjrqNLPoIE1gbVe7bxl4=
 github.com/darklab8/go-typelog v0.6.0/go.mod h1:AwwOf3dkp/tpevHFNbkB+PbwlDrUUgO1CVFkEnj+q5w=
 github.com/darklab8/go-utils v0.11.1 h1:ll4XFxeMBUEIYkNIIcat55w31X8KwxQo0aJIn+uPK8A=

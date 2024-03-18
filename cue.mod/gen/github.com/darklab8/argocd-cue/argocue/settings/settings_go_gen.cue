@@ -13,8 +13,8 @@ package settings
 
 #AppParameterGroup: {
 	name: string @go(Name)
-	map: {[string]: string} @go(Map,map[string]string)
-	array: [...string] @go(Array,[]string)
+	map?: {[string]: string} @go(Map,map[string]string)
+	array?: [...string] @go(Array,[]string)
 }
 
 #APP_PARAMETER_HELM_TEMPLATE_ARGS_KEY: "helm_template_args"
