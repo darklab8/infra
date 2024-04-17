@@ -64,10 +64,10 @@ import (
 }
 
 build_file: [
-   {#application."production-scarecrow"},
-   {#application."production-monitoring"},
-   {#namespace."production-scarecrow"},
+//    {#namespace."production-scarecrow"},
+//    {#application."production-scarecrow"},
    {#namespace."production-monitoring"},
+   {#application."production-monitoring"},
 ]
 
 #namespace: [Name=_]: {
