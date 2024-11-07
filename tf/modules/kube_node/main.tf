@@ -17,16 +17,16 @@ module "microk8s" {
   hostname = module.server.ipv4_address
 }
 
-resource "kubernetes_labels" "labels" {
-  api_version = "v1"
-  kind        = "Node"
-  metadata {
-    name = var.init_hostname
-  }
-  labels = {
-    "node" = var.name
-  }
-  depends_on = [
-    module.microk8s,
-  ]
-}
+# resource "kubernetes_labels" "labels" {
+#   api_version = "v1"
+#   kind        = "Node"
+#   metadata {
+#     name = var.init_hostname
+#   }
+#   labels = {
+#     "node" = var.name
+#   }
+#   depends_on = [
+#     module.microk8s,
+#   ]
+# }

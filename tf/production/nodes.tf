@@ -1,12 +1,25 @@
-module "node_arm" {
+# module "node_arm" {
+#   source        = "../modules/kube_node"
+#   environment   = "production"
+#   ssh_id        = module.ssh_key.id
+#   init_hostname = "cluster-arm64"
+#   name          = "arm"
+#   server = {
+#     datacenter = "hel1-dc2"
+#     hardware   = "cax31"
+#     backups    = true
+#   }
+# }
+
+module "node_darkbot" {
   source        = "../modules/kube_node"
   environment   = "production"
   ssh_id        = module.ssh_key.id
-  init_hostname = "cluster-arm64"
-  name          = "arm"
+  init_hostname = "cluster-darkbot"
+  name          = "darkbot"
   server = {
     datacenter = "hel1-dc2"
-    hardware   = "cax31"
+    hardware   = "cax11"
     backups    = true
   }
 }
