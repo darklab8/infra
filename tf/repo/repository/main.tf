@@ -17,4 +17,10 @@ resource "github_repository" "project" {
   pages {
     build_type = "workflow"
   }
+
+  lifecycle {
+    ignore_changes = [
+      "pages[0].source",
+    ]
+  }
 }

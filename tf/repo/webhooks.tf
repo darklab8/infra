@@ -2,8 +2,21 @@ data "external" "issues_webhook" {
   program = ["pass", "personal/terraform/github/darklab8/webhooks"]
 }
 
+locals {
+  webhook_repos = {
+    darklint  = local.public_repositories.darklint
+    darkstat  = local.public_repositories.darkstat
+    darkmap   = local.public_repositories.darkmap
+    darkcore  = local.public_repositories.darkcore
+    darkrelay = local.public_repositories.darkrelay
+    darkbot   = local.public_repositories.darkbot
+    configs   = local.public_repositories.configs
+    ctrlv     = local.public_repositories.ctrlv
+  }
+}
+
 resource "github_repository_webhook" "for_issues" {
-  for_each = local.public_repositories
+  for_each = local.webhook_repos
 
   repository = each.value.name
 
@@ -21,7 +34,7 @@ resource "github_repository_webhook" "for_issues" {
 # push, release
 
 resource "github_repository_webhook" "for_commits" {
-  for_each = local.public_repositories
+  for_each = local.webhook_repos
 
   repository = each.value.name
 
