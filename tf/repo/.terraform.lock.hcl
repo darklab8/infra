@@ -1,6 +1,29 @@
 # This file is maintained automatically by "tofu init".
 # Manual edits may be lost in future updates.
 
+provider "registry.opentofu.org/gitlabhq/gitlab" {
+  version     = "17.6.0"
+  constraints = ">= 17.6.0"
+  hashes = [
+    "h1:BP30Ry6HxKXJtbtKgZGZvrblbYQnxMMo6E2BKbn+JUo=",
+    "zh:0b50580bcb17e3c99c475e469ec89c6f7c589279bedd5e379ddad0312cd0e2ed",
+    "zh:107e0f2b699a7df1fa2b1bff3c7489dbd8bd18555ac9a776c1130352f9f2871f",
+    "zh:1150e928017e37b3df8d3ad05ecf221d14941f193b23568d2b53150eda62f214",
+    "zh:153b8d79c37f3cf3123b115f0c3597796bcc6112516888be10f2c1066bc3dc90",
+    "zh:24c330edfc6eff1a81d4298553ccf9ae9c7fa885f0cc79197bc2b119b5f947f4",
+    "zh:35f7fc3515eee4d26866e964b5463843942cc793eb0502c06cfaa288d4da8d3b",
+    "zh:5c4cceb150346c610ed921bae1ea23e00df4f383b3b67fa60cffa96e505ab840",
+    "zh:5c9c6864f3573b2bfe1a14988469721bbc05e8e969accca8ad1729050859615b",
+    "zh:5fac98f54c85f03263aab6745bf6aa7fbe65f63ca9d784113982bc8bd4423304",
+    "zh:7299e8e4830d37da32aa2511ed8093625604b7ff4baed3b7057f4fe16f9e75dc",
+    "zh:7ffc90583e496c0bc6d38b28650097b1f15e468ab210b600e0e6a5fa1dfec632",
+    "zh:80cc89c4fe47f1d0e9720cc8ee6df67ff516b7fc47a4d6f56b198a1acdc34081",
+    "zh:8c43a4ad3ad42b81118cba0ca324e78bacb41cf6ffcd3056bb3354b53034e4df",
+    "zh:e8b29e1a7e70dc118a9b2bae3fa102faf15c4f68afc717a9bfaa848de3916a70",
+    "zh:f809ab383cca0a5f83072981c64208cbd7fa67e986a86ee02dd2c82333221e32",
+  ]
+}
+
 provider "registry.opentofu.org/hashicorp/external" {
   version = "2.3.4"
   hashes = [
