@@ -17,20 +17,20 @@ variable "project" {
 resource "kubernetes_manifest" "autodiscovery" {
   manifest = {
     apiVersion = "argoproj.io/v1alpha1"
-    kind = "Application"
+    kind       = "Application"
     metadata = {
-      name = "${var.environment}-${var.project}-discovery"
+      name      = "${var.environment}-${var.project}-discovery"
       namespace = "argocd"
     }
     spec = {
       project = "default"
       source = {
-        repoURL = var.repo_url
-        targetRevision= "HEAD"
-        path = var.repo_path
+        repoURL        = var.repo_url
+        targetRevision = "HEAD"
+        path           = var.repo_path
       }
       destination = {
-        server = "https://kubernetes.default.svc"
+        server    = "https://kubernetes.default.svc"
         namespace = var.environment
       }
     }

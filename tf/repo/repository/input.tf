@@ -1,17 +1,17 @@
 variable "name" {
-    type = string
-    default = ""
+  type    = string
+  default = ""
 }
 
 variable "description" {
-    type = string
-    default = ""
+  type    = string
+  default = ""
 }
 
 variable "public" {
-    type = bool
+  type = bool
 }
 
-variable group_gitlab_id {
-    type = string
+variable "group_gitlab_id" {
+  type = string
 }
