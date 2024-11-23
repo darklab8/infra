@@ -32,6 +32,30 @@ locals {
       name        = "fl-ctrlv"
       description = "Make Ctrl-V work for Freelancer(2003) game"
     }
+    infra = {
+      name        = "infra"
+      description = "Central infrastructure repository for cluster setup and reusable infra code"
+    }
+    blog     = { name = "blog", description = "Personal web site", homepage_url = "https://darklab8.github.io/blog/" }
+    go_utils = { name = "go-utils", description = "shared lib for golang stuff that is too small for dedicated lib" }
+
+    fl-files-discovery = { name = "fl-files-discovery", public = false }
+    fl-files-vanilla   = { name = "fl-files-vanilla", public = false }
+    fl-data-discovery = {
+      name         = "fl-data-discovery"
+      description  = "fl-darkstat deployment for Freelancer Discovery"
+      homepage_url = "https://darklab8.github.io/fl-data-discovery/"
+    }
+    fl-data-vanilla = {
+      name         = "fl-data-vanilla",
+      description  = "fl-darkstat deployment for Freelancer Vanilla"
+      homepage_url = "https://darklab8.github.io/fl-data-vanilla/"
+    }
+    infra_game_servers = { name = "infra-game-servers" }
+    autogit            = { name = "autogit", description = "Automated git conventional commits and semantic versioning" }
+    examples           = { name = "examples", public = false }
+    go-typelog         = { name = "go-typelog", description = "Static typed structured logging lib" }
+    py-typelog         = { name = "py-typelog", description = "Static typed structured logging lib" }
   })
 }
 
@@ -44,6 +68,7 @@ module "public_repositories" {
   description     = try(each.value.description, "")
   source          = "./repository"
   name            = each.value.name
-  public          = true
+  public          = try(each.value.public, true)
   group_gitlab_id = data.gitlab_group.darklab.id
+  homepage_url    = try(each.value.homepage_url, null)
 }

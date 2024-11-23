@@ -13,9 +13,13 @@ resource "github_repository" "project" {
   private       = !var.public
   has_issues    = true
   has_downloads = true
+  homepage_url  = var.homepage_url
 
-  pages {
-    build_type = "workflow"
+  dynamic "pages" {
+    for_each = var.public ? { pages = {} } : {}
+    content {
+      build_type = "workflow"
+    }
   }
 
   lifecycle {

@@ -15,3 +15,8 @@ variable "public" {
 variable "group_gitlab_id" {
   type = string
 }
+
+variable "homepage_url" {
+  type    = string
+  default = null
+}
