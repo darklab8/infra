@@ -33,7 +33,7 @@ locals {
       description = "Make Ctrl-V work for Freelancer(2003) game"
     }
     redock = {
-      name        = "redocker"
+      name        = "redock"
       description = "Docker container recreating script with updated image"
     }
     infra = {
