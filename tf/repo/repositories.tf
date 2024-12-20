@@ -32,6 +32,10 @@ locals {
       name        = "fl-ctrlv"
       description = "Make Ctrl-V work for Freelancer(2003) game"
     }
+    redock = {
+      name        = "redocker"
+      description = "Docker container recreating script with updated image"
+    }
     infra = {
       name        = "infra"
       description = "Central infrastructure repository for cluster setup and reusable infra code"
@@ -52,7 +56,11 @@ locals {
       homepage_url = "https://darklab8.github.io/fl-data-vanilla/"
     }
     infra_game_servers = { name = "infra-game-servers" }
-    autogit            = { name = "autogit", description = "Automated git conventional commits and semantic versioning" }
+    autogit            = {
+      name = "autogit"
+      description = "Automated git conventional commits and semantic versioning"
+      homepage_url = "https://darklab8.github.io/blog/article/git_conventional_commits.html"
+    }
     examples           = { name = "examples", public = false }
     go-typelog         = { name = "go-typelog", description = "Static typed structured logging lib" }
     py-typelog         = { name = "py-typelog", description = "Static typed structured logging lib" }
