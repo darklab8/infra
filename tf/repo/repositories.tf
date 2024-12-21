@@ -1,5 +1,13 @@
+data "external" "docker_darkwind8_push_token" {
+  program = ["pass", "personal/docker/darkwind8/push_token"]
+}
+
+data "external" "darkbot_ssh_key_base64" {
+  program = ["pass", "personal/terraform/darkbot/ssh_key_base64"]
+}
+
 locals {
-  public_repositories = tomap({
+  public_repositories = {
     darklint = {
       full_name = "darklab8/fl-darklint"
       name      = "fl-darklint"
@@ -23,6 +31,10 @@ locals {
       name                = "fl-darkbot"
       description         = "discord bot to freelancer discovery community for player bases, players and forum messages tracking with alerting."
       webhook_url_commits = data.external.issues_webhook.result.url_commits_darkbot
+      secrets = {
+        DOCKERHUB_TOKEN = data.external.docker_darkwind8_push_token.result["token"]
+        SSH_KEY_BASE64  = data.external.darkbot_ssh_key_base64.result["data"]
+      }
     }
     configs = {
       name        = "fl-configs"
@@ -64,7 +76,7 @@ locals {
     examples           = { name = "examples", public = false }
     go-typelog         = { name = "go-typelog", description = "Static typed structured logging lib" }
     py-typelog         = { name = "py-typelog", description = "Static typed structured logging lib" }
-  })
+  }
 }
 
 data "gitlab_group" "darklab" {
@@ -79,4 +91,5 @@ module "public_repositories" {
   public          = try(each.value.public, true)
   group_gitlab_id = data.gitlab_group.darklab.id
   homepage_url    = try(each.value.homepage_url, null)
+  secrets         = try(each.value.secrets, {})
 }
