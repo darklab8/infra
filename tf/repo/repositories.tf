@@ -68,14 +68,14 @@ locals {
       homepage_url = "https://darklab8.github.io/fl-data-vanilla/"
     }
     infra_game_servers = { name = "infra-game-servers" }
-    autogit            = {
-      name = "autogit"
-      description = "Automated git conventional commits and semantic versioning"
+    autogit = {
+      name         = "autogit"
+      description  = "Automated git conventional commits and semantic versioning"
       homepage_url = "https://darklab8.github.io/blog/article/git_conventional_commits.html"
     }
-    examples           = { name = "examples", public = false }
-    go-typelog         = { name = "go-typelog", description = "Static typed structured logging lib" }
-    py-typelog         = { name = "py-typelog", description = "Static typed structured logging lib" }
+    examples   = { name = "examples", public = false }
+    go-typelog = { name = "go-typelog", description = "Static typed structured logging lib" }
+    py-typelog = { name = "py-typelog", description = "Static typed structured logging lib" }
   }
 }
 

@@ -22,6 +22,6 @@ variable "homepage_url" {
 }
 
 variable "secrets" {
-  type   = map(string)
+  type    = map(string)
   default = {}
 }

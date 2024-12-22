@@ -13,6 +13,7 @@ module "server" {
 }
 
 module "microk8s" {
+  count    = var.install_microk8s ? 1 : 0
   source   = "../ansible_microk8s"
   hostname = module.server.ipv4_address
 }

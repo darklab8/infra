@@ -11,12 +11,12 @@
 #   }
 # }
 
-module "node_darkbot" {
+module "node_darklab" {
   source        = "../modules/kube_node"
   environment   = "production"
   ssh_id        = module.ssh_key.id
-  init_hostname = "cluster-darkbot"
-  name          = "darkbot"
+  init_hostname = "cluster-darklab"
+  name          = "darklab"
   server = {
     datacenter = "hel1-dc2"
     hardware   = "cax11"

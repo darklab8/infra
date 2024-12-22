@@ -19,3 +19,8 @@ variable "server" {
   description = "Server configuration"
   default     = {}
 }
+
+variable "install_microk8s" {
+  type    = bool
+  default = false
+}
