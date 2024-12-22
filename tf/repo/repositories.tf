@@ -47,6 +47,7 @@ locals {
     redock = {
       name        = "redock"
       description = "Docker container recreating script with updated image"
+      public      = false
     }
     infra = {
       name        = "infra"
