@@ -58,6 +58,11 @@ locals {
 
     fl-files-discovery = { name = "fl-files-discovery", public = false }
     fl-files-vanilla   = { name = "fl-files-vanilla", public = false }
+    fl-data-flsr = {
+      name         = "fl-data-flsr"
+      description  = "fl-darkstat deployment for Freelancer Sirius Revival"
+      homepage_url = "https://darklab8.github.io/fl-data-flsr/"
+    }
     fl-data-discovery = {
       name         = "fl-data-discovery"
       description  = "fl-darkstat deployment for Freelancer Discovery"
