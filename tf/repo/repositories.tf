@@ -9,8 +9,10 @@ data "external" "darkbot_ssh_key_base64" {
 locals {
   public_repositories = {
     darklint = {
-      full_name = "darklab8/fl-darklint"
-      name      = "fl-darklint"
+      full_name           = "darklab8/fl-darklint"
+      name                = "fl-darklint"
+      webhook_url_commits = data.external.issues_webhook.result.url_commits_darklint
+
     }
     darkstat = {
       name                = "fl-darkstat"
