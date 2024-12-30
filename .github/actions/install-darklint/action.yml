@@ -1,0 +1,9 @@
+name: Install Darklint
+description: ""
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install Darklint
+      shell: bash
+      run: go install github.com/darklab8/fl-darklint@latest
