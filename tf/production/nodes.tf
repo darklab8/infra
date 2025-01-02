@@ -24,6 +24,17 @@ module "node_darklab" {
   }
 }
 
+
+module "data_cluster" {
+  source       = "./output/serializer"
+  node_darklab = module.node_darklab
+}
+
+output "data_cluster" {
+  value     = module.data_cluster
+  sensitive = true
+}
+
 # module "node_amd" {
 #   source        = "../modules/kube_node"
 #   environment   = "production"
