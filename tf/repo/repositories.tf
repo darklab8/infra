@@ -18,6 +18,10 @@ locals {
       name                = "fl-darkstat"
       description         = "Static site generator for Freeancer Discovery community to provide info about game stuff for players"
       webhook_url_commits = data.external.issues_webhook.result.url_commits_darkstat
+      secrets = {
+        DOCKERHUB_TOKEN = data.external.docker_darkwind8_push_token.result["token"]
+        SSH_KEY_BASE64  = data.external.darkbot_ssh_key_base64.result["data"]
+      }
     }
     darkmap = {
       name                = "fl-darkmap",

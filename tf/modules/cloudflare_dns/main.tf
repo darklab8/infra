@@ -24,7 +24,6 @@ resource "cloudflare_record" "record" {
   ttl     = each.value.proxied ? 1 : 60
   type    = each.value.type
   value   = each.value.value
-  content = each.value.value
   name    = each.value.name
   zone_id = data.cloudflare_zone.domain_main.id
   proxied = each.value.proxied
