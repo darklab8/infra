@@ -1,9 +1,8 @@
-name: Install templ
-description: ""
-
+name: Install Templ
+description: ''
 runs:
-  using: "composite"
+  using: composite
   steps:
-    - name: Install Templ
-      shell: bash
-      run: go install github.com/a-h/templ/cmd/templ@v0.2.747
+  - name: Install Templ
+    shell: bash
+    run: go install github.com/a-h/templ/cmd/templ@v0.2.747

@@ -1,9 +1,8 @@
-name: Install taskfile
-description: ""
-
+name: Install Taskfile
+description: ''
 runs:
-  using: "composite"
+  using: composite
   steps:
-    - name: Install Task
-      shell: bash
-      run: sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin
+  - name: Install Taskfile
+    shell: bash
+    run: sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin

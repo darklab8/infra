@@ -1,11 +1,10 @@
 
 import yaml
-import kcls.github_action as gh
+import kcls.models.github_action as gh
 
 _name = "Install Templ"
 
-yaml.dump_to_file(
-    gh.GHAction{
+_action = gh.GHAction{
     name = _name
     runs = {
         steps = [
@@ -16,13 +15,14 @@ yaml.dump_to_file(
             },
         ]
     }
-}, 
-    ".github/actions/${_filename}/action.yml",
-    ignore_private=True,
-    ignore_none=True,
-)
+}
+
 _filename = "install-templ"
 
 schema InstallTempl(gh.Step):
     name: str = _name
     uses: str = "darklab8/infra/.github/actions/${_filename}@master"
+
+schema GenerateTempl(gh.Step):
+    name: str = "generate Templ files"
+    run: str = "templ generate"

@@ -1,9 +1,8 @@
 name: Install Darklint
-description: ""
-
+description: ''
 runs:
-  using: "composite"
+  using: composite
   steps:
-    - name: Install Darklint
-      shell: bash
-      run: go install github.com/darklab8/fl-darklint@latest
+  - name: Install Darklint
+    shell: bash
+    run: go install github.com/darklab8/fl-darklint@latest

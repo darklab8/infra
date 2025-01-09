@@ -1,10 +1,9 @@
-name: Install golang
-description: ""
-
+name: Install Go
+description: ''
 runs:
-  using: "composite"
+  using: composite
   steps:
-    - name: Set up Go
-      uses: actions/setup-go@v5
-      with:
-        go-version: '^1.22.5'
+  - name: Install Go
+    uses: actions/setup-go@v5
+    with:
+      go-version: ^1.22.5

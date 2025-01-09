@@ -1,8 +1,10 @@
 import yaml
-import kcls.github_action as gh
+import kcls.models.github_action as gh
+
+_name = "Checkout Freelancer"
 
 _checkoutFrelancer: gh.GHAction = {
-    name = "Checkout Freelancer"
+    name = _name
     inputs: {
         "freelancer-folder": {
             description = "Path to root of freelancer directory"
@@ -69,9 +71,13 @@ os.chmod(file_output_name, 0o600)
     }
 }
 
-yaml.dump_to_file(
-    _checkoutFrelancer, 
-    ".github/actions/checkout-freelancer/action.yml",
-    ignore_private=True,
-    ignore_none=True,
-)
+schema CheckoutFreelancerOpts(gh.StepOpts):
+    "freelancer-mod": "discovery" | "vanilla"
+    "freelancer-folder": str
+    "ssh-key-base64-discovery"?: str
+    "ssh-key-base64-vanilla"?: str
+
+schema CheckoutFreelancer(gh.Step):
+    name: str = _name
+    uses: str = r"darklab8/infra/.github/actions/checkout-freelancer@master"
+    with: CheckoutFreelancerOpts

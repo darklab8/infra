@@ -1,11 +1,10 @@
 
 import yaml
-import kcls.github_action as gh
+import kcls.models.github_action as gh
 
 _name = "Install Go"
 
-yaml.dump_to_file(
-    gh.GHAction{
+_action = gh.GHAction{
     name = _name
     runs = {
         steps = [
@@ -18,11 +17,7 @@ yaml.dump_to_file(
             },
         ]
     }
-}, 
-    ".github/actions/${_filename}/action.yml",
-    ignore_private=True,
-    ignore_none=True,
-)
+}
 _filename = "install-go"
 
 schema InstallGo(gh.Step):
