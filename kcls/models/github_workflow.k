@@ -22,6 +22,7 @@ schema Job:
     steps: [gh.Step]
 
 schema Workflow:
+    _filename?: str
     name: str
     on: Triggers
     jobs: {str: Job}
