@@ -1,0 +1,14 @@
+version: '3'
+
+tasks:
+  build:
+    cmds:
+      - >
+        kcl
+        kcls/actions/checkout_freelancer.k
+        kcls/actions/install_autogit.k
+        kcls/actions/install_darklint.k
+        kcls/actions/install_go.k
+        kcls/actions/install_taskfile.k
+        kcls/actions/install_templ.k
+        kcls/actions/patch_disco.k

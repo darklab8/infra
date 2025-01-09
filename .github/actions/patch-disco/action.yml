@@ -1,15 +1,14 @@
 name: Patch freelancer discovery to latest
-description: ""
+description: ''
 inputs:
   freelancer-folder:
     description: Path to Discovery Freelancer u wish to patch
-
 runs:
-  using: "composite"
+  using: composite
   steps:
-    - name: Install Discovery patcher
-      shell: bash
-      run: go install github.com/darklab8/fl-data-discovery@latest
-    - name: Patch to latest
-      shell: bash
-      run: fl-data-discovery -wd ${{ inputs.freelancer-folder }}
+  - name: Install Discovery patcher
+    shell: bash
+    run: go install github.com/darklab8/fl-data-discovery@latest
+  - name: Patch to latest
+    shell: bash
+    run: fl-data-discovery -wd ${{ inputs.freelancer-folder }}

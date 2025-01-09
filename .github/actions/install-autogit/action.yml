@@ -1,9 +1,8 @@
-name: Install Autogit
-description: ""
-
+name: Patch freelancer discovery to latest
+description: ''
 runs:
-  using: "composite"
+  using: composite
   steps:
-    - name: Install Autogit
-      shell: bash
-      run: go install github.com/darklab8/autogit/v2@latest
+  - name: Patch freelancer discovery to latest
+    shell: bash
+    run: go install github.com/darklab8/autogit/v2@latest
