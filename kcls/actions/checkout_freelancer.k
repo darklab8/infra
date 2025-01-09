@@ -33,7 +33,7 @@ _checkoutFrelancer: gh.GHAction = {
 import os
 file_output_name = "${{ github.workspace }}/id_rsa.out"
 with open(file_output_name, "wb", 0o600) as file:
-file.write(base64.b64decode(bytes(os.environ["ID_RSA_FILE_IN_BASE64"], encoding='utf8')))
+    file.write(base64.b64decode(bytes(os.environ["ID_RSA_FILE_IN_BASE64"], encoding='utf8')))
 os.chmod(file_output_name, 0o600)
 """
                 env = {
