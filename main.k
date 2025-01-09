@@ -5,53 +5,26 @@ import kcls.actions.install_go as go
 import kcls.actions.install_taskfile as taskfile
 import kcls.actions.install_templ as templ
 import kcls.actions.patch_disco as disco
+import kcls.models.github_action as ga
 import yaml
 
-yaml.dump_to_file(
-    cf._checkoutFrelancer, 
-    ".github/actions/checkout-freelancer/action.yml",
+schema ActionBuild:
+    action: ga.GHAction
+    filename: str
+
+_actions = [
+    {action = cf._checkoutFrelancer, filename = cf._filename}
+    {action = autogit._action, filename = autogit._filename}
+    {action = darklint._action, filename = darklint._filename}
+    {action = go._action, filename =  go._filename}
+    {action = taskfile._action, filename =  taskfile._filename}
+    {action = templ._action, filename = templ._filename}
+    {action = disco._action, filename = disco._filename}
+]
+
+_run = [yaml.dump_to_file(
+    a.action, 
+    ".github/actions/${a.filename}/action.yml",
     ignore_private=True,
     ignore_none=True,
-)
-yaml.dump_to_file(
-    autogit._action, 
-    ".github/actions/install-autogit/action.yml",
-    ignore_private=True,
-    ignore_none=True,
-)
-yaml.dump_to_file(
-    autogit._action, 
-    ".github/actions/install-autogit/action.yml",
-    ignore_private=True,
-    ignore_none=True,
-)
-yaml.dump_to_file(
-    darklint._action, 
-    ".github/actions/${darklint._filename}/action.yml",
-    ignore_private=True,
-    ignore_none=True,
-)
-yaml.dump_to_file(
-    go._action, 
-    ".github/actions/${go._filename}/action.yml",
-    ignore_private=True,
-    ignore_none=True,
-)
-yaml.dump_to_file(
-    taskfile._action, 
-    ".github/actions/${taskfile._filename}/action.yml",
-    ignore_private=True,
-    ignore_none=True,
-)
-yaml.dump_to_file(
-    templ._action, 
-    ".github/actions/${templ._filename}/action.yml",
-    ignore_private=True,
-    ignore_none=True,
-)
-yaml.dump_to_file(
-    disco._action, 
-    ".github/actions/${disco._filename}/action.yml",
-    ignore_private=True,
-    ignore_none=True,
-)
+) for a in _actions]

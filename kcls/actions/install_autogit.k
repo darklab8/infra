@@ -3,6 +3,7 @@ import yaml
 import ..models.github_action as gh
 
 _name = "Install Autogit"
+_filename = "install-autogit"
 
 _action = gh.GHAction{
     name = _name

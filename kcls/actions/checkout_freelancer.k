@@ -2,7 +2,7 @@ import yaml
 import kcls.models.github_action as gh
 
 _name = "Checkout Freelancer"
-
+_filename = "checkout-freelancer"
 _checkoutFrelancer: gh.GHAction = {
     name = _name
     inputs: {
