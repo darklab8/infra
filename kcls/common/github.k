@@ -100,4 +100,4 @@ echo "BUILD_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
 GetVersionOutput = r"${{ steps.version.outputs.BUILD_VERSION }}"
 
 TagsSemverProduction = ["*", "!*-*"]
-TagsSemverStaging = ["!*-*"]
+TagsSemverStaging = ["*-*"]
