@@ -1,4 +1,3 @@
-import yaml
 import kcls.models.github_action as gh
 
 _name = "Checkout Freelancer"

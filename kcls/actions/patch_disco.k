@@ -1,5 +1,4 @@
 
-import yaml
 import kcls.models.github_action as gh
 
 _name = "Patch freelancer discovery to latest"

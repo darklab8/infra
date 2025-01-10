@@ -1,5 +1,4 @@
 
-import yaml
 import ..models.github_action as gh
 
 _name = "Install Autogit"
