@@ -2,30 +2,33 @@ import kcls.models.github_action as ga
 import kcls.models.github_workflow as gw
 import template
 
-CheckoutRepo = ga.Step{
+CheckoutRepo = ga.Step {
     name = "Check out source repository"
-    uses = "actions/checkout@v2"
+    uses = "actions/checkout@v3"
 }
-CheckoutRepoWithCommits = ga.Step{
+CheckoutRepoWithCommits = ga.Step {
     name = "Check out source repository with commits history"
     uses = "actions/checkout@v3"
-    with: { "fetch-depth": 0 }
+    with: {"fetch-depth": 0}
 }
 
-PagesToDeploySteps = lambda {
-   [
+schema PagesDeployOpts:
+    path: str = "./build"
+
+PagesToDeploySteps = lambda a: PagesDeployOpts {
+    [
         ga.Step {
             uses = "actions/upload-pages-artifact@v1"
             with: {
                 name = "github-pages"
-                path = "./build"
+                path = a.path
             }
         }
         ga.Step {
             uses = "actions/deploy-pages@v1"
             id = "deployment"
         }
-   ]
+    ]
 }
 
 schema PagesPermissions(gw.Permissions):
@@ -51,7 +54,7 @@ schema UploadBinariesStep[opts: UploadBinariesStepOpts](ga.Step):
         files = template.execute("""{{# each files}}
 {{this}}
 {{/each}}
-""", { files=opts.files })
+""", {files = opts.files})
     }
 
 schema TriggerWorkflowDispatchOpts:
@@ -69,12 +72,12 @@ DockerHostEnv = {
     DOCKER_HOST = "ssh://root@darkbot"
 }
 
-DockerLogin = ga.Step{
+DockerLogin = ga.Step {
     name = "Docker login"
     run = r'echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login --username darkwind8 --password-stdin'
 }
 
-InstallDarklabSshKey = ga.Step{
+InstallDarklabSshKey = ga.Step {
     name = "Install Darklab ssh key"
     run = r"""mkdir ~/.ssh | true
 echo "${{ secrets.SSH_KEY_BASE64 }}" | base64 --decode > ~/.ssh/id_rsa
@@ -90,7 +93,7 @@ ssh-keyscan -H darkbot >> ~/.ssh/known_hosts | true
 """
 }
 
-GetVersionFromTag = ga.Step{
+GetVersionFromTag = ga.Step {
     name = "Get version from tag"
     id = "version"
     run = r"""set -x
