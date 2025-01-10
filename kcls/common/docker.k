@@ -32,17 +32,20 @@ schema Retag[opt: RetagOpts](ga.Step):
     name = "Retag from ${opt.old_tag} to ${opt.new_tag}"
     run = template.execute("""set -ex
 {{#if pull}}
-docker pull ${opt.image_name}:${opt.old_tag}
+docker pull {{image_name}}:{{old_tag}}
 sleep 5
 {{/if}}
-docker tag ${opt.image_name}:${opt.old_tag} ${opt.image_name}:${opt.new_tag}
+docker tag {{image_name}}:{{old_tag}} {{image_name}}:{{new_tag}}
 {{#if push}}
-docker push ${opt.image_name}:${opt.new_tag}
+docker push {{image_name}}:{{new_tag}}
 sleep 5
 {{/if}}
 """, { 
         pull = opt.pull 
         push = opt.push 
+        old_tag = opt.old_tag
+        new_tag = opt.new_tag
+        image_name = opt.image_name
     })
 
 schema DeploySwarmOpts:
@@ -55,10 +58,13 @@ schema DeploySwarm[opt: DeploySwarmOpts](ga.Step):
     name = "Switch service image ${opt.image_name} for swarm to new one"
     run = template.execute("""set -ex
 {{#if pull}}
-docker pull ${opt.image_name}:${opt.tag}
+docker pull {{image_name}}:{{tag}}
 sleep 5
 {{/if}}
-docker service update --image ${opt.image_name}:${opt.tag} ${opt.service_name}
+docker service update --image {{image_name}}:{{tag}} {{service_name}}
 """{ 
         pull = opt.pull 
+        tag = opt.tag
+        service_name = opt.service_name
+        image_name = opt.image_name
     })
