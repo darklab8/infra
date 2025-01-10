@@ -31,6 +31,7 @@ PagesToDeploySteps = lambda {
 schema PagesPermissions(gw.Permissions):
     pages: str = "write"
     "id-token": str = "write"
+    contents = "read"
 
 schema PagesEnvironment:
     name = "github-pages"
@@ -97,3 +98,6 @@ echo "BUILD_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
 """
 }
 GetVersionOutput = r"${{ steps.version.outputs.BUILD_VERSION }}"
+
+TagsSemverProduction = ["*", "!*-*"]
+TagsSemverStaging = ["!*-*"]

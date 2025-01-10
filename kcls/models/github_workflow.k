@@ -3,6 +3,7 @@ import .github_action as gh
 schema TriggerPush:
     branches?: [str]
     tags?: [str]
+    "tags-ignore"?: [str]
 
 schema Triggers:
     push?: TriggerPush

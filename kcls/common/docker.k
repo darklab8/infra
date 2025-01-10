@@ -5,10 +5,35 @@ import template
 schema BuildOpts:
     image_name: str
     context: str = "."
+    tag: str
+    extra_tags?: [str]
+    push: bool = False
 
-schema Build[opts: BuildOpts](ga.Step):
-    name = "Build image ${opts.image_name}"
-    run = """docker build --build-arg "BUILD_VERSION=${autogit.GetVersionOutput}" --tag ${opts.image_name}:${autogit.GetVersionOutput} ${opts.context}"""
+schema Build[opt: BuildOpts](ga.Step):
+    name = "Build image ${opt.image_name}"
+    run = template.execute("""set -ex
+export tag_version={{tag}}
+docker build --build-arg "BUILD_VERSION=$tag_version" --tag ${opt.image_name}:$tag_version {{context}}
+
+{{# each extra_tags}}
+docker tag ${opt.image_name}:$tag_version ${opt.image_name}:{{this}}
+{{/each}}
+
+{{#if push}}
+docker push ${opt.image_name}:$tag_version
+sleep 5
+{{# each extra_tags}}
+docker push ${opt.image_name}:{{this}}
+sleep 5
+{{/each}}
+{{/if}}
+""", {
+        tag = opt.tag
+        image_name = opt.image_name
+        context = opt.context
+        extra_tags= opt.extra_tags
+        push = opt.push
+    })
 
 schema PullOpts:
     image_name: str
