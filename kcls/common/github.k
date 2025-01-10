@@ -90,6 +90,8 @@ ssh-keyscan -H darkbot >> ~/.ssh/known_hosts | true
 }
 
 GetVersionFromTag = ga.Step{
+    name = "Get version from tag"
+    id = "version"
     run = r"""set -x
 echo "BUILD_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
 """
