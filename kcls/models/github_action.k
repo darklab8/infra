@@ -20,7 +20,12 @@ schema Step:
     run?: str
     env?: {str: str}
     uses?: str
-    with?: StepOpts | {str : str}
+    with?: StepOpts | {str : str|int}
+    id?: str
+
+schema StepWithOutput:
+    Step: Step
+    Output: str
 
 schema StepOpts:
     "optional to step"
