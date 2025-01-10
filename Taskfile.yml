@@ -1,9 +1,5 @@
 version: '3'
 
-includes:
-  kcl:
-    taskfile: ./Taskfile.kcl.yml
-
 tasks:
   build:folder_create:
     dir: '{{.WORKDIR}}'
