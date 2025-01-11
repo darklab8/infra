@@ -34,6 +34,7 @@ schema JobDispatch(Job):
     "runs-on"?: str = None
 
 schema Workflow:
+    _workflow_name?: str
     _filename?: str
     name: str
     on: Triggers
