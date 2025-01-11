@@ -18,8 +18,11 @@ DockerDeploySwarm = lambda opt: DockerDeploySwarmOpts {
             ghc.InstallDarklabSshKey
             docker.Build(docker.BuildOpts {
                 image_name = opt.image_name
-                tag = ghc.GetVersionOutput
-                extra_tags = [opt.environment]
+                if opt.environment == "staging":
+                    tag = opt.environment
+                else:
+                    tag = ghc.GetVersionOutput
+                    extra_tags = [opt.environment]
                 push = True
             })
             docker.DeploySwarm(docker.DeploySwarmOpts {
