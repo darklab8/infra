@@ -22,6 +22,7 @@ schema Step:
     uses?: str
     with?: StepOpts | {str : str|int}
     id?: str
+    "continue-on-error"?: bool
 
 schema StepWithOutput:
     Step: Step

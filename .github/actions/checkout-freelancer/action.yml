@@ -43,4 +43,5 @@ runs:
   - shell: bash
     run: GIT_SSH_COMMAND='ssh -i ${{ github.workspace }}/id_rsa.out -o IdentitiesOnly=yes' git clone git@github.com:darklab8/fl-files-${{ inputs.freelancer-mod }}.git
   - shell: bash
-    run: mv fl-files-${{ inputs.freelancer-mod }} ${{ inputs.freelancer-folder }} | true
+    run: mv fl-files-${{ inputs.freelancer-mod }} ${{ inputs.freelancer-folder }}
+    continue-on-error: true

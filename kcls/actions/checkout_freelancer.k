@@ -63,7 +63,8 @@ os.chmod(file_output_name, 0o600)
             }
             gh.Step {
                 shell: "bash"
-                run = r"mv fl-files-${{ inputs.freelancer-mod }} ${{ inputs.freelancer-folder }} | true"
+                "continue-on-error": True
+                run = r"mv fl-files-${{ inputs.freelancer-mod }} ${{ inputs.freelancer-folder }}"
             }
         ]
     }
