@@ -18,6 +18,7 @@ schema PagesDeployOpts:
 PagesToDeploySteps = lambda a: PagesDeployOpts {
     [
         ga.Step {
+            name = "Upload artifacts for deployment to Github Pages"
             uses = "actions/upload-pages-artifact@v1"
             with: {
                 name = "github-pages"
@@ -25,6 +26,7 @@ PagesToDeploySteps = lambda a: PagesDeployOpts {
             }
         }
         ga.Step {
+            name = "Deploy to pages"
             uses = "actions/deploy-pages@v1"
             id = "deployment"
         }

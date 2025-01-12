@@ -5,11 +5,15 @@ schema TriggerPush:
     tags?: [str]
     "tags-ignore"?: [str]
 
+schema RepositoryDispatch:
+    types: [str]
+
 schema Triggers:
     push?: TriggerPush
     schedule?: [ScheduleCron]
     workflow_dispatch?: {str: str} 
     workflow_call?: {str:str}
+    repository_dispatch?: RepositoryDispatch
 
 schema ScheduleCron:
     cron: str

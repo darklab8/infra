@@ -83,9 +83,11 @@ schema CheckoutFreelancerOpts(gh.StepOpts):
 schema CheckoutArgs:
     freelancer_mod: "discovery" | "vanilla"
     freelancer_folder: str
+    $if?: str
 
-NewCheckoutFreelancerOpts = lambda a: CheckoutArgs {
+NewCheckoutFreelancer = lambda a: CheckoutArgs {
     CheckoutFreelancer {
+        $if = a.if
         if a.freelancer_mod == _mod_discovery:
             with = CheckoutFreelancerOpts {
                 "freelancer-mod": a.freelancer_mod
