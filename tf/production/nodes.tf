@@ -19,9 +19,18 @@ module "node_darklab" {
   name          = "darklab"
   server = {
     datacenter = "hel1-dc2"
-    hardware   = "cax11"
+    hardware   = "cax21"
     backups    = true
   }
+}
+
+provider "docker" {
+  host     = "ssh://root@${module.data_cluster.node_darklab.ipv4_address}:22"
+  ssh_opts = ["-o", "StrictHostKeyChecking=no", "-o", "UserKnownHostsFile=/dev/null", "-i", "~/.ssh/id_rsa.darklab"]
+}
+
+module "caddy" {
+  source = "../modules/caddy"
 }
 
 
