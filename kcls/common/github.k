@@ -4,11 +4,11 @@ import template
 
 CheckoutRepo = ga.Step {
     name = "Check out source repository"
-    uses = "actions/checkout@v3"
+    uses = "actions/checkout@v4"
 }
 CheckoutRepoWithCommits = ga.Step {
     name = "Check out source repository with commits history"
-    uses = "actions/checkout@v3"
+    uses = "actions/checkout@v4"
     with: {"fetch-depth": 0}
 }
 
@@ -19,7 +19,7 @@ PagesToDeploySteps = lambda a: PagesDeployOpts {
     [
         ga.Step {
             name = "Upload artifacts for deployment to Github Pages"
-            uses = "actions/upload-pages-artifact@v1"
+            uses = "actions/upload-pages-artifact@v3"
             with: {
                 name = "github-pages"
                 path = a.path
@@ -27,7 +27,7 @@ PagesToDeploySteps = lambda a: PagesDeployOpts {
         }
         ga.Step {
             name = "Deploy to pages"
-            uses = "actions/deploy-pages@v1"
+            uses = "actions/deploy-pages@v4"
             id = "deployment"
         }
     ]
