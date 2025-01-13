@@ -30,17 +30,10 @@ In the long run, projects running with code from this repo are meant to be runni
 | [fl-darkbot](https://github.com/darklab8/fl-darkbot)                     | <img src="docs/assets/darkbot.png" style="width: 50px; height: 50px;"/>                                                                                | discord bot for Discovery Freelancer community       |
 | [fl-darkstat](https://github.com/darklab8/fl-darkstat)                   | <img src="docs/assets/darkstat.png" style="width: 50px; height: 50px;"/>                                                                               | game data navigational tool for Freelancer           |
 
-# Inactive and experimental infra
-
-| Link                                                                     | Logo                                                                                                                                                   | Description                                          |
-| -------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------- |
-| [game-servers](https://github.com/darklab8/infra-game-servers)           | <img src="docs/assets/minecraft.png" style="width: 59px; height: 50px;"/> <img src="docs/assets/avorion_logo.png" style="width: 59px; height: 50px;"/> | personal game servers, minecraft and avorion         |
-| [microk8s](tf/modules/ansible_microk8s/)                                 | <img src="docs/assets/microk8s.png" style="width: 50px; height: 50px;"/>                                                                               | k8s cluster for experiments                          |
-| [argo-cd](https://argoproj.github.io/cd/)                                | <img src="docs/assets/argocd.png" style="width: 100px; height: 50px;"/>                                                                                | for experimental deploys to k8s                      |
-
 ```mermaid
 mindmap
-    ((cluster docker swarm))
+    ((cluster
+    docker swarm))
         darkbot
             staging
             production
@@ -48,6 +41,12 @@ mindmap
             [staging: darkstat-staging.dd84ai.com]
             [production: darkstat.dd84ai.com]
         caddy docker proxy
-            (brings reverse proxy and tls
-            to services by docker labels)
 ```
+
+# Inactive and experimental infra
+
+| Link                                                                     | Logo                                                                                                                                                   | Description                                          |
+| -------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------- |
+| [game-servers](https://github.com/darklab8/infra-game-servers)           | <img src="docs/assets/minecraft.png" style="width: 59px; height: 50px;"/> <img src="docs/assets/avorion_logo.png" style="width: 59px; height: 50px;"/> | personal game servers, minecraft and avorion         |
+| [microk8s](tf/modules/ansible_microk8s/)                                 | <img src="docs/assets/microk8s.png" style="width: 50px; height: 50px;"/>                                                                               | k8s cluster for experiments                          |
+| [argo-cd](https://argoproj.github.io/cd/)                                | <img src="docs/assets/argocd.png" style="width: 100px; height: 50px;"/>                                                                                | for experimental deploys to k8s                      |
