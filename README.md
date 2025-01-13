@@ -8,7 +8,7 @@ This repository is for:
 
 # Prefered Container Scheduling engine
 
-In the long run, projects running with code from this repo are meant to be running for years with minimum effort in a stable way in a cheap way from Hetzner single server. For this reason Docker Swarm is prefered default, as it does not have an array of things needed to be installed and kept up to date for its functioning. Kubernetes usage will remain for experimental and learning purposes only. Projects could be having optional switch for their running in Kubernetes for the same experimental purposes, but they will be always having Docker/Swarm running way being available first.
+In the long run, projects running with code from this repo are meant to be running for years with minimum effort in a stable way in a cheap way from Hetzner single server. For this reason Docker Swarm is prefered default, as it does not have an array of things needed to be installed and kept up to date for its functioning. Kubernetes usage will remain for experimental and learning purposes only. Projects could be having optional switch for their running in Kubernetes for the same experimental purposes, but they will be always having Docker/Swarm running way being available first. If some day Kubernetes benefits will overweight Docker Swarm way to run, this may change.
 
 # Languages in use
 
