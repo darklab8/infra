@@ -30,19 +30,6 @@ In the long run, projects running with code from this repo are meant to be runni
 | [fl-darkbot](https://github.com/darklab8/fl-darkbot)                     | <img src="docs/assets/darkbot.png" style="width: 50px; height: 50px;"/>                                                                                | discord bot for Discovery Freelancer community       |
 | [fl-darkstat](https://github.com/darklab8/fl-darkstat)                   | <img src="docs/assets/darkstat.png" style="width: 50px; height: 50px;"/>                                                                               | game data navigational tool for Freelancer           |
 
-```mermaid
-mindmap
-    ((cluster
-    docker swarm))
-        darkbot
-            staging
-            production
-        darkstat
-            [staging: darkstat-staging.dd84ai.com]
-            [production: darkstat.dd84ai.com]
-        caddy docker proxy
-```
-
 # Inactive and experimental infra
 
 | Link                                                                     | Logo                                                                                                                                                   | Description                                          |
