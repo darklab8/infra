@@ -16,7 +16,7 @@ This repository is for:
 | [Github Actions](https://github.com/features/actions) | <img src="docs/assets/github_actions.png" style="width: 50px; height: 50px;"/> | for automated testing and deployments in a fully GitOps way                  |
 | [KCL](https://www.kcl-lang.io/)                       | <img src="docs/assets/kcl-logo.png" style="width: 50px; height: 50px;"/>       | To setup yaml of Github Actions with static typing and code reusage          |
 
-# Projects here:
+# Projects here of using this repo code and infra:
 
 
 | Link                                                                     | Logo                                                                                                                                                   | Description                                          |
