@@ -11,7 +11,7 @@ This repository is for:
 
 | name                                                  | Logo                                                                           | purpose                                                                      |
 | ------------------------------------------------------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| [Docker](https://www.docker.com/)                     | <img src="docs/assets/docker.png" style="width: 50px; height: 50px;"/>                                                                               | App as a code with reproducability of a saved image to which we can rollback |
+| [Docker](https://www.docker.com/)                     | <img src="docs/assets/docker.png" style="width: 80px; height: 50px;"/>                                                                               | App as a code with reproducability of a saved image to which we can rollback |
 | [Opentofu](https://opentofu.org/)                     | <img src="docs/assets/tofu.png" style="width: 50px; height: 50px;"/>           | to setup Hetzner, DNS at cloudflare and docker containers and services.      |
 | [Github Actions](https://github.com/features/actions) | <img src="docs/assets/github_actions.png" style="width: 50px; height: 50px;"/> | for automated testing and deployments in a fully GitOps way                  |
 | [KCL](https://www.kcl-lang.io/)                       | <img src="docs/assets/kcl-logo.png" style="width: 50px; height: 50px;"/>       | To setup yaml of Github Actions with static typing and code reusage          |
