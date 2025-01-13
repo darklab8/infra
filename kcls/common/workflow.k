@@ -5,6 +5,7 @@ import kcls.common.docker
 schema DockerDeploySwarmOpts:
     image_name: str
     service_name: str
+    task_name: str = "app"
     environment: "staging" | "production"
 
 DockerDeploySwarm = lambda opt: DockerDeploySwarmOpts {
@@ -28,7 +29,7 @@ DockerDeploySwarm = lambda opt: DockerDeploySwarmOpts {
             docker.DeploySwarm(docker.DeploySwarmOpts {
                 image_name = opt.image_name
                 tag = opt.environment
-                service_name = "${opt.service_name}-${opt.environment}"
+                service_name = "${opt.environment}-${opt.service_name}-${opt.task_name}"
             })
         ]
     }
@@ -50,7 +51,3 @@ DockerDeploySwarm = lambda opt: DockerDeploySwarmOpts {
     # return
     _workflow
 }
-
-
-
-
