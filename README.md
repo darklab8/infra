@@ -6,7 +6,7 @@ This repository is for:
 - For infra specific applications (monitoring stuff for example)
 - and for reusable modules/infra templates for reusage in other repositories
 
-# links to projects running here:
+# links to projects here:
 
 
 | Link                                                                     | Running | Logo                                                                                                                                                   | Description                                          |
