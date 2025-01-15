@@ -14,7 +14,7 @@
     community.general.snap:
       name: microk8s
       classic: yes
-      # channel: 1.28/stable # risking update always to keep up with k8s
+      channel: 1.31/stable # risking update always to keep up with k8s
 
   - name: Await microk8s starting cluster
     shell: microk8s status --wait-ready
