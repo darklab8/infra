@@ -9,7 +9,8 @@ _action = gh.GHAction{
         steps = [
             gh.Step{
                 name: _name
-                uses: "github.com/swaggo/swag/cmd/swag@v1.16.4"
+                shell: "bash"
+                run: 'go install github.com/swaggo/swag/cmd/swag@v1.16.4'
             },
         ]
     }
