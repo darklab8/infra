@@ -1,0 +1,7 @@
+name: Install Swag
+description: ''
+runs:
+  using: composite
+  steps:
+  - name: Install Swag
+    uses: github.com/swaggo/swag/cmd/swag@v1.16.4

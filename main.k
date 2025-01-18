@@ -4,6 +4,8 @@ import kcls.actions.install_darklint as darklint
 import kcls.actions.install_go as go
 import kcls.actions.install_taskfile as taskfile
 import kcls.actions.install_templ as templ
+import kcls.actions.install_swag as swag
+
 import kcls.actions.patch_disco as disco
 import kcls.models.github_action as ga
 import yaml
@@ -20,6 +22,8 @@ _actions = [
     {action = taskfile._action, filename =  taskfile._filename}
     {action = templ._action, filename = templ._filename}
     {action = disco._action, filename = disco._filename}
+    {action = disco._action, filename = disco._filename}
+    {action = swag._action, filename = swag._filename}
 ]
 
 _run = [yaml.dump_to_file(
