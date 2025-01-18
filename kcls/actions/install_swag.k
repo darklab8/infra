@@ -16,6 +16,10 @@ _action = gh.GHAction{
 }
 _filename = "install-swag"
 
-schema InstallSwag(gh.Step):
+schema SwagInstall(gh.Step):
     name: str = _name
     uses: str = "darklab8/infra/.github/actions/${_filename}@master"
+
+schema SwagBuild(gh.Step):
+    name: str = "Build swag go stuff"
+    run: str = "swag init --parseDependency"
