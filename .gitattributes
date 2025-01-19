@@ -1,1 +1,4 @@
-cue.mod/gen/** linguist-generated
+cue.mod/** linguist-generated
+*.k linguist-detectable
+*.k linguist-language=kcl
+*.yml linguist-generated
