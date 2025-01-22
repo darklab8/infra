@@ -16,7 +16,7 @@ DockerDeploySwarm = lambda opt: DockerDeploySwarmOpts {
         steps = [
             ghc.CheckoutRepo
             ghc.GetVersionFromTag
-            docker.DockerLogin
+            docker.DockerLogin{}
             ghc.InstallDarklabSshKey
             docker.BuildMultiArch(docker.BuildMultiArchOpts {
                 image_name = opt.image_name
