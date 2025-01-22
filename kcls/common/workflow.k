@@ -16,16 +16,15 @@ DockerDeploySwarm = lambda opt: DockerDeploySwarmOpts {
         steps = [
             ghc.CheckoutRepo
             ghc.GetVersionFromTag
-            ghc.DockerLogin
+            docker.DockerLogin
             ghc.InstallDarklabSshKey
-            docker.Build(docker.BuildOpts {
+            docker.BuildMultiArch(docker.BuildMultiArchOpts {
                 image_name = opt.image_name
                 if opt.environment == "staging":
                     tag = opt.environment
                 else:
                     tag = ghc.GetVersionOutput
                     extra_tags = [opt.environment]
-                push = True
             })
             docker.DeploySwarm(docker.DeploySwarmOpts {
                 image_name = opt.image_name
@@ -50,7 +49,7 @@ DockerDeploySwarm = lambda opt: DockerDeploySwarmOpts {
                 push.tags: ghc.TagsSemverProduction
             workflow_dispatch: {}
         }
-        env = ghc.DockerHostEnv
+        env = docker.DockerHostEnv
         jobs = {
             job = _job
         }

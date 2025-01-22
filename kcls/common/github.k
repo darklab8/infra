@@ -70,15 +70,6 @@ schema TriggerWorkflowDispatch[opts: TriggerWorkflowDispatchOpts](ga.Step):
         "event-type": "publish"
     }
 
-DockerHostEnv = {
-    DOCKER_HOST = "ssh://root@darkbot"
-}
-
-DockerLogin = ga.Step {
-    name = "Docker login"
-    run = r'echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login --username darkwind8 --password-stdin'
-}
-
 InstallDarklabSshKey = ga.Step {
     name = "Install Darklab ssh key"
     run = r"""mkdir ~/.ssh | true

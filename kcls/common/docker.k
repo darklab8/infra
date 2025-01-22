@@ -2,12 +2,27 @@ import kcls.models.github_action as ga
 import kcls.actions.install_autogit as autogit
 import template
 
+DOCKER_HOST_ARM64 = "ssh://root@darkbot"
+DOCKER_HOST_AMD64 = "unix:///var/run/docker.sock"
+DockerHostEnv = {
+    DOCKER_HOST = DOCKER_HOST_ARM64
+}
+
+schema DockerLogin(ga.Step):
+    name = "Docker login"
+    run = r'echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login --username darkwind8 --password-stdin'
+
 schema BuildOpts:
     image_name: str
     context: str = "."
     tag: str
     extra_tags?: [str]
     push: bool = False
+
+schema BuildMultiArchOpts(BuildOpts):
+    docker_host_arm64: str = DOCKER_HOST_ARM64
+    docker_host_amd64: str = DOCKER_HOST_AMD64
+    push: bool = True
 
 schema Build[opt: BuildOpts](ga.Step):
     name = "Build image ${opt.image_name}"
@@ -27,6 +42,30 @@ docker push ${opt.image_name}:{{this}}
 sleep 5
 {{/each}}
 {{/if}}
+""", {
+        tag = opt.tag
+        image_name = opt.image_name
+        context = opt.context
+        extra_tags= opt.extra_tags
+        push = opt.push
+    })
+
+schema BuildMultiArch[opt: BuildMultiArchOpts](ga.Step):
+    name = "Build image ${opt.image_name}"
+    run = template.execute("""set -ex
+export tag_version={{tag}}
+DOCKER_HOST=${opt.docker_host_arm64} docker build --build-arg "BUILD_VERSION=$tag_version" --tag ${opt.image_name}:\${tag_version}-arm64 {{context}}
+DOCKER_HOST=${opt.docker_host_amd64} docker build --build-arg "BUILD_VERSION=$tag_version" --tag ${opt.image_name}:\${tag_version}-amd64 {{context}}
+DOCKER_HOST=${opt.docker_host_arm64} docker push ${opt.image_name}:\${tag_version}-arm64
+sleep 5
+DOCKER_HOST=${opt.docker_host_amd64} docker push ${opt.image_name}:\${tag_version}-amd64
+sleep 5
+docker manifest create ${opt.image_name}:\${tag_version} --amend ${opt.image_name}:\${tag_version}-arm64 --amend ${opt.image_name}:\${tag_version}-amd64
+docker manifest push ${opt.image_name}:\${tag_version}
+{{# each extra_tags}}
+docker manifest create ${opt.image_name}:\${tag_version} --amend ${opt.image_name}:\${tag_version}-arm64 --amend ${opt.image_name}:\${tag_version}-amd64
+docker manifest push ${opt.image_name}:{{this}}
+{{/each}}
 """, {
         tag = opt.tag
         image_name = opt.image_name
