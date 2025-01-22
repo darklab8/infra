@@ -63,7 +63,7 @@ sleep 5
 docker manifest create ${opt.image_name}:\${tag_version} --amend ${opt.image_name}:\${tag_version}-arm64 --amend ${opt.image_name}:\${tag_version}-amd64
 docker manifest push ${opt.image_name}:\${tag_version}
 {{# each extra_tags}}
-docker manifest create ${opt.image_name}:\${tag_version} --amend ${opt.image_name}:\${tag_version}-arm64 --amend ${opt.image_name}:\${tag_version}-amd64
+docker manifest create ${opt.image_name}:{{this}} --amend ${opt.image_name}:\${tag_version}-arm64 --amend ${opt.image_name}:\${tag_version}-amd64
 docker manifest push ${opt.image_name}:{{this}}
 {{/each}}
 """, {
