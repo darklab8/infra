@@ -4,8 +4,11 @@ import template
 
 DOCKER_HOST_ARM64 = "ssh://root@darkbot"
 DOCKER_HOST_AMD64 = "unix:///var/run/docker.sock"
-DockerHostEnv = {
+DockerHostArm64Env = {
     DOCKER_HOST = DOCKER_HOST_ARM64
+}
+DockerHostAmd64Env = {
+    DOCKER_HOST = DOCKER_HOST_AMD64
 }
 
 schema DockerLogin(ga.Step):
@@ -18,27 +21,25 @@ schema BuildOpts:
     tag: str
     extra_tags?: [str]
     push: bool = False
-
-schema BuildMultiArchOpts(BuildOpts):
-    docker_host_arm64: str = DOCKER_HOST_ARM64
-    docker_host_amd64: str = DOCKER_HOST_AMD64
-    push: bool = True
+    arch_suffix?: str = ""
 
 schema Build[opt: BuildOpts](ga.Step):
+    _arch_suf = ""
+    if opt.arch_suffix != "":
+        _arch_suf = "-${opt.arch_suffix}"
     name = "Build image ${opt.image_name}"
     run = template.execute("""set -ex
 export tag_version={{tag}}
-docker build --build-arg "BUILD_VERSION=$tag_version" --tag ${opt.image_name}:$tag_version {{context}}
+docker build --build-arg "BUILD_VERSION=\${tag_version}${_arch_suf}" --tag ${opt.image_name}:\${tag_version}${_arch_suf} {{context}}
 
 {{# each extra_tags}}
-docker tag ${opt.image_name}:$tag_version ${opt.image_name}:{{this}}
+docker tag ${opt.image_name}:\${tag_version}${_arch_suf} ${opt.image_name}:{{this}}${_arch_suf}
 {{/each}}
-
 {{#if push}}
-docker push ${opt.image_name}:$tag_version
+docker push ${opt.image_name}:\${tag_version}${_arch_suf}
 sleep 5
 {{# each extra_tags}}
-docker push ${opt.image_name}:{{this}}
+docker push ${opt.image_name}:{{this}}${_arch_suf}
 sleep 5
 {{/each}}
 {{/if}}
@@ -50,16 +51,10 @@ sleep 5
         push = opt.push
     })
 
-schema BuildMultiArch[opt: BuildMultiArchOpts](ga.Step):
-    name = "Build image ${opt.image_name}"
+schema JoinMultiArch[opt: BuildOpts](ga.Step):
+    name = "Manifest join image ${opt.image_name}"
     run = template.execute("""set -ex
 export tag_version={{tag}}
-DOCKER_HOST=${opt.docker_host_arm64} docker build --build-arg "BUILD_VERSION=$tag_version" --tag ${opt.image_name}:\${tag_version}-arm64 {{context}}
-DOCKER_HOST=${opt.docker_host_amd64} docker build --build-arg "BUILD_VERSION=$tag_version" --tag ${opt.image_name}:\${tag_version}-amd64 {{context}}
-DOCKER_HOST=${opt.docker_host_arm64} docker push ${opt.image_name}:\${tag_version}-arm64
-sleep 5
-DOCKER_HOST=${opt.docker_host_amd64} docker push ${opt.image_name}:\${tag_version}-amd64
-sleep 5
 docker manifest create ${opt.image_name}:\${tag_version} --amend ${opt.image_name}:\${tag_version}-arm64 --amend ${opt.image_name}:\${tag_version}-amd64
 docker manifest push ${opt.image_name}:\${tag_version}
 {{# each extra_tags}}

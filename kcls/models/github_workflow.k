@@ -26,6 +26,7 @@ schema Job:
     name: str
     "runs-on"?: str = "ubuntu-22.04"
     permissions?: Permissions
+    env?: {str: str}
     environment?: {str: str}
     steps?: [gh.Step]
     needs?: [str]
