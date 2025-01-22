@@ -1,5 +1,4 @@
 import kcls.models.github_action as ga
-import kcls.actions.install_autogit as autogit
 import template
 
 DOCKER_HOST_ARM64 = "ssh://root@darkbot"
