@@ -11,9 +11,10 @@ schema RepositoryDispatch:
 schema Triggers:
     push?: TriggerPush
     schedule?: [ScheduleCron]
-    workflow_dispatch?: {str: str} 
+    workflow_dispatch?: {str:str}
     workflow_call?: {str:str}
     repository_dispatch?: RepositoryDispatch
+    pull_request?: {str:str}
 
 schema ScheduleCron:
     cron: str
@@ -26,8 +27,8 @@ schema Job:
     name: str
     "runs-on"?: str = "ubuntu-22.04"
     permissions?: Permissions
-    env?: {str: str}
-    environment?: {str: str}
+    env?: {str:str}
+    environment?: {str:str}
     steps?: [gh.Step]
     needs?: [str]
 
@@ -43,7 +44,6 @@ schema Workflow:
     _filename?: str
     name: str
     on: Triggers
-    jobs: {str: Job}
-    env?: {str: str}
-
+    jobs: {str:Job}
+    env?: {str:str}
 
