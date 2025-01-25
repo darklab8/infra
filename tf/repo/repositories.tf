@@ -33,6 +33,12 @@ locals {
     darkrelay = {
       name = "fl-darkrelay"
     }
+    fl-server-vanilla = {
+      name = "fl-server-vanilla"
+      secrets = {
+        DOCKERHUB_TOKEN = data.external.docker_darkwind8_push_token.result["token"]
+      }
+    }
     darkbot = {
       name                = "fl-darkbot"
       description         = "discord bot to freelancer discovery community for player bases, players and forum messages tracking with alerting."

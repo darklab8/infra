@@ -17,6 +17,10 @@ _checkoutFrelancer: gh.GHAction = {
             description = "Key to download Freelancer vanilla repo"
             default = ""
         }
+        "ssh-key-base64-vanilla-full": {
+            description = "Key to download Freelancer vanilla full repo"
+            default = ""
+        }
         "ssh-key-base64-discovery": {
             description = "Key to download Discovery repo"
             default = ""
@@ -24,6 +28,21 @@ _checkoutFrelancer: gh.GHAction = {
     }
     runs = {
         steps = [
+            gh.Step {
+                name = "Write vanilla full id_rsa down"
+                $if = r"${{ inputs.freelancer-mod == 'vanilla-full' }}"
+                shell: "python"
+                run = r"""import base64
+import os
+file_output_name = "${{ github.workspace }}/id_rsa.out"
+with open(file_output_name, "wb", 0o600) as file:
+    file.write(base64.b64decode(bytes(os.environ["ID_RSA_FILE_IN_BASE64"], encoding='utf8')))
+os.chmod(file_output_name, 0o600)
+"""
+                env = {
+                    ID_RSA_FILE_IN_BASE64: r"${{ inputs.ssh-key-base64-vanilla-full}}"
+                }
+            }
             gh.Step {
                 name = "Write vanilla id_rsa down"
                 $if = r"${{ inputs.freelancer-mod == 'vanilla' }}"
@@ -72,20 +91,22 @@ os.chmod(file_output_name, 0o600)
 
 _key_discovery = r"${{ secrets.ID_RSA_FILES_FREELANCER_DISCOVERY }}"
 _key_vanilla = r"${{ secrets.ID_RSA_FILES_FREELANCER_VANILLA }}"
+_key_vanilla_full = r"${{ secrets.ID_RSA_FILES_FREELANCER_VANILLA_FULL }}"
 _mod_discovery = "discovery"
 _mod_vanilla = "vanilla"
+_mod_vanilla_full = "vanilla-full"
 schema CheckoutFreelancerOpts(gh.StepOpts):
-    "freelancer-mod": "discovery" | "vanilla"
+    "freelancer-mod": "discovery" | "vanilla"| "vanilla-full"
     "freelancer-folder": str
     "ssh-key-base64-discovery"?: str
     "ssh-key-base64-vanilla"?: str
 
 schema CheckoutArgs:
-    freelancer_mod: "discovery" | "vanilla"
+    freelancer_mod: "discovery" | "vanilla" | "vanilla-full"
     freelancer_folder: str
     $if?: str
 
-NewCheckoutFreelancer = lambda a: CheckoutArgs {
+NewCheckoutFreelancer: (CheckoutArgs) -> CheckoutFreelancer = lambda a: CheckoutArgs {
     CheckoutFreelancer {
         $if = a.if
         if a.freelancer_mod == _mod_discovery:
@@ -95,6 +116,12 @@ NewCheckoutFreelancer = lambda a: CheckoutArgs {
                 "ssh-key-base64-discovery": _key_discovery
             }
         if a.freelancer_mod == _mod_vanilla:
+            with = CheckoutFreelancerOpts {
+                "freelancer-mod": a.freelancer_mod
+                "freelancer-folder": a.freelancer_folder
+                "ssh-key-base64-vanilla": _key_vanilla
+            }
+        if a.freelancer_mod == _mod_vanilla_full:
             with = CheckoutFreelancerOpts {
                 "freelancer-mod": a.freelancer_mod
                 "freelancer-folder": a.freelancer_folder
