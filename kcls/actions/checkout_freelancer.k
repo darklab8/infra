@@ -100,6 +100,7 @@ schema CheckoutFreelancerOpts(gh.StepOpts):
     "freelancer-folder": str
     "ssh-key-base64-discovery"?: str
     "ssh-key-base64-vanilla"?: str
+    "ssh-key-base64-vanilla-full"?: str
 
 schema CheckoutArgs:
     freelancer_mod: "discovery" | "vanilla" | "vanilla-full"
@@ -125,7 +126,7 @@ NewCheckoutFreelancer: (CheckoutArgs) -> CheckoutFreelancer = lambda a: Checkout
             with = CheckoutFreelancerOpts {
                 "freelancer-mod": a.freelancer_mod
                 "freelancer-folder": a.freelancer_folder
-                "ssh-key-base64-vanilla": _key_vanilla
+                "ssh-key-base64-vanilla-full": _key_vanilla_full
             }
     }
 }
