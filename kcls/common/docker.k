@@ -29,7 +29,7 @@ schema Build[opt: BuildOpts](ga.Step):
     name = "Build image ${opt.image_name}"
     run = template.execute("""set -ex
 export tag_version={{tag}}
-docker build --build-arg "BUILD_VERSION=\${tag_version}${_arch_suf}" --tag ${opt.image_name}:\${tag_version}${_arch_suf} {{context}}
+docker build --build-arg "BUILD_VERSION=\${tag_version}" --tag ${opt.image_name}:\${tag_version}${_arch_suf} {{context}}
 
 {{# each extra_tags}}
 docker tag ${opt.image_name}:\${tag_version}${_arch_suf} ${opt.image_name}:{{this}}${_arch_suf}
