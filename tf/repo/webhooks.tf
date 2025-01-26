@@ -7,7 +7,6 @@ locals {
     darklint  = local.public_repositories.darklint
     darkstat  = local.public_repositories.darkstat
     darkmap   = local.public_repositories.darkmap
-    darkcore  = local.public_repositories.darkcore
     darkrelay = local.public_repositories.darkrelay
     darkbot   = local.public_repositories.darkbot
     configs   = local.public_repositories.configs

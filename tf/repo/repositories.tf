@@ -27,9 +27,6 @@ locals {
       name                = "fl-darkmap",
       webhook_url_commits = data.external.issues_webhook.result.url_commits_darkmap
     }
-    darkcore = {
-      name = "fl-darkcore"
-    }
     darkrelay = {
       name = "fl-darkrelay"
     }
