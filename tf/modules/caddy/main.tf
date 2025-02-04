@@ -17,6 +17,16 @@ resource "docker_container" "caddy" {
     name = docker_network.network.id
   }
 
+  # Useful for rapid debugging. `docker stop caddy`, `docker start caddy`
+  # env = [
+  #   "CADDY_DOCKER_CADDYFILE_PATH=/config/Caddyfile"
+  # ]
+  # volumes {
+  #   host_path      = "/var/lib/caddy"
+  #   container_path = "/config"
+  #   read_only      = false
+  # }
+
   ports {
     internal = "80"
     external = "80"
@@ -24,6 +34,11 @@ resource "docker_container" "caddy" {
   ports {
     internal = "443"
     external = "443"
+  }
+
+  ports {
+    internal = "888"
+    external = "888"
   }
 
   volumes {
