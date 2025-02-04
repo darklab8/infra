@@ -5,7 +5,14 @@ resource "docker_network" "network" {
 }
 
 resource "docker_image" "caddy" {
-  name = "lucaslorentz/caddy-docker-proxy:2.9.1"
+  name = "caddy_docker_proxy_grcp"
+  build {
+    context = path.module
+  }
+
+  triggers = {
+    dir_sha1 = sha1(join("", [for f in ["Dockerfile", "Caddyfile"] : filesha1("${path.module}/${f}")]))
+  }
 }
 
 resource "docker_container" "caddy" {
