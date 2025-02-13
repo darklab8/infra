@@ -6,6 +6,7 @@ schema BuildOpts(ga.StepOpts):
     "freelancer-folder": str
     "heading": str
     "relay-host": str
+    "apigateway-host": str
     is_detailed?: bool
 
 schema BuildArgs:
@@ -14,6 +15,7 @@ schema BuildArgs:
     freelancer_folder: str
     heading: str
     relay_host: str = ""
+    apigateway_host: str = ""
     is_detailed: bool = False
 
 schema Build[opt: BuildArgs](ga.Step):
@@ -25,6 +27,7 @@ schema Build[opt: BuildArgs](ga.Step):
         "freelancer-folder" = opt.freelancer_folder
         heading = opt.heading
         "relay-host" = opt.relay_host
+        "apigateway-host" = opt.apigateway_host
         if opt.is_detailed:
             is_detailed = opt.is_detailed
     }

@@ -7,7 +7,7 @@ schema DockerDeploySwarmOpts:
     service_name: str
     task_name: str = "app"
     environment: "staging" | "production"
-    extra_service: str = ""
+    extra_services: [str] = []
 
 DockerDeploySwarm = lambda opt: DockerDeploySwarmOpts {
     _workflow_name = "Deploy docker ${opt.environment}"
@@ -83,13 +83,11 @@ DockerDeploySwarm = lambda opt: DockerDeploySwarmOpts {
                         tag = opt.environment
                         service_name = "${opt.environment}-${opt.service_name}-${opt.task_name}"
                     })
-                    if opt.extra_service != "":
-                        docker.DeploySwarm(docker.DeploySwarmOpts {
-                            image_name = opt.image_name
-                            tag = opt.environment
-                            service_name = opt.extra_service
-                        })
-                ]
+                ] + [docker.DeploySwarm(docker.DeploySwarmOpts {
+                    image_name = opt.image_name
+                    tag = opt.environment
+                    service_name = service
+                }) for service in opt.extra_services]
             }
         }
     }
