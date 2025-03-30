@@ -23,15 +23,7 @@ locals {
         SSH_KEY_BASE64  = data.external.darkbot_ssh_key_base64.result["data"]
       }
     }
-    darkmap = {
-      name                = "fl-darkmap",
-      webhook_url_commits = data.external.issues_webhook.result.url_commits_darkmap
-      public              = false
-      archived            = true
-    }
-    darkrelay = {
-      name = "fl-darkrelay"
-    }
+
     fl-server-vanilla = {
       name = "fl-server-vanilla"
       secrets = {
@@ -47,20 +39,9 @@ locals {
         SSH_KEY_BASE64  = data.external.darkbot_ssh_key_base64.result["data"]
       }
     }
-    configs = {
-      name        = "fl-configs"
-      description = "ORM data accessing lib for Freelancer game configs"
-      public      = false
-      archived    = true
-    }
     ctrlv = {
       name        = "fl-ctrlv"
       description = "Make Ctrl-V work for Freelancer(2003) game"
-    }
-    redock = {
-      name        = "redock"
-      description = "Docker container recreating script with updated image"
-      public      = false
     }
     infra = {
       name        = "infra"
@@ -95,6 +76,26 @@ locals {
     examples   = { name = "examples", public = false }
     go-typelog = { name = "go-typelog", description = "Static typed structured logging lib" }
     py-typelog = { name = "py-typelog", description = "Static typed structured logging lib" }
+
+    # DEPRECATED ARCHIVED STUFF
+    redock = {
+      name        = "redock"
+      description = "Docker container recreating script with updated image. Archived because Swarm makes it useless"
+      public      = false
+      archived    = true
+    }
+    configs = {
+      name        = "fl-configs"
+      description = "ORM data accessing lib for Freelancer game configs"
+      public      = false
+      archived    = true
+    }
+    darkmap = {
+      name                = "fl-darkmap",
+      webhook_url_commits = data.external.issues_webhook.result.url_commits_darkmap
+      public              = false
+      archived            = true
+    }
   }
 }
 

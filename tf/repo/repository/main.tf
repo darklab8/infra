@@ -1,6 +1,7 @@
 resource "gitlab_project" "project" {
-  name        = var.name
-  description = var.description
+  name                            = var.name
+  description                     = var.description
+  restrict_user_defined_variables = true
 
   visibility_level = var.public ? "public" : "private"
   namespace_id     = var.group_gitlab_id

@@ -4,13 +4,10 @@ data "external" "issues_webhook" {
 
 locals {
   webhook_repos = {
-    darklint  = local.public_repositories.darklint
-    darkstat  = local.public_repositories.darkstat
-    darkmap   = local.public_repositories.darkmap
-    darkrelay = local.public_repositories.darkrelay
-    darkbot   = local.public_repositories.darkbot
-    configs   = local.public_repositories.configs
-    ctrlv     = local.public_repositories.ctrlv
+    darklint = local.public_repositories.darklint
+    darkstat = local.public_repositories.darkstat
+    darkbot  = local.public_repositories.darkbot
+    ctrlv    = local.public_repositories.ctrlv
   }
 }
 
