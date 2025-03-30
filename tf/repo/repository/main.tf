@@ -10,6 +10,7 @@ resource "github_repository" "project" {
   name        = var.name
   description = var.description
 
+  archived      = var.archived
   private       = !var.public
   has_issues    = true
   has_downloads = true

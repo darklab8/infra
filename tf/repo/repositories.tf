@@ -16,7 +16,7 @@ locals {
     }
     darkstat = {
       name                = "fl-darkstat"
-      description         = "Static site generator for Freeancer Discovery community to provide info about game stuff for players"
+      description         = "Static site generator for Freelancer Discovery community to provide info about game stuff for players"
       webhook_url_commits = data.external.issues_webhook.result.url_commits_darkstat
       secrets = {
         DOCKERHUB_TOKEN = data.external.docker_darkwind8_push_token.result["token"]
@@ -26,6 +26,8 @@ locals {
     darkmap = {
       name                = "fl-darkmap",
       webhook_url_commits = data.external.issues_webhook.result.url_commits_darkmap
+      public              = false
+      archived            = true
     }
     darkrelay = {
       name = "fl-darkrelay"
@@ -48,6 +50,8 @@ locals {
     configs = {
       name        = "fl-configs"
       description = "ORM data accessing lib for Freelancer game configs"
+      public      = false
+      archived    = true
     }
     ctrlv = {
       name        = "fl-ctrlv"
@@ -104,6 +108,7 @@ module "public_repositories" {
   source          = "./repository"
   name            = each.value.name
   public          = try(each.value.public, true)
+  archived        = try(each.value.archived, false)
   group_gitlab_id = data.gitlab_group.darklab.id
   homepage_url    = try(each.value.homepage_url, null)
   secrets         = try(each.value.secrets, {})

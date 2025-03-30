@@ -12,6 +12,10 @@ variable "public" {
   type = bool
 }
 
+variable "archived" {
+  type = bool
+}
+
 variable "group_gitlab_id" {
   type = string
 }
