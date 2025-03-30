@@ -10,7 +10,7 @@ _action = gh.GHAction{
             gh.Step{
                 name: _name
                 shell: "bash"
-                run: 'go install github.com/a-h/templ/cmd/templ@v0.2.747'
+                run: 'go install github.com/a-h/templ/cmd/templ@v0.3.857'
             },
         ]
     }

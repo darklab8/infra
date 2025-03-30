@@ -16,7 +16,6 @@ schema BuildArgs:
     heading: str
     relay_host: str = ""
     apigateway_host: str = ""
-    is_detailed: bool = False
 
 schema Build[opt: BuildArgs](ga.Step):
     name: str = "Darkstat Build"
@@ -28,7 +27,5 @@ schema Build[opt: BuildArgs](ga.Step):
         heading = opt.heading
         "relay-host" = opt.relay_host
         "apigateway-host" = opt.apigateway_host
-        if opt.is_detailed:
-            is_detailed = opt.is_detailed
     }
 
