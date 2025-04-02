@@ -3,28 +3,34 @@ variable "zone" {
 }
 
 data "cloudflare_zone" "domain_main" {
-  name = var.zone
+  filter = {
+    name = var.zone
+  }
 }
 
 variable "dns_records" {
   description = "cloudflare domain records"
   type = list(object({
-    type    = string
-    value   = string
-    name    = string
-    proxied = bool
+    type  = string
+    value = string
+    name  = string
   }))
 }
 
-resource "cloudflare_record" "record" {
+resource "cloudflare_dns_record" "record" {
   for_each = {
     for index, record in var.dns_records : record.name => record
   }
 
-  ttl     = each.value.proxied ? 1 : 60
+  ttl     = 60
   type    = each.value.type
-  value   = each.value.value
-  name    = each.value.name
-  zone_id = data.cloudflare_zone.domain_main.id
-  proxied = each.value.proxied
+  content = each.value.value
+  name    = "${each.value.name}.${var.zone}"
+  zone_id = data.cloudflare_zone.domain_main.zone_id
+  proxied = false # disable special cloudflare features, we use Caddy instead
+
+  # settings = {
+  #   ipv4_only = true
+  #   ipv6_only = true
+  # }
 }
