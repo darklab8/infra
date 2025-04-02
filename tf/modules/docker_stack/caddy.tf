@@ -1,0 +1,3 @@
+module "caddy" {
+  source = "../caddy"
+}

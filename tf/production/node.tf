@@ -18,9 +18,9 @@ provider "docker" {
   ssh_opts = ["-o", "StrictHostKeyChecking=no", "-o", "UserKnownHostsFile=/dev/null", "-i", "~/.ssh/id_rsa.darklab"]
 }
 
-module "caddy" {
+module "docker" {
+  source = "../modules/docker_stack"
   providers = {
     docker = docker.darklab
   }
-  source = "../modules/caddy"
 }
