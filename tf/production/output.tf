@@ -1,7 +1,7 @@
 module "data_cluster" {
   source = "./output/serializer"
   node_darklab = {
-    ipv4_address     = module.node_darklab.ipv4_address
+    ipv4_address     = module.node_darklab_cax21.ipv4_address
     caddy_network_id = module.caddy.network_id
   }
 }

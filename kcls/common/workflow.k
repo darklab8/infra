@@ -80,12 +80,12 @@ DockerDeploySwarm = lambda opt: DockerDeploySwarmOpts {
                     })
                     docker.DeploySwarm(docker.DeploySwarmOpts {
                         image_name = opt.image_name
-                        tag = opt.environment
+                        tag = "${opt.environment}-arm64"
                         service_name = "${opt.environment}-${opt.service_name}-${opt.task_name}"
                     })
                 ] + [docker.DeploySwarm(docker.DeploySwarmOpts {
                     image_name = opt.image_name
-                    tag = opt.environment
+                    tag = "${opt.environment}-arm64"
                     service_name = service
                 }) for service in opt.extra_services]
             }

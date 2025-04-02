@@ -26,6 +26,7 @@ schema Build[opt: BuildOpts](ga.Step):
     _arch_suf = ""
     if opt.arch_suffix != "":
         _arch_suf = "-${opt.arch_suffix}"
+
     name = "Build image ${opt.image_name}"
     run = template.execute("""set -ex
 export tag_version={{tag}}
@@ -46,7 +47,7 @@ sleep 5
         tag = opt.tag
         image_name = opt.image_name
         context = opt.context
-        extra_tags= opt.extra_tags
+        extra_tags = opt.extra_tags
         push = opt.push
     })
 
@@ -64,7 +65,7 @@ docker manifest push ${opt.image_name}:{{this}}
         tag = opt.tag
         image_name = opt.image_name
         context = opt.context
-        extra_tags= opt.extra_tags
+        extra_tags = opt.extra_tags
         push = opt.push
     })
 
@@ -98,9 +99,9 @@ docker tag {{image_name}}:{{old_tag}} {{image_name}}:{{new_tag}}
 docker push {{image_name}}:{{new_tag}}
 sleep 5
 {{/if}}
-""", { 
-        pull = opt.pull 
-        push = opt.push 
+""", {
+        pull = opt.pull
+        push = opt.push
         old_tag = opt.old_tag
         new_tag = opt.new_tag
         image_name = opt.image_name
@@ -109,7 +110,7 @@ sleep 5
 schema DeploySwarmOpts:
     image_name: str
     service_name: str
-    tag: "staging" | "production"
+    tag: str
     pull: bool = True
 
 schema DeploySwarm[opt: DeploySwarmOpts](ga.Step):
@@ -120,9 +121,10 @@ docker pull {{image_name}}:{{tag}}
 sleep 5
 {{/if}}
 docker service update --image {{image_name}}:{{tag}} {{service_name}}
-"""{ 
-        pull = opt.pull 
+""", {
+        pull = opt.pull
         tag = opt.tag
         service_name = opt.service_name
         image_name = opt.image_name
     })
+

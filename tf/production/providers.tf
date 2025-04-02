@@ -12,12 +12,6 @@ terraform {
       source  = "kreuzwerker/docker"
       version = ">=3.0.2"
     }
-    kubernetes = {
-      source = "hashicorp/kubernetes"
-    }
-    ansible = {
-      source = "ansible/ansible"
-    }
   }
 }
 
@@ -35,9 +29,4 @@ provider "hcloud" {
 
 provider "cloudflare" {
   api_token = data.external.secrets_cloudflare.result["token"]
-}
-
-provider "kubernetes" {
-  config_path    = "~/.kube/config"
-  config_context = "darklab"
 }

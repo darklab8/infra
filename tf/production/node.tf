@@ -2,10 +2,10 @@ module "ssh_key" {
   source = "../modules/hetzner_ssh_key"
 }
 
-module "node_darklab" {
+module "node_darklab_cax21" {
   source      = "../modules/hetzner_server"
   environment = "production"
-  name        = "node-darklab"
+  name        = "darklab"
   hardware    = "cax21"
   backups     = true
   ssh_key_id  = module.ssh_key.id
@@ -13,10 +13,14 @@ module "node_darklab" {
 }
 
 provider "docker" {
-  host     = "ssh://root@${module.node_darklab.ipv4_address}:22"
+  alias    = "darklab"
+  host     = "ssh://root@${module.node_darklab_cax21.ipv4_address}:22"
   ssh_opts = ["-o", "StrictHostKeyChecking=no", "-o", "UserKnownHostsFile=/dev/null", "-i", "~/.ssh/id_rsa.darklab"]
 }
 
 module "caddy" {
+  providers = {
+    docker = docker.darklab
+  }
   source = "../modules/caddy"
 }
