@@ -75,13 +75,13 @@ InstallDarklabSshKey = ga.Step {
     run = r"""mkdir ~/.ssh | true
 echo "${{ secrets.SSH_KEY_BASE64 }}" | base64 --decode > ~/.ssh/id_rsa
 echo "Host darkbot" > ~/.ssh/config
-echo "    HostName 37.27.207.42" >> ~/.ssh/config
+echo "    HostName 95.217.128.104" >> ~/.ssh/config
 echo "    User root" >> ~/.ssh/config
 echo "    IdentityFile ~/.ssh/id_rsa" >> ~/.ssh/config
 echo "    IdentitiesOnly yes" >> ~/.ssh/config
 chmod 700 ~/.ssh
 chmod 600 ~/.ssh/*
-ssh-keyscan -H 37.27.207.42 >> ~/.ssh/known_hosts | true
+ssh-keyscan -H 95.217.128.104 >> ~/.ssh/known_hosts | true
 ssh-keyscan -H darkbot >> ~/.ssh/known_hosts | true
 """
 }
