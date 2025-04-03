@@ -57,54 +57,46 @@ locals {
 #       datasourceUid: prometheus
 
 
-resource "docker_service" "grafana" {
+resource "docker_container" "grafana" {
   name = "grafana"
 
-  task_spec {
-    networks_advanced {
-      name = docker_network.grafana.id
-    }
-    networks_advanced {
-      name = var.docker_network_caddy_id
-    }
+  image = docker_image.grafana.name
+  env   = [for k, v in local.grafana_envs : "${k}=${v}"]
 
-    container_spec {
-      image = docker_image.grafana.name
-      env   = local.grafana_envs
 
-      dynamic "labels" {
-        for_each = merge({
-          "caddy_0"               = "${local.dns.grafana.prefix}.${var.zone}"
-          "caddy_0.reverse_proxy" = "{{upstreams 3000}}"
-          },
-        )
-        content {
-          label = labels.key
-          value = labels.value
-        }
-      }
+  networks_advanced {
+    name = docker_network.grafana.id
+  }
 
-      command = ["sh", "-c"]
-      args = [join(" && ", [
-        "echo '${local.grafana_datasources_yaml}' > /etc/grafana/provisioning/datasources/datasources.yaml",
-        "/run.sh",
-      ])]
-    }
-    restart_policy {
-      condition = "any"
-      delay     = "20s"
-    }
-    resources {
-      limits {
-        memory_bytes = 1000 * 1000 * 1000 # 1 gb
-      }
+  networks_advanced {
+    name = var.docker_network_caddy_id
+  }
+
+  entrypoint = ["sh", "-c"]
+  command = [join(" && ", [
+    "echo '${local.grafana_datasources_yaml}' > /etc/grafana/provisioning/datasources/datasources.yaml",
+    "/run.sh",
+  ])]
+
+  dynamic "labels" {
+    for_each = merge({
+      "caddy_0"               = "${local.dns.grafana.prefix}.${var.zone}"
+      "caddy_0.reverse_proxy" = "{{upstreams 3000}}"
+      },
+    )
+    content {
+      label = labels.key
+      value = labels.value
     }
   }
 
+  restart = "always"
+  memory  = 1000 # MBs
   lifecycle {
     ignore_changes = [
-      task_spec[0].restart_policy[0].window,
-      task_spec[0].container_spec[0].image,
+      memory_swap,
+      network_mode,
+      image,
     ]
   }
 }

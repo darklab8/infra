@@ -12,8 +12,8 @@ locals {
   loki_config = file("${path.module}/loki-local-config.yaml")
 }
 
-resource "docker_volume" "loki_data_retention" {
-  name = "loki_data_retention"
+resource "docker_volume" "loki_data" {
+  name = "loki_data"
 }
 
 resource "docker_container" "loki" {
@@ -35,8 +35,8 @@ resource "docker_container" "loki" {
   restart = "always"
 
   mounts {
-    target    = "/data/retention"
-    source    = docker_volume.loki_data_retention.name
+    target    = "/data"
+    source    = docker_volume.loki_data.name
     type      = "volume"
     read_only = false
   }
