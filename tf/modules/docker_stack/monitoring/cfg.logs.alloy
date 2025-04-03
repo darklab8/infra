@@ -1,0 +1,96 @@
+logging {
+  level  = "info"
+  format = "logfmt"
+}
+
+discovery.docker "swarm" {
+  host = "unix:///var/run/docker.sock"
+
+  filter {
+    name = "is-task"
+    values = ["true"]
+  }
+}
+
+discovery.relabel "swarm" {
+  targets = discovery.docker.swarm.targets
+
+  rule {
+    source_labels = ["__meta_docker_container_name"]
+    regex = "/(.*)"
+    action = "replace"
+    target_label = "container_name"
+  }
+
+  rule {
+    source_labels = ["__meta_docker_container_name"]
+    regex = `^/([^\.]*)\..*`
+    action = "replace"
+    target_label = "service_name"
+  }
+
+  rule {
+    source_labels = ["__meta_docker_network_name"]
+    action = "replace"
+    target_label = "network_name"
+  }
+}
+
+loki.source.docker "swarm" {
+  host = "unix:///var/run/docker.sock"
+  labels     = {"mode" = "swarm"}
+  targets    = discovery.relabel.swarm.output
+  forward_to = [loki.process.logs_service.receiver]
+}
+
+discovery.docker "docker" {
+  host = "unix:///var/run/docker.sock"
+
+  filter {
+    name = "is-task"
+    values = ["false"]
+  }
+}
+
+discovery.relabel "docker" {
+  targets = discovery.docker.docker.targets
+
+  rule {
+    source_labels = ["__meta_docker_container_name"]
+    regex = "/(.*)"
+    action = "replace"
+    target_label = "container_name"
+  }
+
+  rule {
+    source_labels = ["__meta_docker_container_name"]
+    regex = `/(.*)`
+    action = "replace"
+    target_label = "service_name"
+  }
+
+  rule {
+    source_labels = ["__meta_docker_network_name"]
+    action = "replace"
+    target_label = "network_name"
+  }
+}
+
+
+loki.source.docker "docker" {
+  host = "unix:///var/run/docker.sock"
+  labels     = {"mode" = "docker"}
+  targets    = discovery.relabel.docker.output
+  forward_to = [loki.process.logs_service.receiver]
+}
+
+loki.process "logs_service" {
+  forward_to = [loki.write.local.receiver]
+}
+
+loki.write "local" {
+  endpoint {
+    url = coalesce(sys.env("LOKI_URL"), "http://loki:3100/loki/api/v1/push")
+    tenant_id = ""
+  }
+}

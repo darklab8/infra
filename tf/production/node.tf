@@ -23,4 +23,6 @@ module "docker" {
   providers = {
     docker = docker.darklab
   }
+  zone         = "dd84ai.com"
+  ipv4_address = module.node_darklab_cax21.ipv4_address
 }
