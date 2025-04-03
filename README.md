@@ -8,7 +8,13 @@ This repository is for:
 
 # Prefered Container Scheduling engine
 
-In the long run, projects running with code from this repo are meant to be running for years with minimum effort in a stable way in a cheap way from Hetzner single server. For this reason Docker Swarm is prefered default, as it does not have an array of things needed to be installed and kept up to date for its functioning. Kubernetes usage will remain for experimental and learning purposes only. Projects could be having optional switch for their running in Kubernetes for the same experimental purposes, but they will be always having Docker/Swarm running way being available first. If some day Kubernetes benefits will overweight Docker Swarm way to run, this may change.
+Docker with Swarm was chosen over Kubernetes for homelab because:
+- Docker/Swarm is more lightweight. Microk8s that was tried for k8s, required 1.2gb RAM for hello world.
+- Microk8s was freezing from time to time.
+- K8s in self hosted way requires extra dependencies to run itself in multiple amount, with high decaying rate. Metallb, ingress nginx
+- If we would have went for K8s, we would be needing to keep up with community supported helm charts for monitoring stuff at lest that bring even more infra code. Infra code is still a code, homelab done in a free time must be using our time very efficiently and justified.
+
+In the long run, projects running with code from this repo are meant to be running for years with minimum effort in a stable way in a cheap way from Hetzner single server. The aim to have only minimal need for support that could be performed as rarely as once in a year or two. For this reason Docker Swarm is prefered default. Kubernetes way will remain as experimental extra way to run things. Projects could be having optional switch for their running in Kubernetes for the same experimental purposes from time to time may be, but they will be always having Docker/Swarm running way being available first. If some day Kubernetes benefits will overweight Docker Swarm way to run, this may change.
 
 # Languages in use
 
