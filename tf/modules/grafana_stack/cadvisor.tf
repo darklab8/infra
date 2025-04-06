@@ -26,3 +26,7 @@ resource "grafana_dashboard" "cadvisor" {
     module.folder_cadvisor.uid
   ]
 }
+
+resource "grafana_organization_preferences" "test" {
+  home_dashboard_uid = grafana_dashboard.cadvisor["cadvisor_exporter_14282_rev1"].uid
+}
