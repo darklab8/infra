@@ -13,3 +13,14 @@ datasources:
     timeout: 60
     maxLines: 5000
     tlsSkipVerify: true
+- name: Prometheus
+  type: prometheus
+  uid: prometheus-datasource
+  access: proxy
+  orgId: 1
+  url: http://prometheus:9090
+  basicAuth: false
+  version: 1
+  editable: true
+  jsonData:
+    httpMethod: GET

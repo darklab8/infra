@@ -1,0 +1,68 @@
+prometheus.exporter.cadvisor "docker_metrics" {
+  docker_host = "unix:///var/run/docker.sock"
+  storage_duration = "5m"
+  store_container_labels = true
+  env_metadata_allowlist = [
+    "VERSION_ID",
+  ]
+  enabled_metrics = [
+    // default
+    "cpu", "sched", "percpu", "memory", "cpuLoad", "diskIO", "disk",
+    "network", "app", "process", "perf_event", "oom_event",
+    // not default
+    "process",
+    // DO NOT TURN ON advtcp. it has highly cardinal `container_network_advance_tcp_stats_total`. Or exclude this one before turning on.
+    // "memory_numa", "tcp", "udp", "advtcp", "hugetlb", "referenced_memory", "cpu_topology", "resctrl", "cpuset
+  ]
+}
+
+// Configure a prometheus.scrape component to collect cadvisor metrics.
+prometheus.scrape "scraper" {
+  targets    = prometheus.exporter.cadvisor.docker_metrics.targets
+  forward_to = [ prometheus.relabel.labelator.receiver ]
+}
+
+prometheus.relabel "labelator" {
+  forward_to = [prometheus.remote_write.backend.receiver]
+}
+
+prometheus.remote_write "backend" {
+  endpoint {
+    url = coalesce(sys.env("PROMETHEUS_URL"),"http://prometheus:9090/api/v1/write")
+  }
+}
+
+// Add also Unix exporter
+// https://grafana.com/docs/alloy/latest/reference/components/prometheus/prometheus.exporter.unix/
+// https://grafana.com/docs/grafana-cloud/send-data/metrics/metrics-prometheus/prometheus-config-examples/docker-compose-linux/
+
+prometheus.exporter.unix "hosts" {
+    procfs_path	= "/host/proc"  // /proc default
+    sysfs_path	= "/sys"   // string	The sysfs mount point.	/sys	no
+    rootfs_path	= "/rootfs"     // string	Specify a prefix for accessing the host filesystem.	/	no
+    filesystem {
+        mount_points_exclude = "^/(sys|proc|dev|host|etc)($$|/)"
+    }
+}
+
+// Configure a prometheus.scrape component to collect unix metrics.
+prometheus.scrape "hosts" {
+  targets    = prometheus.exporter.unix.hosts.targets
+  forward_to = [prometheus.relabel.labelator.receiver]
+}
+
+discovery.docker "prometheus_endpoints" {
+  host = "unix:///var/run/docker.sock"
+  filter {
+    name = "label"
+    // this label is used to set datadog prometheus parsing. lets reuse.
+    values = ["prometheus"] 
+  }
+}
+
+// WARNING: make sure to drop high cardinality crap out of it
+prometheus.scrape "prometheus_endpoints" {
+  targets    = discovery.docker.prometheus_endpoints.targets
+  forward_to = [prometheus.relabel.labelator.receiver]
+  metrics_path = "/prometheus/metrics"
+}

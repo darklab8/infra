@@ -28,18 +28,6 @@ resource "docker_network" "grafana" {
 locals {
   grafana_datasources_yaml = file("${path.module}/grafana-datasources.yaml")
 }
-# - name: Prometheus
-#   type: prometheus
-#   uid: prometheus-datasource
-#   access: proxy
-#   orgId: 1
-#   url: http://prometheus:9090
-#   basicAuth: false
-#   isDefault: true
-#   version: 1
-#   editable: true
-#   jsonData:
-#     httpMethod: GET
 # - name: Tempo
 #   type: tempo
 #   access: proxy
@@ -56,6 +44,10 @@ locals {
 #     serviceMap:
 #       datasourceUid: prometheus
 
+
+resource "docker_volume" "grafana_data" {
+  name = "grafana_data"
+}
 
 resource "docker_container" "grafana" {
   name = "grafana"
@@ -89,6 +81,14 @@ resource "docker_container" "grafana" {
       value = labels.value
     }
   }
+
+  mounts {
+    target    = "/var/lib/grafana"
+    source    = docker_volume.grafana_data.name
+    type      = "volume"
+    read_only = false
+  }
+
 
   restart = "always"
   memory  = 1000 # MBs
