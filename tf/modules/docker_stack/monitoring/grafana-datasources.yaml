@@ -1,9 +1,9 @@
 apiVersion: 1
 
 datasources:
-- name: prometheus
+- name: Prometheus
   type: prometheus
-  uid: prometheus
+  uid: prometheus-datasource
   access: proxy
   orgId: 1
   url: http://prometheus:9090
@@ -13,9 +13,9 @@ datasources:
   editable: true
   jsonData:
     httpMethod: GET
-- name: loki
+- name: Loki
   type: loki
-  uid: loki
+  uid: loki-datasource
   access: proxy
   url: http://loki:3100
   basicAuth: false
@@ -24,3 +24,13 @@ datasources:
     timeout: 60
     maxLines: 5000
     tlsSkipVerify: true
+- name: Alertmanager
+  type: alertmanager
+  editable: true
+  url: http://localhost:9093
+  access: proxy
+  jsonData:
+    # Valid options for implementation include mimir, cortex and prometheus
+    implementation: prometheus
+    # Whether or not Grafana should send alert instances to this Alertmanager
+    handleGrafanaManagedAlerts: true

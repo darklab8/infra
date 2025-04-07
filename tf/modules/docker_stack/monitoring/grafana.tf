@@ -16,6 +16,7 @@ locals {
   grafana_envs = {
     GF_SECURITY_ADMIN_PASSWORD = local.grafana_password
     GF_SECURITY_ADMIN_USER     = "admin"
+    GF_FEATURE_TOGGLES_ENABLE  = "alertingSimplifiedRouting,alertingQueryAndExpressionsStepMode"
   }
 }
 
