@@ -53,16 +53,30 @@ prometheus.scrape "hosts" {
 
 discovery.docker "prometheus_endpoints" {
   host = "unix:///var/run/docker.sock"
+  match_first_network = false
   filter {
     name = "label"
-    // this label is used to set datadog prometheus parsing. lets reuse.
     values = ["prometheus"] 
   }
 }
 
-// WARNING: make sure to drop high cardinality crap out of it
 prometheus.scrape "prometheus_endpoints" {
   targets    = discovery.docker.prometheus_endpoints.targets
   forward_to = [prometheus.relabel.labelator.receiver]
-  metrics_path = "/prometheus/metrics"
+  scrape_interval = "60s"
+}
+
+discovery.dockerswarm "prometheus_endpoints_swarm" {
+  host = "unix:///var/run/docker.sock"
+  role = "tasks"
+  filter {
+    name = "label"
+    values = ["prometheus"] 
+  }
+}
+
+prometheus.scrape "prometheus_endpoints_swarm" {
+  targets    = discovery.dockerswarm.prometheus_endpoints_swarm.targets
+  forward_to = [prometheus.relabel.labelator.receiver]
+  scrape_interval = "60s"
 }
