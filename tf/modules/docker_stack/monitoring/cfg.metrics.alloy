@@ -24,6 +24,13 @@ prometheus.scrape "scraper" {
 
 prometheus.relabel "labelator" {
   forward_to = [prometheus.remote_write.backend.receiver]
+
+  rule {
+    source_labels = ["__meta_docker_container_name"]
+    regex = "/(.*)"
+    action = "replace"
+    target_label = "container_name"
+  }
 }
 
 prometheus.remote_write "backend" {
