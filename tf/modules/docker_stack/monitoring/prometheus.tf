@@ -30,7 +30,12 @@ resource "docker_container" "prometheus" {
   entrypoint = ["sh", "-c"]
   command = [join(" && ", [
     "echo '${local.prometheus_config}' > /etc/prometheus/prometheus.yml",
-    "/bin/prometheus --config.file=/etc/prometheus/prometheus.yml --web.enable-remote-write-receiver --storage.tsdb.retention.size=10GB",
+    join(" ", [
+      "/bin/prometheus",
+      "--config.file=/etc/prometheus/prometheus.yml",
+      "--web.enable-remote-write-receiver",
+      "--storage.tsdb.retention.time=30d",
+      "--storage.tsdb.retention.size=10GB",]),
   ])]
   restart = "always"
 

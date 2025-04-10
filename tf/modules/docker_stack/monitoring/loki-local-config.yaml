@@ -10,7 +10,7 @@ compactor:
 
 limits_config:
   metric_aggregation_enabled: true
-  retention_period: 24h
+  retention_period: 336h
   max_query_series: 100000
   ingestion_rate_mb: 30
   ingestion_burst_size_mb: 30
