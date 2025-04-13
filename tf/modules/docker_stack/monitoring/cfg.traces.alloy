@@ -49,8 +49,8 @@ otelcol.processor.transform "default" {
 
 otelcol.processor.batch "default" {
   output {
-    metrics = [otelcol.exporter.otlphttp.default.input]
-    logs    = [otelcol.exporter.otlphttp.default.input]
+    metrics = [otelcol.exporter.prometheus.default.input]
+    logs    = [otelcol.exporter.loki.default.input]
     traces  = [otelcol.exporter.otlphttp.default.input]
   }
 }
@@ -68,4 +68,29 @@ otelcol.exporter.otlphttp "default" {
 tracing {
     sampling_fraction = encoding.from_json(coalesce(sys.env("SAMPING_FRACTION"),"1"))
     write_to = [otelcol.exporter.otlphttp.default.input]
+}
+
+otelcol.exporter.prometheus "default" {
+  forward_to = [prometheus.remote_write.local.receiver]
+
+  include_target_info = true
+  include_scope_info = true
+  resource_to_telemetry_conversion = true
+}
+
+prometheus.remote_write "local" {
+  endpoint {
+    url = coalesce(sys.env("PROMETHEUS_URL"),"http://prometheus:9090/api/v1/write")
+  }
+}
+
+otelcol.exporter.loki "default" {
+  forward_to = [loki.write.local.receiver]
+}
+
+loki.write "local" {
+  endpoint {
+    url = coalesce(sys.env("LOKI_URL"), "http://loki:3100/loki/api/v1/push")
+    tenant_id = ""
+  }
 }
