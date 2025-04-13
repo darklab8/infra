@@ -9,7 +9,7 @@ resource "docker_image" "openssh" {
 }
 
 locals {
-    key = file("~/.ssh/id_rsa.darklab.pub")
+  key = file("~/.ssh/id_rsa.darklab.pub")
 }
 
 locals {

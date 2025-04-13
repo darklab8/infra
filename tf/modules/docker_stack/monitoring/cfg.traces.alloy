@@ -1,0 +1,70 @@
+
+logging {
+  level  = "info"
+  format = "logfmt"
+}
+
+otelcol.receiver.otlp "receiver" {
+  debug_metrics {
+    disable_high_cardinality_metrics = true
+  }
+
+  grpc {
+    endpoint = "0.0.0.0:4317"
+  }
+  http {
+    endpoint = "0.0.0.0:4318"
+  }
+  output {
+    metrics = [otelcol.processor.transform.default.input]
+    logs    = [otelcol.processor.transform.default.input]
+    traces  = [otelcol.processor.transform.default.input]
+  }
+}
+
+otelcol.processor.transform "default" {
+  error_mode = "ignore"
+
+  trace_statements {
+    context = "resource"
+    statements = [
+      `limit(attributes, 500, [])`,
+      `truncate_all(attributes, 20480)`,
+    ]
+  }
+
+  trace_statements {
+    context = "span"
+    statements = [
+      `limit(attributes, 500, [])`,
+      `truncate_all(attributes, 20480)`,
+    ]
+  }
+  output {
+    metrics = [otelcol.processor.batch.default.input]
+    logs    = [otelcol.processor.batch.default.input]
+    traces  = [otelcol.processor.batch.default.input]
+  }
+}
+
+otelcol.processor.batch "default" {
+  output {
+    metrics = [otelcol.exporter.otlphttp.default.input]
+    logs    = [otelcol.exporter.otlphttp.default.input]
+    traces  = [otelcol.exporter.otlphttp.default.input]
+  }
+}
+
+otelcol.exporter.otlphttp "default" {
+  client {
+    endpoint = coalesce(sys.env("TEMPO_URL"),"https://tempo.ingress.local/")
+    tls {
+        insecure_skip_verify = true
+    }
+  }
+}
+
+tracing {
+    sampling_fraction = encoding.from_json(coalesce(sys.env("SAMPING_FRACTION"),"0.1"))
+    write_to = [otelcol.exporter.otlphttp.default.input]
+}

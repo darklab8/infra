@@ -34,3 +34,18 @@ datasources:
     implementation: prometheus
     # Whether or not Grafana should send alert instances to this Alertmanager
     handleGrafanaManagedAlerts: true
+- name: Tempo
+  type: tempo
+  access: proxy
+  orgId: 1
+  url: http://tempo:3200
+  basicAuth: false
+  isDefault: false
+  version: 1
+  editable: true
+  apiVersion: 1
+  uid: tempo-datasource
+  jsonData:
+    httpMethod: GET
+    serviceMap:
+      datasourceUid: prometheus

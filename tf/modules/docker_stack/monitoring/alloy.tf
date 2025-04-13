@@ -120,3 +120,42 @@ resource "docker_container" "alloy_metrics" {
     ]
   }
 }
+
+locals {
+  alloy_traces_config = file("${path.module}/cfg.traces.alloy")
+}
+
+resource "docker_container" "alloy_traces" {
+  name    = "alloy-traces"
+  image   = docker_image.alloy.name
+  env     = [for k, v in local.alloy_envs : "${k}=${v}"]
+  restart = "always"
+
+  networks_advanced {
+    name    = docker_network.grafana.id
+    aliases = ["alloy-traces"]
+  }
+
+  entrypoint = ["sh", "-c"]
+  command = [join(" && ", [
+    "echo '${local.alloy_logs_config}' > /etc/alloy/config.alloy",
+    "/bin/alloy run /etc/alloy/config.alloy --storage.path=/var/lib/alloy/data",
+  ])]
+
+  volumes {
+    host_path      = "/var/run/docker.sock"
+    container_path = "/var/run/docker.sock"
+    read_only      = true
+  }
+
+  # exposes 4318
+
+  memory = 1000 # MBs
+  lifecycle {
+    ignore_changes = [
+      memory_swap,
+      network_mode,
+      image,
+    ]
+  }
+}
