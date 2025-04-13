@@ -138,7 +138,7 @@ resource "docker_container" "alloy_traces" {
 
   entrypoint = ["sh", "-c"]
   command = [join(" && ", [
-    "echo '${local.alloy_logs_config}' > /etc/alloy/config.alloy",
+    "echo '${local.alloy_traces_config}' > /etc/alloy/config.alloy",
     "/bin/alloy run /etc/alloy/config.alloy --storage.path=/var/lib/alloy/data",
   ])]
 

@@ -57,14 +57,15 @@ otelcol.processor.batch "default" {
 
 otelcol.exporter.otlphttp "default" {
   client {
-    endpoint = coalesce(sys.env("TEMPO_URL"),"https://tempo.ingress.local/")
+    endpoint = coalesce(sys.env("TEMPO_URL"),"http://tempo:4318/")
     tls {
+        insecure             = true
         insecure_skip_verify = true
     }
   }
 }
 
 tracing {
-    sampling_fraction = encoding.from_json(coalesce(sys.env("SAMPING_FRACTION"),"0.1"))
+    sampling_fraction = encoding.from_json(coalesce(sys.env("SAMPING_FRACTION"),"1"))
     write_to = [otelcol.exporter.otlphttp.default.input]
 }

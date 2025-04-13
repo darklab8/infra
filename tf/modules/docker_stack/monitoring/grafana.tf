@@ -17,6 +17,7 @@ locals {
     GF_SECURITY_ADMIN_PASSWORD = local.grafana_password
     GF_SECURITY_ADMIN_USER     = "admin"
     GF_FEATURE_TOGGLES_ENABLE  = "alertingSimplifiedRouting,alertingQueryAndExpressionsStepMode"
+    GF_INSTALL_PLUGINS         = "https://storage.googleapis.com/integration-artifacts/grafana-exploretraces-app/grafana-exploretraces-app-latest.zip;grafana-traces-app"
   }
 }
 
@@ -29,22 +30,6 @@ resource "docker_network" "grafana" {
 locals {
   grafana_datasources_yaml = file("${path.module}/grafana-datasources.yaml")
 }
-# - name: Tempo
-#   type: tempo
-#   access: proxy
-#   orgId: 1
-#   url: http://tempo:3200
-#   basicAuth: false
-#   isDefault: false
-#   version: 1
-#   editable: true
-#   apiVersion: 1
-#   uid: tempo-datasource
-#   jsonData:
-#     httpMethod: GET
-#     serviceMap:
-#       datasourceUid: prometheus
-
 
 resource "docker_volume" "grafana_data" {
   name = "grafana_data"
