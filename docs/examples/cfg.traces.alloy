@@ -1,0 +1,19 @@
+faro.receiver "default" {
+    server {
+        listen_address = "0.0.0.0"
+        listen_port  = 12344
+        cors_allowed_origins     = ["*"]
+
+        rate_limiting {
+            rate = 100
+        }
+    }
+
+    sourcemaps {
+    }
+
+    output {
+        logs   = [loki.write.local.receiver]
+        traces = [otelcol.exporter.otlphttp.default.input]
+    }
+}

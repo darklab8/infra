@@ -8,3 +8,7 @@ module "monitoring" {
   zone                    = var.zone
   ipv4_address            = var.ipv4_address
 }
+
+# module "bastion" {
+#   source = "./bastion"
+# }

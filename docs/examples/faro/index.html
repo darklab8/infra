@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Href Attribute Example</title>
+    <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
+    <script>
+        // Initialize Faro when the main bundle loads
+        window.init = () => {
+            window.GrafanaFaroWebSdk.initializeFaro({
+                instrumentations: [
+                    new window.GrafanaFaroWebSdk.ErrorsInstrumentation(),
+                    new window.GrafanaFaroWebSdk.ConsoleInstrumentation({}),
+                    new window.GrafanaFaroWebSdk.SessionInstrumentation(),
+                ],
+            app: {
+                name: 'my-app2',
+                version: '1.0.0', // Optional, but recommended
+            },
+            url: 'http://localhost:12344/collect',
+            });
+        };
+
+        // Dynamically add the tracing instrumentation when the tracing bundle loads
+        window.addTracing = () => {
+            window.GrafanaFaroWebSdk.faro.instrumentations.add(new window.GrafanaFaroWebTracing.TracingInstrumentation());
+        };
+    </script>
+  </head>
+  <body>
+    <script
+      src="https://unpkg.com/@grafana/faro-web-sdk@^1.0.0/dist/bundle/faro-web-sdk.iife.js"
+      onload="window.init()"
+    ></script>
+    <script
+      src="https://unpkg.com/@grafana/faro-web-tracing@^1.0.0/dist/bundle/faro-web-tracing.iife.js"
+      onload="window.addTracing()"
+    ></script>
+    <h1>Href Attribute Example</h1>
+    <p>
+      <a href="https://example.com">The example link</a>
+
+      <button hx-get="/clicked.html"
+        hx-trigger="click"
+        hx-target="#parent-div"
+        hx-swap="outerHTML">
+        Click Me!
+      </button>
+      <div id="parent-div">444</div>
+    </p>
+  </body>
+</html>

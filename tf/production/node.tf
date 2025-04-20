@@ -14,7 +14,7 @@ module "node_darklab_cax21" {
 
 provider "docker" {
   alias    = "darklab"
-  host     = "ssh://root@${module.node_darklab_cax21.ipv4_address}:22"
+  host     = "ssh://darklab"
   ssh_opts = ["-o", "StrictHostKeyChecking=no", "-o", "UserKnownHostsFile=/dev/null", "-i", "~/.ssh/id_rsa.darklab"]
 }
 

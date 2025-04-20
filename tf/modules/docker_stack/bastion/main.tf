@@ -4,8 +4,12 @@ resource "docker_network" "network" {
   driver     = "overlay"
 }
 
+data "docker_network" "grafana" {
+  name       = "grafana"
+}
+
 resource "docker_image" "openssh" {
-  name = "linuxserver/openssh-server:amd64-version-9.9_p2-r0"
+  name = "linuxserver/openssh-server:version-9.9_p2-r0"
 }
 
 locals {
@@ -23,6 +27,10 @@ resource "docker_container" "openssh" {
 
   networks_advanced {
     name = docker_network.network.id
+  }
+
+  networks_advanced {
+    name = data.docker_network.grafana.id
   }
 
   env = [
