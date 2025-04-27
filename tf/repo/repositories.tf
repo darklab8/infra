@@ -16,7 +16,7 @@ locals {
     }
     darkstat = {
       name                = "fl-darkstat"
-      description         = "Static site generator for Freelancer Discovery community to provide info about game stuff for players"
+      description         = "web site for Freelancer Discovery community to provide info about game stuff for players. It is able to switch between SSG and SSR ways to run it."
       webhook_url_commits = data.external.issues_webhook.result.url_commits_darkstat
       secrets = {
         DOCKERHUB_TOKEN = data.external.docker_darkwind8_push_token.result["token"]

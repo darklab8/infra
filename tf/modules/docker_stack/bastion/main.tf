@@ -5,7 +5,7 @@ resource "docker_network" "network" {
 }
 
 data "docker_network" "grafana" {
-  name       = "grafana"
+  name = "grafana"
 }
 
 resource "docker_image" "openssh" {

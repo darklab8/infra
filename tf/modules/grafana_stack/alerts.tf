@@ -197,10 +197,10 @@ resource "grafana_rule_group" "alerts_nodes0" {
 }
 
 resource "grafana_rule_group" "rule_group_15cad967beae7328" {
-  org_id           = 1
-  name             = "darkbot_uptime_health"
-  folder_uid       = "fei55y3yi1340d"
-  interval_seconds = 60
+  org_id             = 1
+  name               = "darkbot_uptime_health"
+  folder_uid         = "fei55y3yi1340d"
+  interval_seconds   = 60
   disable_provenance = local.alert_disable_provenance
 
 
