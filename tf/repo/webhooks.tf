@@ -7,7 +7,6 @@ locals {
     darklint = local.public_repositories.darklint
     darkstat = local.public_repositories.darkstat
     darkbot  = local.public_repositories.darkbot
-    ctrlv    = local.public_repositories.ctrlv
   }
 }
 
@@ -24,7 +23,10 @@ resource "github_repository_webhook" "for_issues" {
 
   active = true
 
-  events = ["issues"]
+  events = [
+    "issues",
+    "issue_comment",
+  ]
 }
 
 # push, release
