@@ -206,7 +206,7 @@
               "uid": "prometheus-datasource"
             },
             "editorMode": "code",
-            "expr": "sum (irate(darkstat_http_by_ip_finished_total[10m])) by (status_code)",
+            "expr": "sum (increase(darkstat_http_by_ip_finished_total[10m])) by (status_code, environment)",
             "legendFormat": "__auto",
             "range": true,
             "refId": "A"
@@ -245,6 +245,10 @@
         },
         "id": 3,
         "options": {
+          "displayLabels": [
+            "value",
+            "name"
+          ],
           "legend": {
             "displayMode": "list",
             "placement": "bottom",
@@ -273,9 +277,9 @@
             },
             "editorMode": "code",
             "exemplar": false,
-            "expr": "sum (darkstat_http_by_ip_finished_total{status_code=~\"2.*|3.*\"}) by (status_code, ip)",
+            "expr": "sum (darkstat_http_by_ip_finished_total{status_code=~\"2.*|3.*\", environment=\"production\"}) by (status_code, ip)",
             "instant": true,
-            "legendFormat": "__auto",
+            "legendFormat": "{{ip}} - {{status_code}}",
             "range": false,
             "refId": "A"
           }
@@ -538,7 +542,7 @@
               "uid": "prometheus-datasource"
             },
             "editorMode": "code",
-            "expr": "sum (rate(darkstat_http_by_pattern_finished_total[10m])) by (status_code, pattern)",
+            "expr": "sum (increase(darkstat_http_by_pattern_finished_total[10m])) by (status_code, pattern)",
             "legendFormat": "__auto",
             "range": true,
             "refId": "A"
@@ -771,6 +775,9 @@
         },
         "id": 8,
         "options": {
+          "displayLabels": [
+            "value"
+          ],
           "legend": {
             "displayMode": "list",
             "placement": "bottom",
@@ -801,7 +808,7 @@
             "exemplar": false,
             "expr": "sum by(status_code, pattern) (darkstat_http_by_pattern_duration_seconds_sum{})",
             "instant": true,
-            "legendFormat": "__auto",
+            "legendFormat": "{{pattern}}:{{status_code}}",
             "range": false,
             "refId": "A"
           }
@@ -871,7 +878,7 @@
         },
         "gridPos": {
           "h": 8,
-          "w": 6,
+          "w": 8,
           "x": 0,
           "y": 16
         },
@@ -897,13 +904,13 @@
               "uid": "prometheus-datasource"
             },
             "editorMode": "code",
-            "expr": "sum by(status_code, pattern) (rate(darkstat_http_by_pattern_duration_seconds_sum{}[10m])) /\nsum by(status_code, pattern) (rate(darkstat_http_by_pattern_finished_total{}[10m]))",
+            "expr": "avg (histogram_quantile(0.50, darkstat_http_by_pattern_duration_seconds_hist_bucket{})) by (status_code, pattern, environment)",
             "legendFormat": "__auto",
             "range": true,
             "refId": "A"
           }
         ],
-        "title": "Http Average Execution By pattern",
+        "title": "P50 Http Execution By pattern",
         "type": "timeseries"
       },
       {
@@ -968,8 +975,8 @@
         },
         "gridPos": {
           "h": 8,
-          "w": 6,
-          "x": 6,
+          "w": 8,
+          "x": 8,
           "y": 16
         },
         "id": 10,
@@ -1065,8 +1072,8 @@
         },
         "gridPos": {
           "h": 8,
-          "w": 6,
-          "x": 12,
+          "w": 8,
+          "x": 16,
           "y": 16
         },
         "id": 11,
@@ -1162,9 +1169,229 @@
         },
         "gridPos": {
           "h": 8,
-          "w": 6,
-          "x": 18,
-          "y": 16
+          "w": 8,
+          "x": 0,
+          "y": 24
+        },
+        "id": 16,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "hideZeros": false,
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "11.6.0",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "prometheus-datasource"
+            },
+            "editorMode": "code",
+            "expr": "sum by(status_code, pattern) (rate(darkstat_http_by_pattern_duration_seconds_hist_sum{pattern!=\"index.html\"}[10m])) /\nsum by(status_code, pattern) (rate(darkstat_http_by_pattern_duration_seconds_hist_count{pattern!=\"index.html\"}[10m]))",
+            "legendFormat": "__auto",
+            "range": true,
+            "refId": "A"
+          }
+        ],
+        "title": "Http Average Execution By pattern",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus-datasource"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "barWidthFactor": 0.6,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green"
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "s"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 8,
+          "x": 8,
+          "y": 24
+        },
+        "id": 15,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "hideZeros": false,
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "11.6.0",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "prometheus-datasource"
+            },
+            "editorMode": "code",
+            "expr": "avg (histogram_quantile(0.50, darkstat_http_by_pattern_duration_seconds_hist_bucket{})) by (status_code, environment)",
+            "legendFormat": "P50 {{environment}}, {{status_code}}",
+            "range": true,
+            "refId": "A"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "prometheus-datasource"
+            },
+            "editorMode": "code",
+            "expr": "avg (histogram_quantile(0.70, darkstat_http_by_pattern_duration_seconds_hist_bucket{})) by (status_code, environment)",
+            "hide": false,
+            "instant": false,
+            "legendFormat": "P70 {{environment}}, {{status_code}}",
+            "range": true,
+            "refId": "B"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "prometheus-datasource"
+            },
+            "editorMode": "code",
+            "expr": "avg (histogram_quantile(0.90, darkstat_http_by_pattern_duration_seconds_hist_bucket{})) by (status_code, environment)",
+            "hide": false,
+            "instant": false,
+            "legendFormat": "P90 {{environment}}, {{status_code}}",
+            "range": true,
+            "refId": "C"
+          }
+        ],
+        "title": "P50-P75-P90 latencies",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus-datasource"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "barWidthFactor": 0.6,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green"
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "s"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 8,
+          "x": 16,
+          "y": 24
         },
         "id": 14,
         "options": {
@@ -1188,18 +1415,106 @@
               "uid": "prometheus-datasource"
             },
             "editorMode": "code",
-            "expr": "sum by(status_code) (rate(darkstat_http_by_pattern_duration_seconds_sum{}[10m]))",
+            "expr": "sum by (status_code, environment) (increase(darkstat_http_by_pattern_duration_seconds_sum{}[10m]))",
+            "hide": false,
+            "instant": false,
             "legendFormat": "__auto",
             "range": true,
-            "refId": "A"
+            "refId": "C"
+          }
+        ],
+        "title": "Load By Status Code and Env",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus-datasource"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "barWidthFactor": 0.6,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green"
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "bytes"
           },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 8,
+          "x": 0,
+          "y": 32
+        },
+        "id": 17,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "hideZeros": false,
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "11.6.0",
+        "targets": [
           {
             "datasource": {
               "type": "prometheus",
               "uid": "prometheus-datasource"
             },
             "editorMode": "code",
-            "expr": "sum by(status_code) (irate(darkstat_http_by_pattern_duration_seconds_sum{}[10m]))",
+            "expr": "sum by(status_code, pattern) (darkstat_http_by_pattern_body_size_bytes_hist_sum{environment=\"production\"})",
             "hide": false,
             "instant": false,
             "legendFormat": "__auto",
@@ -1207,7 +1522,203 @@
             "refId": "B"
           }
         ],
-        "title": "Load By Status Code",
+        "title": "Http Body Size Sum Load By pattern",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus-datasource"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "barWidthFactor": 0.6,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green"
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "bytes"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 8,
+          "x": 8,
+          "y": 32
+        },
+        "id": 19,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "hideZeros": false,
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "11.6.0",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "prometheus-datasource"
+            },
+            "editorMode": "code",
+            "expr": "sum by(status_code, pattern) (increase(darkstat_http_by_pattern_body_size_bytes_hist_sum{environment=\"production\"}[10m])) /\nsum by(status_code, pattern) (increase(darkstat_http_by_pattern_body_size_bytes_hist_count{environment=\"production\"}[10m]))",
+            "legendFormat": "__auto",
+            "range": true,
+            "refId": "A"
+          }
+        ],
+        "title": "Http Average Body Size By pattern",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus-datasource"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "barWidthFactor": 0.6,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green"
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "bytes"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 8,
+          "x": 16,
+          "y": 32
+        },
+        "id": 18,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "hideZeros": false,
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "11.6.0",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "prometheus-datasource"
+            },
+            "editorMode": "code",
+            "expr": "avg (histogram_quantile(0.50, darkstat_http_by_pattern_body_size_bytes_hist_bucket{environment=\"production\"})) by (status_code, pattern)",
+            "hide": false,
+            "instant": false,
+            "legendFormat": "__auto",
+            "range": true,
+            "refId": "B"
+          }
+        ],
+        "title": "Http Body Size P50 pattern",
         "type": "timeseries"
       }
     ],
@@ -1218,12 +1729,12 @@
       "list": []
     },
     "time": {
-      "from": "now-1h",
+      "from": "now-15m",
       "to": "now"
     },
     "timepicker": {},
     "timezone": "browser",
     "title": "App Darkstat",
     "uid": "belbdnu2uqe4gd",
-    "version": 1
+    "version": 5
   }
