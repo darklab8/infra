@@ -471,7 +471,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "s"
         },
         "overrides": []
       },
@@ -506,7 +507,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "darkbot_uptime_minutes{error=\"\"}",
+          "expr": "darkbot_uptime_seconds{error=\"\"}",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "legendFormat": "{{guild_name}}",
@@ -515,7 +516,7 @@
           "useBackend": false
         }
       ],
-      "title": "Uptime minutes",
+      "title": "Uptime",
       "type": "timeseries"
     },
     {
@@ -735,7 +736,7 @@
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "App CUSTOM",
+  "title": "App Darkbot",
   "uid": "deiax9gq89b0gd",
-  "version": 6
+  "version": 7
 }
