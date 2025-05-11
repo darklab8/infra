@@ -9,6 +9,6 @@ module "monitoring" {
   ipv4_address            = var.ipv4_address
 }
 
-# module "bastion" {
-#   source = "./bastion"
-# }
+module "bastion" {
+  source = "./bastion"
+}

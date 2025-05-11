@@ -87,7 +87,7 @@ resource "grafana_rule_group" "alerts_nodes0" {
     labels = {
       "ping_channel" = "true"
     }
-    name          = "Instance disk usage > 70%"
+    name          = "Instance disk usage > 90%"
     no_data_state = "NoData"
     data {
       datasource_uid = "prometheus-datasource"
@@ -158,7 +158,7 @@ resource "grafana_rule_group" "alerts_nodes0" {
             {
               evaluator = {
                 params = [
-                  70,
+                  90,
                 ]
                 type = "gt"
               }
