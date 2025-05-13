@@ -22,7 +22,10 @@ resource "docker_container" "alloy_logs" {
     name    = docker_network.grafana.id
     aliases = ["alloy-logs"]
   }
-
+  log_opts = {
+    "mode" : "non-blocking"
+    "max-buffer-size" : "500m"
+  }
   entrypoint = ["sh", "-c"]
   command = [join(" && ", [
     "echo '${local.alloy_logs_config}' > /etc/alloy/config.alloy",
@@ -59,7 +62,10 @@ resource "docker_container" "alloy_metrics" {
     name    = docker_network.grafana.id
     aliases = ["alloy-metrics"]
   }
-
+  log_opts = {
+    "mode" : "non-blocking"
+    "max-buffer-size" : "500m"
+  }
   entrypoint = ["sh", "-c"]
   command = [join(" && ", [
     "echo '${local.alloy_metrics_config}' > /etc/alloy/config.alloy",
@@ -109,6 +115,13 @@ resource "docker_container" "alloy_metrics" {
     read_only      = true
   }
 
+  volumes {
+    # smth from cadvisor
+    container_path = "/host/etc"
+    host_path      = "/etc"
+    read_only      = true
+  }
+
   privileged = true
 
   memory = 1000 # MBs
@@ -135,7 +148,10 @@ resource "docker_container" "alloy_traces" {
     name    = docker_network.grafana.id
     aliases = ["alloy-traces"]
   }
-
+  log_opts = {
+    "mode" : "non-blocking"
+    "max-buffer-size" : "500m"
+  }
   entrypoint = ["sh", "-c"]
   command = [join(" && ", [
     "echo '${local.alloy_traces_config}' > /etc/alloy/config.alloy",

@@ -34,7 +34,10 @@ resource "docker_container" "tempo" {
     ]),
   ])]
   restart = "always"
-
+  log_opts = {
+    "mode" : "non-blocking"
+    "max-buffer-size" : "500m"
+  }
   mounts {
     target    = "/var/tempo"
     source    = docker_volume.tempo_data.name

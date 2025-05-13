@@ -32,7 +32,10 @@ resource "docker_container" "openssh" {
   networks_advanced {
     name = data.docker_network.grafana.id
   }
-
+  log_opts = {
+    "mode" : "non-blocking"
+    "max-buffer-size" : "500m"
+  }
   env = [
     "PUBLIC_KEY=${local.key}",
     "PUBLIC_KEY_URL=https://github.com/dd84ai.keys",

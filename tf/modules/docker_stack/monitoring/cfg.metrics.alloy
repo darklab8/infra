@@ -33,6 +33,18 @@ prometheus.relabel "labelator" {
   }
 }
 
+prometheus.relabel "host_metrics" {
+  forward_to = [prometheus.remote_write.backend.receiver]
+  rule {
+      target_label = "instance"
+      replacement = string.trim_space(local.file.hostname.content)
+  }
+}
+
+local.file "hostname" {
+  filename  = "/host/etc/hostname"
+}
+
 prometheus.remote_write "backend" {
   endpoint {
     url = coalesce(sys.env("PROMETHEUS_URL"),"http://prometheus:9090/api/v1/write")
@@ -48,14 +60,14 @@ prometheus.exporter.unix "hosts" {
     sysfs_path	= "/sys"   // string	The sysfs mount point.	/sys	no
     rootfs_path	= "/rootfs"     // string	Specify a prefix for accessing the host filesystem.	/	no
     filesystem {
-        mount_points_exclude = "^/(sys|proc|dev|host|etc)($$|/)"
+        mount_points_exclude = "^/(sys|proc|dev|host)($$|/)"
     }
 }
 
 // Configure a prometheus.scrape component to collect unix metrics.
 prometheus.scrape "hosts" {
   targets    = prometheus.exporter.unix.hosts.targets
-  forward_to = [prometheus.relabel.labelator.receiver]
+  forward_to = [prometheus.relabel.host_metrics.receiver]
 }
 
 discovery.docker "prometheus_endpoints" {

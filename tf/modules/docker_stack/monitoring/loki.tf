@@ -34,6 +34,11 @@ resource "docker_container" "loki" {
   ])]
   restart = "always"
 
+  log_opts = {
+    "mode" : "non-blocking"
+    "max-buffer-size" : "500m"
+  }
+
   mounts {
     target    = "/data"
     source    = docker_volume.loki_data.name

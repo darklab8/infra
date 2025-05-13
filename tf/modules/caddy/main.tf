@@ -23,7 +23,10 @@ resource "docker_container" "caddy" {
   networks_advanced {
     name = docker_network.network.id
   }
-
+  log_opts = {
+    "mode" : "non-blocking"
+    "max-buffer-size" : "500m"
+  }
   # Useful for rapid debugging. `docker stop caddy`, `docker start caddy`
   # env = [
   #   "CADDY_DOCKER_CADDYFILE_PATH=/config/Caddyfile"

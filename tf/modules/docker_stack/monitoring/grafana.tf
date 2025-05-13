@@ -55,6 +55,10 @@ resource "docker_container" "grafana" {
     "echo '${local.grafana_datasources_yaml}' > /etc/grafana/provisioning/datasources/datasources.yaml",
     "/run.sh",
   ])]
+  log_opts = {
+    "mode" : "non-blocking"
+    "max-buffer-size" : "500m"
+  }
 
   dynamic "labels" {
     for_each = merge({
