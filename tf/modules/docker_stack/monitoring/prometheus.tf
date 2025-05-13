@@ -34,6 +34,7 @@ resource "docker_container" "prometheus" {
       "/bin/prometheus",
       "--config.file=/etc/prometheus/prometheus.yml",
       "--web.enable-remote-write-receiver",
+      "--enable-feature=exemplar-storage",
       "--storage.tsdb.retention.time=30d",
       "--storage.tsdb.retention.size=10GB",
     ]),
