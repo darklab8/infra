@@ -69,6 +69,26 @@ resource "hcloud_firewall" "basic_firewall" {
       "::/0"
     ]
   }
+
+   rule {
+    direction = "in"
+    protocol  = "udp"
+    port      = "443"
+    source_ips = [
+      "0.0.0.0/0",
+      "::/0"
+    ]
+  }
+
+  dynamic "rule" {
+    for_each = var.firewall_rules
+    content {
+      direction = rule.value["direction"]
+      protocol = rule.value["protocol"]
+      port = rule.value["port"]
+      source_ips = rule.value["source_ips"]
+    }
+  }
 }
 
 resource "hcloud_firewall_attachment" "fw_ref" {
