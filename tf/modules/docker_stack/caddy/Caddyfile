@@ -1,4 +1,5 @@
 {
+        # stuff needed for grpc reverse proxy to work
         servers {
                 protocols h1 h2 h2c
         }

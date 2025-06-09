@@ -1,5 +1,5 @@
 data "hcloud_ssh_key" "darklab" {
-  name       = "darklab_key"
+  name = "darklab_key"
 }
 
 output "id" {

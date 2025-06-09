@@ -1,5 +1,5 @@
 module "caddy" {
-  source = "../caddy"
+  source = "./caddy"
 }
 
 module "monitoring" {

@@ -3,13 +3,12 @@ module "ssh_key" {
 }
 
 module "node_darklab_cax21" {
-  source      = "../modules/hetzner_server"
-  environment = "production"
-  name        = "darklab"
-  hardware    = "cax21"
-  backups     = true
-  ssh_key_id  = module.ssh_key.id
-  datacenter  = "hel1-dc2"
+  source     = "../modules/hetzner_server"
+  name       = "darklab"
+  hardware   = "cax21"
+  backups    = true
+  ssh_key_id = module.ssh_key.id
+  datacenter = "hel1-dc2"
 }
 
 provider "docker" {
