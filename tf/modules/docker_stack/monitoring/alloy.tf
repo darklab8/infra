@@ -13,6 +13,7 @@ locals {
 }
 
 resource "docker_container" "alloy_logs" {
+  count   = var.logging.enabled ? 1 : 0
   name    = "alloy-logs"
   image   = docker_image.alloy.name
   env     = [for k, v in local.alloy_envs : "${k}=${v}"]
@@ -53,6 +54,7 @@ locals {
 }
 
 resource "docker_container" "alloy_metrics" {
+  count   = var.metrics.enabled ? 1 : 0
   name    = "alloy-metrics"
   image   = docker_image.alloy.name
   env     = [for k, v in local.alloy_envs : "${k}=${v}"]
@@ -139,6 +141,7 @@ locals {
 }
 
 resource "docker_container" "alloy_traces" {
+  count   = var.tracing.enabled ? 1 : 0
   name    = "alloy-traces"
   image   = docker_image.alloy.name
   env     = [for k, v in local.alloy_envs : "${k}=${v}"]

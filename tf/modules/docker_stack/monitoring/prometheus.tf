@@ -17,7 +17,8 @@ resource "docker_volume" "prometheus_data" {
 }
 
 resource "docker_container" "prometheus" {
-  name = "prometheus"
+  count = var.metrics.enabled ? 1 : 0
+  name  = "prometheus"
 
   image = docker_image.prometheus.name
   env   = [for k, v in local.prometheus_envs : "${k}=${v}"]

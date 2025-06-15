@@ -4,17 +4,12 @@ resource "docker_image" "grafana" {
   keep_locally = true
 }
 
-data "external" "secrets" {
-  program = ["pass", "personal/terraform/grafana"]
-}
-
 locals {
   # to add some day anon access?
   # GF_AUTH_ANONYMOUS_ENABLED=true
   # GF_AUTH_ANONYMOUS_ORG_ROLE=YourRole
-  grafana_password = data.external.secrets.result["grafana_password"]
   grafana_envs = {
-    GF_SECURITY_ADMIN_PASSWORD = local.grafana_password
+    GF_SECURITY_ADMIN_PASSWORD = var.grafana_password
     GF_SECURITY_ADMIN_USER     = "admin"
     GF_FEATURE_TOGGLES_ENABLE  = "alertingSimplifiedRouting,alertingQueryAndExpressionsStepMode"
     GF_INSTALL_PLUGINS         = "https://storage.googleapis.com/integration-artifacts/grafana-exploretraces-app/grafana-exploretraces-app-latest.zip;grafana-traces-app"
@@ -62,7 +57,7 @@ resource "docker_container" "grafana" {
 
   dynamic "labels" {
     for_each = merge({
-      "caddy_0"               = "${local.dns.grafana.prefix}.${var.zone}"
+      "caddy_0"               = var.grafana_domain
       "caddy_0.reverse_proxy" = "{{upstreams 3000}}"
       },
     )

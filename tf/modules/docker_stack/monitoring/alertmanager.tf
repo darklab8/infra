@@ -10,7 +10,7 @@ locals {
 
 locals {
   alertmanager_config = templatefile("${path.module}/alertmanager.yaml", {
-    discord_webhook_url = data.external.secrets.result["discord_webhook_url"]
+    discord_webhook_url = var.alerts.discord_webhook_url
   })
 }
 
@@ -19,7 +19,8 @@ resource "docker_volume" "alertmanager_data" {
 }
 
 resource "docker_container" "alertmanager" {
-  name = "alertmanager"
+  count = var.alerts.enabled ? 1 : 0
+  name  = "alertmanager"
 
   image = docker_image.alertmanager.name
   env   = [for k, v in local.alertmanager_envs : "${k}=${v}"]

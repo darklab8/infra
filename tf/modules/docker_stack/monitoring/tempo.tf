@@ -17,6 +17,7 @@ resource "docker_volume" "tempo_data" {
 }
 
 resource "docker_container" "tempo" {
+  count = var.tracing.enabled ? 1 : 0
   name  = "tempo"
   image = docker_image.tempo.name
   env   = [for k, v in local.tempo_envs : "${k}=${v}"]

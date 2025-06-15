@@ -17,7 +17,8 @@ resource "docker_volume" "loki_data" {
 }
 
 resource "docker_container" "loki" {
-  name = "loki"
+  count = var.logging.enabled ? 1 : 0
+  name  = "loki"
 
   image = docker_image.loki.name
   env   = [for k, v in local.loki_envs : "${k}=${v}"]
