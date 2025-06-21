@@ -86,7 +86,21 @@ resource "grafana_data_source" "tempo" {
     }
     tracesToMetrics = {
       datasourceUid = local.prometheus_uid
-      queries       = []
+      # Example of configuring Traces to Metrics. Disabled because not super useful in comparison to proper dashboard
+      # tags = [
+      #   { key = "service.name", value = "service" },
+      #   { key="span_name", value = "span_name"  }, # if u will add it to attributes, u will be able to filter by it
+      # ]
+      # queries = [
+      #   {
+      #     name = "Traces latency P90"
+      #     query= "histogram_quantile(0.90, sum(rate(traces_spanmetrics_latency_bucket{$__tags}[5m])) by (le, span_name))"
+      #   },
+      #   {
+      #     name = "Traces latency P50"
+      #     query= "histogram_quantile(0.50, sum(rate(traces_spanmetrics_latency_bucket{$__tags}[5m])) by (le, span_name))"
+      #   }
+      # ]
     }
   })
 }
