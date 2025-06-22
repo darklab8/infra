@@ -1,0 +1,3 @@
+module "datasources" {
+  source = "./datasources"
+}
