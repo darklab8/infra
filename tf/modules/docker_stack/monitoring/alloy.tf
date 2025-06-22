@@ -161,12 +161,6 @@ resource "docker_container" "alloy_traces" {
     "/bin/alloy run /etc/alloy/config.alloy --storage.path=/var/lib/alloy/data",
   ])]
 
-  volumes {
-    host_path      = "/var/run/docker.sock"
-    container_path = "/var/run/docker.sock"
-    read_only      = true
-  }
-
   # exposes 4318
 
   memory = 1000 # MBs
