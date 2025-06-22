@@ -47,7 +47,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 4,
         "w": 6,
         "x": 0,
         "y": 0
@@ -110,114 +110,81 @@
         "type": "prometheus",
         "uid": "prometheus-datasource"
       },
-      "description": "overall request rate per minute over last 3 minutes",
+      "description": "request rate per minute over last 3 minutes",
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "mappings": [],
           "thresholds": {
-            "mode": "percentage",
-            "steps": [
-              {
-                "color": "green"
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 3,
-        "x": 6,
-        "y": 0
-      },
-      "id": 8,
-      "options": {
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto"
-      },
-      "pluginVersion": "11.6.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus-datasource"
-          },
-          "editorMode": "code",
-          "expr": "sum(increase(traces_spanmetrics_calls_total{span_kind=~\"$span_kind\",service=~\"${service}\", span_name=~\"$span_name\"}[$interval]))",
-          "hide": false,
-          "instant": false,
-          "range": true,
-          "refId": "B"
-        }
-      ],
-      "title": "Overall Request Rate Per $interval",
-      "type": "gauge"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus-datasource"
-      },
-      "description": "percentage of HTTP status 5xx in all requests",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "percentage",
+            "mode": "absolute",
             "steps": [
               {
                 "color": "green"
               },
               {
                 "color": "red",
-                "value": 10
+                "value": 80
               }
             ]
           },
-          "unit": "percentunit"
+          "unit": "reqpm"
         },
         "overrides": []
       },
       "gridPos": {
         "h": 8,
-        "w": 3,
-        "x": 9,
+        "w": 6,
+        "x": 6,
         "y": 0
       },
-      "id": 9,
+      "id": 13,
       "options": {
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
         },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto"
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
       },
       "pluginVersion": "11.6.0",
       "targets": [
@@ -227,15 +194,16 @@
             "uid": "prometheus-datasource"
           },
           "editorMode": "code",
-          "exemplar": false,
-          "expr": "sum(increase(traces_service_graph_request_failed_total{span_kind=~\"$span_kind\",service=~\"${service}\"}[$interval])) OR on() vector(0)",
-          "instant": true,
-          "range": false,
-          "refId": "A"
+          "expr": "sum by (client, server)(increase(traces_service_graph_request_failed_total{service=~\"${service}\", span_name=~\"$span_name\"}[$interval])) OR on() vector(0)",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{label_name}}",
+          "range": true,
+          "refId": "B"
         }
       ],
-      "title": "Overall Error Rate",
-      "type": "gauge"
+      "title": "Tracing Span Error Rate in $interval",
+      "type": "timeseries"
     },
     {
       "datasource": {
@@ -391,6 +359,138 @@
         "type": "prometheus",
         "uid": "prometheus-datasource"
       },
+      "description": "overall request rate per minute over last 3 minutes",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 0,
+        "y": 4
+      },
+      "id": 8,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus-datasource"
+          },
+          "editorMode": "code",
+          "expr": "sum(increase(traces_spanmetrics_calls_total{span_kind=~\"$span_kind\",service=~\"${service}\", span_name=~\"$span_name\"}[$interval]))",
+          "hide": false,
+          "instant": false,
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "Overall Request Rate Per $interval",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus-datasource"
+      },
+      "description": "percentage of HTTP status 5xx in all requests",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 10
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 3,
+        "y": 4
+      },
+      "id": 9,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus-datasource"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(increase(traces_service_graph_request_failed_total{span_kind=~\"$span_kind\",service=~\"${service}\"}[$interval])) OR on() vector(0)",
+          "instant": true,
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Overall Error Rate",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus-datasource"
+      },
       "description": "request rate per minute over last 3 minutes",
       "fieldConfig": {
         "defaults": {
@@ -461,10 +561,14 @@
       "id": 1,
       "options": {
         "legend": {
-          "calcs": [],
-          "displayMode": "list",
+          "calcs": [
+            "lastNotNull",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
           "placement": "bottom",
-          "showLegend": false
+          "showLegend": true
         },
         "tooltip": {
           "hideZeros": false,
@@ -496,7 +600,7 @@
         "type": "prometheus",
         "uid": "prometheus-datasource"
       },
-      "description": "request rate per minute over last 3 minutes",
+      "description": "by route and http status code",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -548,7 +652,7 @@
               }
             ]
           },
-          "unit": "reqpm"
+          "unit": "s"
         },
         "overrides": []
       },
@@ -558,13 +662,17 @@
         "x": 6,
         "y": 8
       },
-      "id": 13,
+      "id": 6,
       "options": {
         "legend": {
-          "calcs": [],
-          "displayMode": "list",
+          "calcs": [
+            "lastNotNull",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
           "placement": "bottom",
-          "showLegend": false
+          "showLegend": true
         },
         "tooltip": {
           "hideZeros": false,
@@ -580,15 +688,16 @@
             "uid": "prometheus-datasource"
           },
           "editorMode": "code",
-          "expr": "sum by (client, server)(increase(traces_service_graph_request_failed_total{span_kind=~\"$span_kind\",service=~\"${service}\", span_name=~\"$span_name\"}[$interval])) OR on() vector(0)",
-          "hide": false,
+          "exemplar": false,
+          "expr": "sum(rate(traces_spanmetrics_latency_sum{span_kind=~\"$span_kind\",service=~\"${service}\", span_name=~\"$span_name\"}[$interval])) by (span_name) / sum(rate(traces_spanmetrics_latency_count{span_kind=~\"$span_kind\",service=~\"${service}\", span_name=~\"$span_name\"}[$interval])) by (span_name)",
+          "format": "time_series",
           "instant": false,
-          "legendFormat": "{{label_name}}",
+          "legendFormat": "{{span_name}}",
           "range": true,
-          "refId": "B"
+          "refId": "A"
         }
       ],
-      "title": "Tracing Span Error Rate",
+      "title": "Average Latency in $interval",
       "type": "timeseries"
     },
     {
@@ -661,10 +770,14 @@
       "id": 5,
       "options": {
         "legend": {
-          "calcs": [],
-          "displayMode": "list",
+          "calcs": [
+            "lastNotNull",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
           "placement": "bottom",
-          "showLegend": false
+          "showLegend": true
         },
         "tooltip": {
           "hideZeros": false,
@@ -687,7 +800,7 @@
           "refId": "A"
         }
       ],
-      "title": "P$p_latency Latency",
+      "title": "P$p_latency Latency in $interval",
       "type": "timeseries"
     },
     {
@@ -757,13 +870,17 @@
         "x": 18,
         "y": 8
       },
-      "id": 6,
+      "id": 14,
       "options": {
         "legend": {
-          "calcs": [],
-          "displayMode": "list",
+          "calcs": [
+            "lastNotNull",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
           "placement": "bottom",
-          "showLegend": false
+          "showLegend": true
         },
         "tooltip": {
           "hideZeros": false,
@@ -780,7 +897,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(rate(traces_spanmetrics_latency_sum{span_kind=~\"$span_kind\",service=~\"${service}\", span_name=~\"$span_name\"}[$interval])) by (span_name) / sum(rate(traces_spanmetrics_latency_count{span_kind=~\"$span_kind\",service=~\"${service}\", span_name=~\"$span_name\"}[$interval])) by (span_name)",
+          "expr": "sum(increase(traces_spanmetrics_latency_sum{span_kind=~\"$span_kind\",service=~\"${service}\", span_name=~\"$span_name\"}[$interval])) by (span_name)",
           "format": "time_series",
           "instant": false,
           "legendFormat": "{{span_name}}",
@@ -788,7 +905,7 @@
           "refId": "A"
         }
       ],
-      "title": "Average Latency",
+      "title": "Sum Load Time per Span in $interval",
       "type": "timeseries"
     },
     {
@@ -911,7 +1028,7 @@
         "sortBy": [
           {
             "desc": true,
-            "displayName": "Request Total"
+            "displayName": "Trend #LoadingTIme"
           }
         ]
       },
@@ -1203,5 +1320,5 @@
   "timezone": "",
   "title": "TRACE metrics by metricsGenerator",
   "uid": "tempo-metricsgenerator-front",
-  "version": 1
+  "version": 4
 }
