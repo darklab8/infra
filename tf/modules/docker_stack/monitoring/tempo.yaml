@@ -29,8 +29,19 @@ distributor:
 
 compactor:
   compaction:
-    block_retention: 24h
+    block_retention: 24h # how long to store traces
 
+storage:
+  trace:
+    backend: local                 
+    wal:
+      path: /var/tempo/wal            
+    local:
+      path: /var/tempo/blocks
+
+# This part requires configured Prometheus for metrics.
+# Articles contains it in part 2 in advance because not wishing to duplicate infra code ;)
+# So you may see errors from writing to prometheus if this thing is present but prometheus is still not raised which is planned only for Part 3
 metrics_generator:
   registry:
     external_labels:
@@ -47,14 +58,6 @@ metrics_generator:
     local_blocks:
       filter_server_spans: false
       flush_to_storage: true
-
-storage:
-  trace:
-    backend: local                 
-    wal:
-      path: /var/tempo/wal            
-    local:
-      path: /var/tempo/blocks
 
 overrides:
   defaults:
