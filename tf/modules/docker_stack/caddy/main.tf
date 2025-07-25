@@ -24,8 +24,8 @@ resource "docker_container" "caddy" {
     name = docker_network.network.id
   }
   log_opts = {
-    "mode" : "non-blocking"
-    "max-buffer-size" : "500m"
+    "max-file": "3"
+    "max-size": "10m"
   }
   # Useful for rapid debugging. `docker stop caddy`, `docker start caddy`
   # env = [

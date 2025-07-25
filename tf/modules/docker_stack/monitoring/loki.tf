@@ -36,8 +36,8 @@ resource "docker_container" "loki" {
   restart = "always"
 
   log_opts = {
-    "mode" : "non-blocking"
-    "max-buffer-size" : "500m"
+    "max-file": "3"
+    "max-size": "10m"
   }
 
   mounts {

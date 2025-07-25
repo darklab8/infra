@@ -24,8 +24,8 @@ resource "docker_container" "alloy_logs" {
     aliases = ["alloy-logs"]
   }
   log_opts = {
-    "mode" : "non-blocking"
-    "max-buffer-size" : "500m"
+    "max-file": "3"
+    "max-size": "10m"
   }
   entrypoint = ["sh", "-c"]
   command = [join(" && ", [
@@ -65,8 +65,8 @@ resource "docker_container" "alloy_metrics" {
     aliases = ["alloy-metrics"]
   }
   log_opts = {
-    "mode" : "non-blocking"
-    "max-buffer-size" : "500m"
+    "max-file": "3"
+    "max-size": "10m"
   }
   entrypoint = ["sh", "-c"]
   command = [join(" && ", [
@@ -152,8 +152,8 @@ resource "docker_container" "alloy_traces" {
     aliases = ["alloy-traces"]
   }
   log_opts = {
-    "mode" : "non-blocking"
-    "max-buffer-size" : "500m"
+    "max-file": "3"
+    "max-size": "10m"
   }
   entrypoint = ["sh", "-c"]
   command = [join(" && ", [

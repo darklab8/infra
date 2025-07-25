@@ -33,8 +33,8 @@ resource "docker_container" "openssh" {
     name = data.docker_network.grafana.id
   }
   log_opts = {
-    "mode" : "non-blocking"
-    "max-buffer-size" : "500m"
+    "max-file": "3"
+    "max-size": "10m"
   }
   env = [
     "PUBLIC_KEY=${local.key}",
