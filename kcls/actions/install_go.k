@@ -11,7 +11,7 @@ _action = gh.GHAction{
                 name: _name
                 uses: "actions/setup-go@v5"
                 with = {
-                    "go-version": '^1.22.5'
+                    "go-version": '^1.25.1'
                 }
             },
         ]
