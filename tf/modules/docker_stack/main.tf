@@ -1,5 +1,6 @@
 module "caddy" {
-  source = "./caddy"
+  source           = "./caddy"
+  caddy_network_id = var.caddy_network_id
 }
 
 data "external" "secrets" {

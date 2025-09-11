@@ -1,7 +1,5 @@
-resource "docker_network" "network" {
-  name       = "caddy"
-  attachable = true
-  driver     = "overlay"
+variable "caddy_network_id" {
+  type = string
 }
 
 resource "docker_image" "caddy" {
@@ -21,11 +19,11 @@ resource "docker_container" "caddy" {
   restart = "always"
 
   networks_advanced {
-    name = docker_network.network.id
+    name = var.caddy_network_id
   }
   log_opts = {
-    "max-file": "3"
-    "max-size": "10m"
+    "max-file" : "3"
+    "max-size" : "10m"
   }
   # Useful for rapid debugging. `docker stop caddy`, `docker start caddy`
   # env = [

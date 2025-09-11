@@ -17,11 +17,19 @@ provider "docker" {
   ssh_opts = ["-o", "StrictHostKeyChecking=no", "-o", "UserKnownHostsFile=/dev/null", "-i", "~/.ssh/id_rsa.darklab"]
 }
 
+resource "docker_network" "caddy" {
+  provider   = docker.darklab
+  name       = "caddy"
+  attachable = true
+  driver     = "overlay"
+}
+
 module "docker" {
   source = "../modules/docker_stack"
   providers = {
     docker = docker.darklab
   }
-  zone         = "dd84ai.com"
-  ipv4_address = module.node_darklab_cax21.ipv4_address
+  zone             = "dd84ai.com"
+  ipv4_address     = module.node_darklab_cax21.ipv4_address
+  caddy_network_id = docker_network.caddy.id
 }

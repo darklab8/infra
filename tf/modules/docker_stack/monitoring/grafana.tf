@@ -51,8 +51,8 @@ resource "docker_container" "grafana" {
     "/run.sh",
   ])]
   log_opts = {
-    "max-file": "3"
-    "max-size": "10m"
+    "max-file" : "3"
+    "max-size" : "10m"
   }
 
   dynamic "labels" {

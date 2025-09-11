@@ -21,6 +21,62 @@ resource "hcloud_firewall" "basic_firewall" {
     ]
   }
 
+  # docker swarm stuff
+  # rule {
+  #   direction = "in"
+  #   protocol  = "tcp"
+  #   port      = "2377"
+  #   source_ips = [
+  #     "0.0.0.0/0",
+  #     "::/0"
+  #   ]
+  # }
+  # rule {
+  #   direction = "in"
+  #   protocol  = "udp"
+  #   port      = "2377"
+  #   source_ips = [
+  #     "0.0.0.0/0",
+  #     "::/0"
+  #   ]
+  # }
+  # rule {
+  #   direction = "in"
+  #   protocol  = "tcp"
+  #   port      = "7946"
+  #   source_ips = [
+  #     "0.0.0.0/0",
+  #     "::/0"
+  #   ]
+  # }
+  # rule {
+  #   direction = "in"
+  #   protocol  = "udp"
+  #   port      = "7946"
+  #   source_ips = [
+  #     "0.0.0.0/0",
+  #     "::/0"
+  #   ]
+  # }
+  # rule {
+  #   direction = "in"
+  #   protocol  = "tcp"
+  #   port      = "4789"
+  #   source_ips = [
+  #     "0.0.0.0/0",
+  #     "::/0"
+  #   ]
+  # }
+  # rule {
+  #   direction = "in"
+  #   protocol  = "udp"
+  #   port      = "4789"
+  #   source_ips = [
+  #     "0.0.0.0/0",
+  #     "::/0"
+  #   ]
+  # }
+
   rule {
     direction = "in"
     protocol  = "tcp"

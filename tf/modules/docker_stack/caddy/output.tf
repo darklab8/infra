@@ -1,3 +1,3 @@
 output "network_id" {
-  value = docker_network.network.id
+  value = var.caddy_network_id
 }

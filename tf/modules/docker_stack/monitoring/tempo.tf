@@ -36,8 +36,8 @@ resource "docker_container" "tempo" {
   ])]
   restart = "always"
   log_opts = {
-    "max-file": "3"
-    "max-size": "10m"
+    "max-file" : "3"
+    "max-size" : "10m"
   }
   mounts {
     target    = "/var/tempo"
