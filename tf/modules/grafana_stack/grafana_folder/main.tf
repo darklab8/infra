@@ -13,8 +13,23 @@ resource "grafana_folder_permission" "folder_permissions" {
     role       = "Editor"
     permission = "Edit"
   }
-  permissions {
-    role       = "Viewer"
-    permission = "View"
+
+  dynamic "permissions" {
+    for_each = local.permissions
+    content {
+      role       = permissions.value["role"]
+      permission = permissions.value["permission"]
+    }
   }
+}
+
+locals {
+  permissions = concat([],
+    var.is_public ? [
+      {
+        role       = "Viewer"
+        permission = "View"
+      },
+    ] : [],
+  )
 }

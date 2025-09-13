@@ -1,7 +1,8 @@
 module "folder_cadvisor" {
-  source = "./grafana_folder"
-  title  = "CADVISOR"
-  uid    = "cadvisor"
+  source    = "./grafana_folder"
+  title     = "CADVISOR"
+  uid       = "cadvisor"
+  is_public = true
 }
 
 locals {

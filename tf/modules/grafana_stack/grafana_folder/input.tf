@@ -5,3 +5,7 @@ variable "uid" {
   type    = string
   default = null
 }
+
+variable "is_public" {
+  type = bool
+}

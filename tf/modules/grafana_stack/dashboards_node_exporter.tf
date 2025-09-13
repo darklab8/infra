@@ -1,7 +1,8 @@
 module "folder_node_exporter" {
-  source = "./grafana_folder"
-  title  = "NODE_EXPORTER"
-  uid    = "node_exporter"
+  source    = "./grafana_folder"
+  title     = "NODE_EXPORTER"
+  uid       = "node_exporter"
+  is_public = true
 }
 
 locals {

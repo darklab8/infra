@@ -6,9 +6,10 @@ resource "docker_image" "grafana" {
 
 locals {
   # to add some day anon access?
-  # GF_AUTH_ANONYMOUS_ENABLED=true
-  # GF_AUTH_ANONYMOUS_ORG_ROLE=YourRole
+
   grafana_envs = {
+    GF_AUTH_ANONYMOUS_ENABLED  = "true"
+    GF_AUTH_ANONYMOUS_ORG_ROLE = "Viewer"
     GF_SECURITY_ADMIN_PASSWORD = var.grafana_password
     GF_SECURITY_ADMIN_USER     = "admin"
     GF_FEATURE_TOGGLES_ENABLE  = "alertingSimplifiedRouting,alertingQueryAndExpressionsStepMode"
