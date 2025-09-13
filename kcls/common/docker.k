@@ -120,7 +120,7 @@ schema DeploySwarm[opt: DeploySwarmOpts](ga.Step):
 docker pull {{image_name}}:{{tag}}
 sleep 5
 {{/if}}
-docker service update --force {{service_name}}
+docker service update --image {{image_name}}:{{tag}} {{service_name}}
 """, {
         pull = opt.pull
         tag = opt.tag
