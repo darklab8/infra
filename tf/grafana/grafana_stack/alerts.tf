@@ -70,8 +70,8 @@ resource "grafana_folder" "alerts_generic" {
 
 resource "grafana_rule_group" "alerts_nodes0" {
   name               = "alert_node_high_disk_usage"
-  folder_uid         = grafana_folder.alerts_generic.uid
   interval_seconds   = local.alert_interval_seconds
+  folder_uid         = grafana_folder.alerts_generic.uid
   disable_provenance = local.alert_disable_provenance
   org_id             = local.alert_org_id
 
@@ -193,5 +193,49 @@ resource "grafana_rule_group" "alerts_nodes0" {
         to   = 0
       }
     }
+  }
+}
+
+resource "grafana_rule_group" "container_running_failed_streak" {
+  name             = "container_running_failed_streak"
+  interval_seconds = 60
+  folder_uid         = grafana_folder.alerts_generic.uid
+  disable_provenance = local.alert_disable_provenance
+  org_id             = local.alert_org_id
+
+  rule {
+    name      = "container_running_failed_streak"
+    condition = "C"
+
+    data {
+      ref_id = "A"
+
+      relative_time_range {
+        from = 600
+        to   = 0
+      }
+
+      datasource_uid = "prometheus-datasource"
+      model          = "{\"editorMode\":\"code\",\"expr\":\"(docker_container_health_status == 1) * docker_container_health_failing_streak\",\"instant\":true,\"intervalMs\":1000,\"legendFormat\":\"__auto\",\"maxDataPoints\":43200,\"range\":false,\"refId\":\"A\"}"
+    }
+    data {
+      ref_id = "C"
+
+      relative_time_range {
+        from = 0
+        to   = 0
+      }
+
+      datasource_uid = "__expr__"
+      model          = "{\"conditions\":[{\"evaluator\":{\"params\":[0],\"type\":\"gt\"},\"operator\":{\"type\":\"and\"},\"query\":{\"params\":[\"C\"]},\"reducer\":{\"params\":[],\"type\":\"last\"},\"type\":\"query\"}],\"datasource\":{\"type\":\"__expr__\",\"uid\":\"__expr__\"},\"expression\":\"A\",\"intervalMs\":1000,\"maxDataPoints\":43200,\"refId\":\"C\",\"type\":\"threshold\"}"
+    }
+
+    no_data_state  = "NoData"
+    exec_err_state = "Error"
+    for            = "1m"
+    labels = {
+      ping_channel = "true"
+    }
+    is_paused = false
   }
 }
