@@ -126,7 +126,7 @@ resource "docker_container" "alloy_metrics" {
 
   privileged = true
 
-  memory = 1000 # MBs
+  memory = 2000 # MBs
   lifecycle {
     ignore_changes = [
       memory_swap,
