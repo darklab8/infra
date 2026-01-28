@@ -37,8 +37,8 @@ resource "docker_container" "prometheus" {
       "--web.enable-remote-write-receiver",
       "--enable-feature=native-histograms",
       "--enable-feature=exemplar-storage",
-      "--storage.tsdb.retention.time=30d",
-      "--storage.tsdb.retention.size=10GB",
+      "--storage.tsdb.retention.time=90d",
+      "--storage.tsdb.retention.size=20GB",
     ]),
   ])]
   restart = "always"
