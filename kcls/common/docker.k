@@ -51,6 +51,7 @@ sleep 5
         push = opt.push
     })
 
+# became broken. docker pull amd64 on arm64 pulls with manifest list, preventing create
 schema JoinMultiArch[opt: BuildOpts](ga.Step):
     name = "Manifest join image ${opt.image_name}"
     run = template.execute("""set -ex

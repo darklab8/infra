@@ -70,14 +70,6 @@ DockerDeploySwarm = lambda opt: DockerDeploySwarmOpts {
                     ghc.GetVersionFromTag
                     docker.DockerLogin {}
                     ghc.InstallDarklabSshKey
-                    docker.JoinMultiArch(docker.BuildOpts {
-                        image_name = opt.image_name
-                        if opt.environment == "staging":
-                            tag = opt.environment
-                        else:
-                            tag = ghc.GetVersionOutput
-                            extra_tags = [opt.environment]
-                    })
                     docker.DeploySwarm(docker.DeploySwarmOpts {
                         image_name = opt.image_name
                         tag = "${opt.environment}-arm64"
