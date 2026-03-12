@@ -10,8 +10,14 @@ inputs:
 runs:
   using: composite
   steps:
-  - name: Patch to latest
+  - name: Called by {{ github.repository }}
+    shell: bash
+    run: |
+      set -ex
+      echo "Called by next repository"
+      echo "{{ github.repository }}"
+  - name: Trigger workflow
     shell: bash
     run: |
       set -e
-      curl -L --fail -X POST -H "Accept: application/vnd.github+json"  -H "Authorization: Bearer ${{ inputs.token }}" -H "X-GitHub-Api-Version: 2026-03-10" https://api.github.com/repos/${{ inputs.repository }}/actions/workflows/${{ inputs.workflow-file }}/dispatches -d '{"ref":"master","inputs":{"repo":"${GITHUB_REPOSITORY}","owner":"${GITHUB_REPOSITORY_OWNER}"}}'
+      curl -L --fail -X POST -H "Accept: application/vnd.github+json"  -H "Authorization: Bearer ${{ inputs.token }}" -H "X-GitHub-Api-Version: 2026-03-10" https://api.github.com/repos/${{ inputs.repository }}/actions/workflows/${{ inputs.workflow-file }}/dispatches -d '{"ref":"master","inputs":{"repository":"{{ github.repository }}"}}'
