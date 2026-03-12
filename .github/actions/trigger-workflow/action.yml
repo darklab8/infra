@@ -1,0 +1,19 @@
+name: Trigger workflow
+description: ''
+inputs:
+  token:
+    description: Fine grained one with permission for actions:write
+  owner:
+    description: of a target repo u wish to trigger. For example darklab8
+  repo:
+    description: of a triger repo u wish to trigger. for example repo name fl-data-flsr
+  workflow-file:
+    description: for example publish.yaml
+runs:
+  using: composite
+  steps:
+  - name: Patch to latest
+    shell: bash
+    run: |
+      set -e
+      curl -L  -X POST -H "Accept: application/vnd.github+json"  -H "Authorization: Bearer ${{ inputs.token }}" -H "X-GitHub-Api-Version: 2026-03-10" https://api.github.com/repos/${{ inputs.owner }}/${{ inputs.repo }}/actions/workflows/${{ inputs.workflow-file-name }}/dispatches -d '{"ref":"master","inputs":{"repo":"${GITHUB_REPOSITORY}","owner":"${GITHUB_REPOSITORY_OWNER}"}}'
