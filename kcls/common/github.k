@@ -63,11 +63,11 @@ schema TriggerWorkflowDispatchOpts:
     repository: str
 
 schema TriggerWorkflowDispatch[opts: TriggerWorkflowDispatchOpts](ga.Step):
-    uses = "peter-evans/repository-dispatch@v3"
+    uses = "darklab8/infra/.github/actions/trigger-workflow@master"
     with = {
         token = r"${{ secrets.FL_DATA_KEY }}"
         repository: opts.repository
-        "event-type": "publish"
+        "workflow-file": "publish.yaml"
     }
 
 InstallDarklabSshKey = ga.Step {
