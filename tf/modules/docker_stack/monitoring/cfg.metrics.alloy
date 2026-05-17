@@ -25,6 +25,13 @@ prometheus.scrape "scraper" {
 prometheus.relabel "labelator" {
   forward_to = [prometheus.remote_write.backend.receiver]
 
+  rule { // too noisy metric, consuming more storage than everything else together
+    // use topk(20, count by (__name__, job)({__name__=~".+"})) to debug which metric are overly high consuming
+    source_labels = ["__name__"]
+    regex         = "docker_container_health_failing_streak"
+    action        = "drop"
+  }
+
   rule {
     source_labels = ["__meta_docker_container_name"]
     regex = "/(.*)"
