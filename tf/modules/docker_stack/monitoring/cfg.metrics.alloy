@@ -20,6 +20,7 @@ prometheus.exporter.cadvisor "docker_metrics" {
 prometheus.scrape "scraper" {
   targets    = prometheus.exporter.cadvisor.docker_metrics.targets
   forward_to = [ prometheus.relabel.labelator.receiver ]
+  scrape_interval = "40s"
 }
 
 prometheus.relabel "labelator" {
@@ -75,6 +76,7 @@ prometheus.exporter.unix "hosts" {
 prometheus.scrape "hosts" {
   targets    = prometheus.exporter.unix.hosts.targets
   forward_to = [prometheus.relabel.host_metrics.receiver]
+  scrape_interval = "40s"
 }
 
 discovery.docker "prometheus_endpoints" {
@@ -89,7 +91,7 @@ discovery.docker "prometheus_endpoints" {
 prometheus.scrape "prometheus_endpoints" {
   targets    = discovery.docker.prometheus_endpoints.targets
   forward_to = [prometheus.relabel.labelator.receiver]
-  scrape_interval = "60s"
+  scrape_interval = "40s"
 }
 
 discovery.dockerswarm "prometheus_endpoints_swarm" {
@@ -104,5 +106,5 @@ discovery.dockerswarm "prometheus_endpoints_swarm" {
 prometheus.scrape "prometheus_endpoints_swarm" {
   targets    = discovery.dockerswarm.prometheus_endpoints_swarm.targets
   forward_to = [prometheus.relabel.labelator.receiver]
-  scrape_interval = "60s"
+  scrape_interval = "40s"
 }
