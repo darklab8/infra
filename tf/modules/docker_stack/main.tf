@@ -35,11 +35,11 @@ module "dns" {
     type  = "A"
     value = var.ipv4_address
     name  = "grafana"
-  },
-  {
-    type  = "A"
-    value = var.ipv4_address
-    name  = "wiki"
+    },
+    {
+      type  = "A"
+      value = var.ipv4_address
+      name  = "wiki"
   }]
 }
 

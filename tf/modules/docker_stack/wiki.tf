@@ -8,7 +8,7 @@ resource "docker_volume" "wiki_data" {
 }
 
 resource "docker_container" "wiki" {
-  name  = "wiki"
+  name = "wiki"
 
   image = docker_image.wiki.name
 

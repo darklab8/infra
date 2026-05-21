@@ -197,8 +197,8 @@ resource "grafana_rule_group" "alerts_nodes0" {
 }
 
 resource "grafana_rule_group" "container_running_failed_streak" {
-  name             = "container_running_failed_streak"
-  interval_seconds = 60
+  name               = "container_running_failed_streak"
+  interval_seconds   = 60
   folder_uid         = grafana_folder.alerts_generic.uid
   disable_provenance = local.alert_disable_provenance
   org_id             = local.alert_org_id

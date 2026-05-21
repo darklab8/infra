@@ -57,6 +57,7 @@ resource "grafana_data_source" "alertmanager" {
     implementation = "prometheus"
     # Whether or not Grafana should send alert instances to this Alertmanager
     handleGrafanaManagedAlerts = true
+    timeInterval               = "40s"
   })
 
 }
