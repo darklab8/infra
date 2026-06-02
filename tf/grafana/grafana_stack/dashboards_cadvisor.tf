@@ -8,13 +8,13 @@ module "folder_cadvisor" {
 locals {
   grafana-dashboards-cadvisor = {
     cadvisor_exporter_14282_rev1 = {
-      json = file("${path.module}/cadvisor/cadvisor_exporter_14282_rev1.json")
+      json = file("${path.module}/dashboard_docker/cadvisor_exporter_14282_rev1.json")
     }
     db_19792_rev6 = {
-      json = file("${path.module}/cadvisor/19792_rev6.json")
+      json = file("${path.module}/dashboard_docker/19792_rev6.json")
     }
     db_19908_rev1 = {
-      json = file("${path.module}/cadvisor/cadvisor_insights_19908_rev1.json")
+      json = file("${path.module}/dashboard_docker/cadvisor_insights_19908_rev1.json")
     }
   }
 }
