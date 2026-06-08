@@ -8,7 +8,13 @@ module "folder_node_exporter" {
 locals {
   grafana-dashboards-node_exporter = {
     db_1860_rev37_json = {
-      json = file("${path.module}/node_exporter/1860_rev37.json")
+      json = file("${path.module}/dashboards_unix/1860_rev37.json")
+    }
+    NodeExporterBasedOn11074 = {
+      json = file("${path.module}/dashboards_unix/NodeExporterBasedOn11074.json")
+    }
+    UnixOverview2 = {
+      json = file("${path.module}/dashboards_unix/UnixOverview2.json")
     }
   }
 }
@@ -16,7 +22,7 @@ locals {
 resource "grafana_dashboard" "node_exporter" {
   for_each    = local.grafana-dashboards-node_exporter
   folder      = module.folder_node_exporter.uid
-  config_json = each.value.json
+  config_json = jsonencode(merge(jsondecode(each.value.json), { "tags" = ["terraform"] }))
   depends_on = [
     module.folder_node_exporter.uid
   ]

@@ -37,7 +37,7 @@ resource "grafana_data_source" "prometheus" {
 
   json_data_encoded = jsonencode({
     timeInterval = "60s"
-    httpMethod = "GET"
+    httpMethod   = "GET"
     exemplarTraceIdDestinations = [{
       datasourceUid = local.tempo_uid
       name          = "traceID"

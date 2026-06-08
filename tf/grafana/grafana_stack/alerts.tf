@@ -206,6 +206,7 @@ resource "grafana_rule_group" "container_running_failed_streak" {
   rule {
     name      = "container_running_failed_streak"
     condition = "C"
+    is_paused = true
 
     data {
       ref_id = "A"
@@ -236,6 +237,5 @@ resource "grafana_rule_group" "container_running_failed_streak" {
     labels = {
       ping_channel = "true"
     }
-    is_paused = false
   }
 }

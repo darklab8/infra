@@ -22,7 +22,7 @@ locals {
 resource "grafana_dashboard" "cadvisor" {
   for_each    = local.grafana-dashboards-cadvisor
   folder      = module.folder_cadvisor.uid
-  config_json = each.value.json
+  config_json = jsonencode(merge(jsondecode(each.value.json), { "tags" = ["terraform"] }))
   depends_on = [
     module.folder_cadvisor.uid
   ]
