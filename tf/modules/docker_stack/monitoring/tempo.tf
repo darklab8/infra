@@ -25,13 +25,13 @@ resource "docker_container" "tempo" {
     name    = docker_network.grafana.id
     aliases = ["tempo"]
   }
-  user       = "root"
+
   entrypoint = ["sh", "-c"]
   command = [join(" && ", [
-    "echo '${local.tempo_config}' > /etc/tempo.yaml",
+    "echo '${local.tempo_config}' > /tmp/tempo.yaml",
     join(" ", [
       "/tempo",
-      "-config.file=/etc/tempo.yaml",
+      "-config.file=/tmp/tempo.yaml",
     ]),
   ])]
   restart = "always"
@@ -39,6 +39,7 @@ resource "docker_container" "tempo" {
     "max-file" : "3"
     "max-size" : "10m"
   }
+  // may need chown -R 10001:10001 path_to_volume to function properly
   mounts {
     target    = "/var/tempo"
     source    = docker_volume.tempo_data.name
