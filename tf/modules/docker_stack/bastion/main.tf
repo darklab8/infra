@@ -48,6 +48,7 @@ resource "docker_container" "openssh" {
   }
 
   lifecycle {
+    enabled = false
     ignore_changes = [
       memory_swap,
       network_mode,
