@@ -1,56 +1,43 @@
-resource "docker_image" "prometheus" {
-  name         = "prom/prometheus:v3.2.1"
+
+resource "docker_image" "victoria_metrics" {
+  name         = "victoriametrics/victoria-metrics:v1.148.0"
   keep_locally = true
 }
 
 locals {
-  prometheus_envs = {
-  }
+  victoria_metrics_envs = {}
 }
 
-locals {
-  prometheus_config = file("${path.module}/prometheus.yaml")
+resource "docker_volume" "victoria_metrics" {
+  name = "victoria_metrics"
 }
 
-resource "docker_volume" "prometheus_data" {
-  name = "prometheus_data"
-}
-
-resource "docker_container" "prometheus" {
+resource "docker_container" "victoria_metrics" {
   count = var.metrics.enabled ? 1 : 0
-  name  = "prometheus"
+  name  = "victoria-metrics"
 
-  image = docker_image.prometheus.name
-  env   = [for k, v in local.prometheus_envs : "${k}=${v}"]
+  image = docker_image.victoria_metrics.name
+  env   = [for k, v in local.victoria_metrics_envs : "${k}=${v}"]
 
   networks_advanced {
     name    = docker_network.grafana.id
-    aliases = ["prometheus"]
+    aliases = ["victoria-metrics"]
   }
 
-  entrypoint = ["sh", "-c"]
-  command = [join(" && ", [
-    "echo '${local.prometheus_config}' > /etc/prometheus/prometheus.yml",
-    join(" ", [
-      "/bin/prometheus",
-      "--config.file=/etc/prometheus/prometheus.yml",
-      "--web.enable-remote-write-receiver",
-      "--enable-feature=native-histograms",
-      "--enable-feature=exemplar-storage",
-      "--storage.tsdb.retention.time=60d",
-      "--storage.tsdb.retention.size=10GB",
-    ]),
-  ])]
+  command = [
+    "--selfScrapeInterval=30s",
+    "-storageDataPath=victoria-metrics-data",
+    "-retentionPeriod=300d",
+  ]
   restart = "always"
-
   mounts {
-    target    = "/prometheus"
-    source    = docker_volume.prometheus_data.name
+    target    = "/victoria-metrics-data"
+    source    = docker_volume.victoria_metrics.name
     type      = "volume"
     read_only = false
   }
 
-  # exposed port 9090
+  # exposed port 8428
 
   memory = 1000 # MBs
   lifecycle {

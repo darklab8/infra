@@ -55,7 +55,7 @@ local.file "hostname" {
 
 prometheus.remote_write "backend" {
   endpoint {
-    url = coalesce(sys.env("PROMETHEUS_URL"),"http://prometheus:9090/api/v1/write")
+    url = coalesce(sys.env("PROMETHEUS_URL"),"http://victoria-metrics:8428/api/v1/write")
   }
 }
 

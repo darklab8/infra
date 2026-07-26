@@ -18,16 +18,224 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 18,
+  "id": 31,
   "links": [],
   "panels": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus-datasource"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "bars",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 34,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Mean",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus-datasource"
+          },
+          "editorMode": "code",
+          "expr": "sum(rate(typelog_msgs_total{project=\"darkstat\", level!=\"info\"}[$__rate_interval])) by (environment, level, location)",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{environment}} {{level}}: {{location}}",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "Logging Rate By Vers",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus-datasource"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "bars",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 35,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Max",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus-datasource"
+          },
+          "editorMode": "code",
+          "expr": "sum(typelog_msgs_total{project=\"darkstat\", level!=\"info\"}) by (environment, level, location)",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{environment}} {{level}}: {{location}}",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "Logging Sum By Vers",
+      "type": "timeseries"
+    },
     {
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 0
+        "y": 11
       },
       "id": 20,
       "panels": [],
@@ -98,7 +306,7 @@
         "h": 8,
         "w": 7,
         "x": 0,
-        "y": 1
+        "y": 12
       },
       "id": 1,
       "options": {
@@ -195,7 +403,7 @@
         "h": 8,
         "w": 7,
         "x": 7,
-        "y": 1
+        "y": 12
       },
       "id": 2,
       "options": {
@@ -292,7 +500,7 @@
         "h": 8,
         "w": 5,
         "x": 14,
-        "y": 1
+        "y": 12
       },
       "id": 3,
       "options": {
@@ -397,7 +605,7 @@
         "h": 4,
         "w": 5,
         "x": 19,
-        "y": 1
+        "y": 12
       },
       "id": 4,
       "options": {
@@ -496,7 +704,7 @@
         "h": 4,
         "w": 5,
         "x": 19,
-        "y": 5
+        "y": 16
       },
       "id": 13,
       "options": {
@@ -595,7 +803,7 @@
         "h": 8,
         "w": 6,
         "x": 0,
-        "y": 9
+        "y": 20
       },
       "id": 5,
       "options": {
@@ -692,7 +900,7 @@
         "h": 8,
         "w": 7,
         "x": 6,
-        "y": 9
+        "y": 20
       },
       "id": 6,
       "options": {
@@ -789,7 +997,7 @@
         "h": 8,
         "w": 7,
         "x": 13,
-        "y": 9
+        "y": 20
       },
       "id": 7,
       "options": {
@@ -848,7 +1056,7 @@
         "h": 8,
         "w": 4,
         "x": 20,
-        "y": 9
+        "y": 20
       },
       "id": 8,
       "options": {
@@ -957,7 +1165,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 17
+        "y": 28
       },
       "id": 9,
       "options": {
@@ -1056,7 +1264,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 17
+        "y": 28
       },
       "id": 10,
       "options": {
@@ -1154,7 +1362,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 17
+        "y": 28
       },
       "id": 11,
       "options": {
@@ -1252,7 +1460,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 25
+        "y": 36
       },
       "id": 16,
       "options": {
@@ -1349,7 +1557,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 25
+        "y": 36
       },
       "id": 15,
       "options": {
@@ -1472,7 +1680,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 25
+        "y": 36
       },
       "id": 18,
       "options": {
@@ -1571,7 +1779,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 33
+        "y": 44
       },
       "id": 17,
       "options": {
@@ -1675,7 +1883,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 33
+        "y": 44
       },
       "id": 19,
       "options": {
@@ -1772,7 +1980,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 33
+        "y": 44
       },
       "id": 14,
       "options": {
@@ -1871,7 +2079,7 @@
         "h": 10,
         "w": 5,
         "x": 0,
-        "y": 41
+        "y": 52
       },
       "id": 29,
       "options": {
@@ -1970,7 +2178,7 @@
         "h": 10,
         "w": 19,
         "x": 5,
-        "y": 41
+        "y": 52
       },
       "id": 28,
       "options": {
@@ -2016,7 +2224,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 51
+        "y": 62
       },
       "id": 21,
       "panels": [],
@@ -2087,7 +2295,7 @@
         "h": 8,
         "w": 6,
         "x": 0,
-        "y": 52
+        "y": 63
       },
       "id": 22,
       "options": {
@@ -2186,7 +2394,7 @@
         "h": 8,
         "w": 6,
         "x": 6,
-        "y": 52
+        "y": 63
       },
       "id": 26,
       "options": {
@@ -2285,7 +2493,7 @@
         "h": 8,
         "w": 6,
         "x": 12,
-        "y": 52
+        "y": 63
       },
       "id": 23,
       "options": {
@@ -2384,7 +2592,7 @@
         "h": 8,
         "w": 6,
         "x": 18,
-        "y": 52
+        "y": 63
       },
       "id": 30,
       "options": {
@@ -2445,7 +2653,7 @@
         "h": 8,
         "w": 6,
         "x": 0,
-        "y": 60
+        "y": 71
       },
       "id": 24,
       "options": {
@@ -2520,7 +2728,7 @@
         "h": 8,
         "w": 6,
         "x": 6,
-        "y": 60
+        "y": 71
       },
       "id": 25,
       "options": {
@@ -2593,7 +2801,7 @@
         "h": 8,
         "w": 6,
         "x": 12,
-        "y": 60
+        "y": 71
       },
       "id": 27,
       "options": {
@@ -2666,7 +2874,7 @@
         "h": 8,
         "w": 6,
         "x": 18,
-        "y": 60
+        "y": 71
       },
       "id": 31,
       "options": {
@@ -2777,7 +2985,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 68
+        "y": 79
       },
       "id": 32,
       "options": {
@@ -2879,7 +3087,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 76
+        "y": 87
       },
       "id": 33,
       "options": {
@@ -2919,7 +3127,9 @@
   ],
   "preload": false,
   "schemaVersion": 41,
-  "tags": [],
+  "tags": [
+    "terraform"
+  ],
   "templating": {
     "list": [
       {
@@ -2989,12 +3199,12 @@
     ]
   },
   "time": {
-    "from": "now-3h",
+    "from": "now-6h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "App Darkstat",
   "uid": "belbdnu2uqe4gd",
-  "version": 40
+  "version": 6
 }

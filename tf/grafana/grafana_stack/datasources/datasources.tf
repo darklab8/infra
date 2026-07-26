@@ -32,11 +32,11 @@ resource "grafana_data_source" "prometheus" {
   name               = "Prometheus"
   uid                = local.prometheus_uid
   access_mode        = "proxy"
-  url                = "http://prometheus:9090"
+  url                = "http://victoria-metrics:8428"
   basic_auth_enabled = false
 
   json_data_encoded = jsonencode({
-    timeInterval = "60s"
+    timeInterval = "30s"
     httpMethod   = "GET"
     exemplarTraceIdDestinations = [{
       datasourceUid = local.tempo_uid
