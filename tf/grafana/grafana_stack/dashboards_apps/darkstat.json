@@ -58,7 +58,7 @@
             "spanNulls": false,
             "stacking": {
               "group": "A",
-              "mode": "none"
+              "mode": "normal"
             },
             "thresholdsStyle": {
               "mode": "off"
@@ -97,7 +97,7 @@
           "displayMode": "table",
           "placement": "bottom",
           "showLegend": true,
-          "sortBy": "Mean",
+          "sortBy": "Name",
           "sortDesc": true
         },
         "tooltip": {
@@ -114,10 +114,10 @@
             "uid": "prometheus-datasource"
           },
           "editorMode": "code",
-          "expr": "sum(rate(typelog_msgs_total{project=\"darkstat\", level!=\"info\"}[$__rate_interval])) by (environment, level, location)",
+          "expr": "sum(rate(typelog_msgs_total{project=\"darkstat\", level!=\"info\"}[$__rate_interval])) by (environment, level, location, component)",
           "hide": false,
           "instant": false,
-          "legendFormat": "{{environment}} {{level}}: {{location}}",
+          "legendFormat": "{{environment}} {{component}} {{level}}: {{location}}",
           "range": true,
           "refId": "B"
         }
@@ -218,10 +218,10 @@
             "uid": "prometheus-datasource"
           },
           "editorMode": "code",
-          "expr": "sum(typelog_msgs_total{project=\"darkstat\", level!=\"info\"}) by (environment, level, location)",
+          "expr": "sum(typelog_msgs_total{project=\"darkstat\", level!=\"info\"}) by (environment, level, location, component)",
           "hide": false,
           "instant": false,
-          "legendFormat": "{{environment}} {{level}}: {{location}}",
+          "legendFormat": "{{environment}} {{component}} {{level}}: {{location}}",
           "range": true,
           "refId": "B"
         }
@@ -3206,5 +3206,5 @@
   "timezone": "browser",
   "title": "App Darkstat",
   "uid": "belbdnu2uqe4gd",
-  "version": 6
+  "version": 10
 }
