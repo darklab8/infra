@@ -125,7 +125,7 @@
             "uid": "prometheus-datasource"
           },
           "editorMode": "code",
-          "expr": "sum(rate(typelog_msgs_total{instance=~\"$instance\", level!=\"info\",version_id!~\".*-.*\"}[$__rate_interval])) by (version_id, level, location)",
+          "expr": "sum(rate(typelog_msgs_total{project=\"darkbot\", level!=\"info\",version_id!~\".*-.*\"}[$__rate_interval])) by (version_id, level, location)",
           "hide": false,
           "instant": false,
           "legendFormat": "{{version_id}} {{level}}: {{location}}",
@@ -229,7 +229,7 @@
             "uid": "prometheus-datasource"
           },
           "editorMode": "code",
-          "expr": "sum(typelog_msgs_total{instance=~\"$instance\", level!=\"info\",version_id!~\".*-.*\"}) by (version_id, level, location)",
+          "expr": "sum(typelog_msgs_total{project=\"darkbot\", level!=\"info\",version_id!~\".*-.*\"}) by (version_id, level, location)",
           "hide": false,
           "instant": false,
           "legendFormat": "{{version_id}} - {{level}}: {{location}}",
@@ -1346,5 +1346,5 @@
   "timezone": "browser",
   "title": "App Darkbot",
   "uid": "deiax9gq89b0gd",
-  "version": 10
+  "version": 11
 }
