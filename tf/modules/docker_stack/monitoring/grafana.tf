@@ -1,5 +1,5 @@
 resource "docker_image" "grafana" {
-  name         = "grafana/grafana:11.6.0@sha256:62d2b9d20a19714ebfe48d1bb405086081bc602aa053e28cf6d73c7537640dfb"
+  name         = "grafana/grafana:12.3.1"
   platform     = "linux/arm64"
   keep_locally = true
 }
@@ -13,7 +13,9 @@ locals {
     GF_SECURITY_ADMIN_PASSWORD = var.grafana_password
     GF_SECURITY_ADMIN_USER     = "admin"
     GF_FEATURE_TOGGLES_ENABLE  = "alertingSimplifiedRouting,alertingQueryAndExpressionsStepMode"
-    GF_INSTALL_PLUGINS         = "https://storage.googleapis.com/integration-artifacts/grafana-exploretraces-app/grafana-exploretraces-app-latest.zip;grafana-traces-app"
+    # GF_INSTALL_PLUGINS         = "https://storage.googleapis.com/integration-artifacts/grafana-exploretraces-app/grafana-exploretraces-app-latest.zip;grafana-traces-app"
+    # GF_PLUGINS_PREINSTALL_SYNC= "grafana-exploretraces-app@1.4.1@https://grafana.com/api/plugins/grafana-exploretraces-app/versions/1.1.0/download"
+    GF_INSTALL_PLUGINS = "grafana-exploretraces-app 2.1.0"
   }
 }
 

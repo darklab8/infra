@@ -44,5 +44,6 @@ module "dns" {
 }
 
 module "bastion" {
+  count = 0
   source = "./bastion"
 }

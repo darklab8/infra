@@ -68,7 +68,7 @@ resource "grafana_data_source" "tempo" {
   name               = "Tempo"
   uid                = local.tempo_uid
   access_mode        = "proxy"
-  url                = "http://tempo:3200"
+  url                = "http://victoria-traces:10428/select/tempo"
   basic_auth_enabled = false
 
   json_data_encoded = jsonencode({

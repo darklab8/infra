@@ -1,5 +1,5 @@
 resource "docker_image" "tempo" {
-  name         = "grafana/tempo:2.7.2"
+  name         = "docker.io/victoriametrics/victoria-traces:v0.9.4"
   keep_locally = true
 }
 
@@ -13,27 +13,24 @@ locals {
 }
 
 resource "docker_volume" "tempo_data" {
-  name = "tempo_data"
+  name = "victoria_traces"
 }
 
 resource "docker_container" "tempo" {
   count = var.tracing.enabled ? 1 : 0
-  name  = "tempo"
+  name  = "victoria-traces"
   image = docker_image.tempo.name
   env   = [for k, v in local.tempo_envs : "${k}=${v}"]
   networks_advanced {
     name    = docker_network.grafana.id
-    aliases = ["tempo"]
+    aliases = ["victoria-traces"]
   }
 
-  entrypoint = ["sh", "-c"]
-  command = [join(" && ", [
-    "echo '${local.tempo_config}' > /tmp/tempo.yaml",
-    join(" ", [
-      "/tempo",
-      "-config.file=/tmp/tempo.yaml",
-    ]),
-  ])]
+  command = [
+    "-loggerFormat=json",
+    "-retentionPeriod=1w",
+    "-retention.maxDiskSpaceUsageBytes=5GiB"
+  ]
   restart = "always"
   log_opts = {
     "max-file" : "3"
@@ -41,13 +38,13 @@ resource "docker_container" "tempo" {
   }
   // may need chown -R 10001:10001 path_to_volume to function properly
   mounts {
-    target    = "/var/tempo"
+    target    = "/victoria-traces-data"
     source    = docker_volume.tempo_data.name
     type      = "volume"
     read_only = false
   }
 
-  # exposed port 4318 and 4317
+  # exposed port 10428
 
   memory = 1000 # MBs
   lifecycle {
