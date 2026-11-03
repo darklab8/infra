@@ -45,7 +45,6 @@ resource "docker_container" "wiki" {
     ignore_changes = [
       memory_swap,
       network_mode,
-      image,
     ]
   }
 }

@@ -51,7 +51,6 @@ resource "docker_container" "alertmanager" {
     ignore_changes = [
       memory_swap,
       network_mode,
-      image,
     ]
   }
 }

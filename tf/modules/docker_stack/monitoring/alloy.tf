@@ -44,7 +44,6 @@ resource "docker_container" "alloy_logs" {
     ignore_changes = [
       memory_swap,
       network_mode,
-      image,
     ]
   }
 }
@@ -131,7 +130,6 @@ resource "docker_container" "alloy_metrics" {
     ignore_changes = [
       memory_swap,
       network_mode,
-      image,
     ]
   }
 }
@@ -168,7 +166,6 @@ resource "docker_container" "alloy_traces" {
     ignore_changes = [
       memory_swap,
       network_mode,
-      image,
     ]
   }
 }

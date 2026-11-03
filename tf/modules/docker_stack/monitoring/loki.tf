@@ -52,7 +52,6 @@ resource "docker_container" "loki" {
     ignore_changes = [
       memory_swap,
       network_mode,
-      image,
     ]
   }
 }

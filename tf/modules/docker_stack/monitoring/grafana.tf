@@ -1,6 +1,14 @@
 resource "docker_image" "grafana" {
-  name         = "grafana/grafana:12.3.1"
-  # preferably go 13.2.5-distroless-slim
+  build {
+    context = path.module
+    dockerfile = "Dockerfile.grafana"
+  }
+
+  triggers = {
+    dir_sha1 = sha1(join("", [for f in ["Dockerfile.grafana"] : filesha1("${path.module}/${f}")]))
+  }
+
+  name         = "grafana-patched"
   platform     = "linux/arm64"
   keep_locally = true
 }
@@ -49,11 +57,11 @@ resource "docker_container" "grafana" {
     name = var.docker_network_caddy_id
   }
 
-  entrypoint = ["sh", "-c"]
-  command = [join(" && ", [
-    "echo '${local.grafana_datasources_yaml}' > /etc/grafana/provisioning/datasources/datasources.yaml",
-    "/run.sh",
-  ])]
+  # entrypoint = ["sh", "-c"]
+  # command = [join(" && ", [
+  #   "echo '${local.grafana_datasources_yaml}' > /etc/grafana/provisioning/datasources/datasources.yaml",
+  #   "/run.sh",
+  # ])]
   log_opts = {
     "max-file" : "3"
     "max-size" : "10m"
@@ -85,7 +93,6 @@ resource "docker_container" "grafana" {
     ignore_changes = [
       memory_swap,
       network_mode,
-      image,
     ]
   }
 }

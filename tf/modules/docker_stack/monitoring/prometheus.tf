@@ -44,7 +44,6 @@ resource "docker_container" "victoria_metrics" {
     ignore_changes = [
       memory_swap,
       network_mode,
-      image,
     ]
   }
 }
