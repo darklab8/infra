@@ -1,5 +1,6 @@
 resource "docker_image" "grafana" {
   name         = "grafana/grafana:12.3.1"
+  # preferably go 13.2.5-distroless-slim
   platform     = "linux/arm64"
   keep_locally = true
 }
