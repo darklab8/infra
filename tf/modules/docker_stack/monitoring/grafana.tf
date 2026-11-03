@@ -8,7 +8,7 @@ resource "docker_image" "grafana" {
     dir_sha1 = sha1(join("", [for f in ["Dockerfile.grafana"] : filesha1("${path.module}/${f}")]))
   }
 
-  name         = "grafana-patched"
+  name         = "grafana/grafana:13.2.5-distroless-slim-patched"
   platform     = "linux/arm64"
   keep_locally = true
 }
